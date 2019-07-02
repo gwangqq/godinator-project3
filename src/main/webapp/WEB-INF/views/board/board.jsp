@@ -1,18 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-<head>
-	<title>Generic - Editorial by HTML5 UP</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/godinator/css/main.css" />
+<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+
+
 <style>
+a{
+	color: 	#f56a6a;
+	text-decoration: none;
+	border-bottom: none;
+	text-decoration: none;
+}
+
+a:hover{
+	color:	#f56a6a;
+	text-decoration: none;
+	border-bottom: none;
+	text-decoration: none;
+	
+}
+
 select:hover{
 	border-color: #f56a6a;
 	box-shadow: 0 0 0 1px #f56a6a;
@@ -27,9 +33,23 @@ textarea:hover{
 	border-color: #f56a6a;
 	box-shadow: 0 0 0 1px #f56a6a;
 }
-
-
 </style>
+<script>
+$(document).ready(function() {
+	
+	$(".moveWriteBtn").click(function() {
+		alert("눌렸따!!");
+		//encodingURI, encodingComponent쓰면 쿼리스트링 encoding가능 form에 input hidden으로 보내는거 많이 사용
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#seq").val("");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
+	});
+});
+</script>	
+
 </head>
 <body class="is-preload">
 
@@ -177,7 +197,7 @@ textarea:hover{
 											</table>
 									</div>
 									<div class = "col-2" style = "float: right;">
-										<button class = "button">글쓰기</button>
+										<button class = "button moveWriteBtn" id = "moveWriteBtn">글쓰기</button>
 										</div>
 									<br>
 									<hr class="major" />
@@ -211,30 +231,17 @@ textarea:hover{
 								<!-- =============== 조건 검색 창 ===========-->
 									
 										<div class = "col-1"></div>
-										<div class = "col-2" style="margin-right: 0; padding:0;">
-										<select id="demo-category">
+										<div class = "col-3" style="margin-right: 0; padding:0;">
+										<select name = "key" id="demo-category">
 											<option value="1">전체</option>
 											<option value="2">글제목</option>
 											<option value="3">작성자</option>
 											<option value="4">작성내용</option>
 											<option value="5">학교이름</option>
+											<option value="6">지역</option>
 										</select>
 										</div>
-										<div class = "col-2" style="float:left;padding: 0;">
-													<select id="demo-category" >
-														<option value="1">지역</option>
-														<option value="2">서울</option>
-														<option value="3">경기도</option>
-														<option value="4">강원도</option>
-														<option value="5">충청도</option>
-														<option value="6">전라도</option>
-														<option value="7">경상도</option>
-														<option value="8">충청도</option>
-														<option value="9">충청도</option>
-														<option value="10">제주도</option>
-													</select>
-												</div>
-										<div class = "col-5" style="margin-left: 0;margin-right: 0;padding:0;">
+										<div class = "col-6" style="margin-left: 0;margin-right: 0;padding:0;">
 										<input type="text" placeholder="검색내용을 입력해주세요">					
 										</div>
 										<div class = "col-1" style="margin-left: 0; margin-right: 0;padding:0;">
@@ -247,109 +254,4 @@ textarea:hover{
 						</div>
 					</div>
 
-
-
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
-										<li>
-											<span class="opener">COMMUNITY</span>
-											<ul>
-												<li><a href="#">홍보게시판</a></li>
-												<li><a href="#">고등학교 커뮤니티</a></li>
-												<li><a href="#">대학교 커뮤니티</a></li>
-												<li><a href="#">핫 게시물</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>
+<%@ include file="/WEB-INF/views/board/temp/tempfooter.jsp" %>

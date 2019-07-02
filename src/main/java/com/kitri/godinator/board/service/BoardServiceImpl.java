@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoardServiceImpl {
 
-	@Autowired
-	private SqlSession sqlSession;
+
 	
 	
 }

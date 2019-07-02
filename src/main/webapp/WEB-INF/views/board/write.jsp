@@ -1,18 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-<head>
-	<title>Generic - Editorial by HTML5 UP</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+<%@ include file="/WEB-INF/views/mentor/temp/tempheader.jsp" %>	
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 <style type="text/css">
+a{
+	color: 	#f56a6a;
+	text-decoration: none;
+	border-bottom: none;
+	text-decoration: none;
+}
+
+a:hover{
+	color: 	#f56a6a;
+	text-decoration: none;
+	border-bottom: none;
+	text-decoration: none;
+}
 label{
 	text-align: center;
 	padding-top: 14%;
@@ -33,6 +41,24 @@ textarea:hover{
 	box-shadow: 0 0 0 1px #f56a6a;
 }
 </style>
+
+<script>
+$(document).ready(function() {
+	
+	$("#writeBtn").click(function() {
+		if($("#subject").val() == ""){
+			alert("제목입력!!!!");
+			return;
+		} else if($("#content").val() == ""){
+			alert("내용 입력!!!");
+			return;
+		} else {
+			$("#writeForm").attr("action", "${root}/board/write").submit();
+		}
+	});
+});
+</script>	
+
 </head>
 	<body class="is-preload">
 
@@ -62,40 +88,15 @@ textarea:hover{
 									</header>
 								<hr class = "major"/>	
 								<!-- 작성 전체 폼 -->
+			<!-- <form id="writeForm" name="writeForm" method="post" action=""
+				enctype="multipart/form-data"> -->
 								<div class = "row">
-									<!-- 작성 조건.1 -->
-									<div class = "col-2"></div>
-									<div class = "col-1">
-										<label>머리말</label>
-									</div>
-									<div class = "col-3">
-										<select>
-											<option>선택</option>
-											<option>고등학교 입학 홍보</option>
-											<option>대학교 입학 홍보</option>
-											<option>교육 프로그램 홍보</option>
-											<option>학교 행사 홍보</option>
-											<option>기타</option>
-										</select>
-									</div>
-									<div class = "col-1">
-										<label>지역</label>
-									</div>
-									<div class = "col-3">
-										<select>
-											<option value="1">전체</option>
-											<option value="2">서울</option>
-											<option value="3">경기도</option>
-											<option value="4">강원도</option>
-											<option value="5">충청도</option>
-											<option value="6">전라도</option>
-											<option value="7">경상도</option>
-											<option value="8">충청도</option>
-											<option value="9">충청도</option>
-											<option value="10">제주도</option>
-										</select>
-									</div>
-									<div class = "col-2"></div>
+				
+				<input type="hidden" name="bcode" value="${parameter.bcode}">
+				<input type="hidden" name="pg" value="1">
+				<input type="hidden" name="key" value="">
+				<input type="hidden" name="word" value="">
+				
 									<!-- 기본 정보 -->
 								<br>
 								<!-- 제목 작성 -->
@@ -104,7 +105,7 @@ textarea:hover{
 								<label>게시물 제목</label>
 								</div>
 								<div class= "col-7">
-								<input type="text" name="demo-name" id="demo-name" value="" placeholder="게시물의 제목을 입력해주세요" />
+								<input type="text" name="subject" id="subject" value="" placeholder="게시물의 제목을 입력해주세요" />
 								</div>
 								<div class = "col-2"></div>
 								
@@ -112,12 +113,101 @@ textarea:hover{
 								<!-- 지도 파일 첨부 -->
 								<div class = "col-2"></div>
 								<div class = "col-1">
-								<label>파일 첨부</label>
+								<label>지역 선택</label>
+								</div>
+								<div class = "col-4">
+								<select id = "region" style="color: #7f888f;">
+									<option>전체</option>
+									<option>서울</option>
+									<option>부산</option>
+									<option>인천</option>
+									<option>대구</option>
+									<option>광주</option>
+									<option>대전</option>
+									<option>울산</option>
+									<option>강원</option>
+									<option>경기</option>
+									<option>경남</option>
+									<option>경북</option>
+									<option>전남</option>
+									<option>전북</option>
+									<option>충남</option>
+									<option>충북</option>
+									<option>제주</option>
+								</select>
+								</div>
+								<div class = "col-5"></div>
+								
+								
+								<!-- 지도 파일 첨부 -->
+								<div class = "col-2"></div>
+								<div class = "col-1">
+								<label>장소 첨부</label>
 								</div>
 								<div class = "col-3">
-								<button class="button icon solid fa-globe-americas">지도</button>
-								<button class="button icon solid fa-upload">파일</button>
+								<input type="button" class="button" data-toggle="modal" data-target="#myModal" value="장소검색">
+								
+								
+								
+								
+								
+								
+								
+								
+								<!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <input type="button" class="button close" data-dismiss="modal">
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          Modal body..
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <input type="button" class="button" data-dismiss="modal" value = "Close">
+        </div>
+        
+      </div>
+    </div>
+  </div>
+								
+								
 								</div>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								<div class = "col-6"></div>
 								
 								
@@ -128,10 +218,10 @@ textarea:hover{
 								<label>학교 검색</label>
 								</div>
 								<div class = "col-6" style = "margin-right: 0;">
-								<input type="text" name="demo-name" id="demo-name" value="" placeholder="학교 이름 입력" />
+								<input type="text" name="demo-name" id="demo-name" value="" placeholder="학교 이름 입력" style="margin-right:0;"/>
 								</div>
 								<div class = "col-1" style = "margin-left: 0;">
-								<button class="button small icon solid fa-search">검색</button>
+								<input type = "button" class = "button medium" value = "검색">
 								</div>
 								<div class = "col-2"></div>
 								
@@ -146,126 +236,31 @@ textarea:hover{
 								
 								<div class = "col-2"></div>
 								<div class = "col-8">
-								<textarea name="demo-message" id="demo-message" placeholder="게시물의 내용을 작성해주세요" 
+								<textarea name="content" id="content" placeholder="게시물의 내용을 작성해주세요" 
 								rows="20" style="resize: none;"></textarea>
 								</div>
 								<div class = "col-2"></div>
 								
 								<br>
 								<!-- 게시물 완료 버튼 및 위로가기 버튼 -->
-								<div class = "col-8"></div>
-								<div class = "col-2" style="padding-right: 0;">
-									<button class = "button samll">이전</button>
-									<button class = "button primary samll">완료</button>
+
+								
+								
+								<div class = "col-2"></div>
+								<div class = "col-8">
+									<input type="file" class="form-control-file border" name="file">
 								</div>
 								<div class = "col-2"></div>
 								
-								
-								
+								<div class = "col-8"></div>
+								<div class = "col-2" style="padding-right: 0;">
+									<button class = "button samll" >이전</button>
+									<button class = "button primary samll" id = "writeBtn">완료</button>
 								</div>
+								<div class = "col-2"></div>
+								</div>
+	<!-- 	</form> -->
 						</div>
 					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar">
-						<div class="inner">
-
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
-										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
-									</ul>
-								</section>
-
-							<!-- Footer -->
-								<footer id="footer">
-									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-								</footer>
-
-						</div>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>
+					
+<%@ include file="/WEB-INF/views/mentor/temp/tempfooter.jsp" %>

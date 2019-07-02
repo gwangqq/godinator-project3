@@ -111,7 +111,6 @@ function displayMarker(place) {
 	    infowindow.setContent('<div class = "result" style="padding:5px;font-size:12px;">' + searchresult + '</div>');
 	    infowindow.open(map, marker); 
     	
-	    alert(searchresult);
 /* 	    
 	    var latlng = mouseEvent.latLng; 
 	    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
@@ -120,7 +119,6 @@ function displayMarker(place) {
 		
 	});
 	
-	alert(searchresult);
 	
 	geocoder.addressSearch(searchresult, function(result, status) {
 
