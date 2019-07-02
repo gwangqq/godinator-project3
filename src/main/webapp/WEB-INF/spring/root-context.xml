@@ -8,6 +8,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 	<bean id="ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 				<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+<<<<<<< Upstream, based on develop
 				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
 				<property name="username" value="godinator" />
 				<property name="password" value="godinator" />	
@@ -16,6 +17,12 @@
 		<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 	      <property name="jndiName" value="java:comp/env/jdbc/godinator"/>
 	   </bean>
+=======
+				<property name="url" value="jdbc:oracle:thin:@192.168.14.21:1521:orcl" />
+				<property name="username" value="godinator" />
+				<property name="password" value="godinator" />	
+		</bean>
+>>>>>>> 6bdd03b 20190702 root-context.xml 수정
 		
 		<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dataSource"/>
