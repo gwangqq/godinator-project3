@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <<<<<<< Upstream, based on develop
+<<<<<<< Upstream, based on develop
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -351,6 +352,75 @@ function makeListJson(jsonStr){
 			<script src="/godinator/resources/assets/js/util.js"></script>
 			<script src="/godinator/resources/assets/js/main.js"></script>
 =======
+=======
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	 $("#zipcodeSearchBtn").click(function() {
+		//alert($("#demo-category").val())
+		  url:"/godinator/zipcode/zipSearch", //Controller호출        
+		  type:"post",
+		  data:$("#zipform").serialize(), // 요청변수 설정 
+		  dataType:"json",             // 데이터 결과 JSON
+		  success:function(jsonStr){  // jsonStr : 주소 검색 결과 JSON 데이터          
+			  $("#list").html("");  
+			  var errCode = jsonStr.results.common.errorCode;  
+			  var errDesc = jsonStr.results.common.errorMessage;           
+				  if(errCode!= ＂0＂){
+					  alert(errCode+"="+errDesc);
+					  }else{             
+					  if(xmlStr!= null){                 
+						  makeListJson(jsonStr); // JSON데이터 HTML형태로 변환         
+						  }
+					  }        
+				  },
+		  error: function(xhr,status, error){
+			  alert("에러발생"); // AJAX 호출 에러        
+			  } 
+				
+	}); 
+	
+function makeListJson(jsonStr){
+	var htmlStr = "";
+	htmlStr += "<table>";
+	// jquery를 이용한 JSON 결과 데이터 파싱
+	$(jsonStr.results.juso).each(function(){
+		htmlStr += "<tr>";
+		htmlStr += "<td>"+this.roadAddr+"</td>";
+		htmlStr += "<td>"+this.roadAddrPart1+"</td>";
+		htmlStr += "<td>"+this.roadAddrPart2+"</td>";
+		htmlStr += "<td>"+this.jibunAddr+"</td>";
+		htmlStr += "<td>"+this.engAddr+"</td>";
+		htmlStr += "<td>"+this.zipNo+"</td>";
+		htmlStr += "<td>"+this.admCd+"</td>";
+		htmlStr += "<td>"+this.rnMgtSn+"</td>";
+		htmlStr += "<td>"+this.bdMgtSn+"</td>";
+		htmlStr += "<td>"+this.detBdNmList+"</td>";
+		/** API 서비스 제공항목 확대 (2017.02) **/
+		htmlStr += "<td>"+this.bdNm+"</td>";
+		htmlStr += "<td>"+this.bdKdcd+"</td>";
+		htmlStr += "<td>"+this.siNm+"</td>";
+		htmlStr += "<td>"+this.sggNm+"</td>";
+		htmlStr += "<td>"+this.emdNm+"</td>";
+		htmlStr += "<td>"+this.liNm+"</td>";
+		htmlStr += "<td>"+this.rn+"</td>";
+		htmlStr += "<td>"+this.udrtYn+"</td>";
+		htmlStr += "<td>"+this.buldMnnm+"</td>";
+		htmlStr += "<td>"+this.buldSlno+"</td>";
+		htmlStr += "<td>"+this.mtYn+"</td>";
+		htmlStr += "<td>"+this.lnbrMnnm+"</td>";
+		htmlStr += "<td>"+this.lnbrSlno+"</td>";
+		htmlStr += "<td>"+this.emdNo+"</td>";
+		htmlStr += "</tr>";
+	});
+	htmlStr += "</table>";
+	// 결과 HTML을 FORM의 결과 출력 DIV에 삽입
+	$("#list").html(htmlStr);
+}	
+});
+</script>
+>>>>>>> ecc0a57 20190702 회원가입 ing
 <html>
 	<head>
 		<title>register_1.jsp</title>
@@ -406,18 +476,18 @@ function makeListJson(jsonStr){
 										   <input type="text" name="loginPwd" id="loginPwd" value="" />@
 
 										  
-											<select name="demo-category" id="demo-category">
+											<select name="demo-category" id="demo-category" >
 												<option value="">주소를 선택해주세요</option>
-												<option value="1">naver.com</option>
-												<option value="1">gmail.com</option>
-												<option value="1">daum.net</option>
-												<option value="1">hanmail.net</option>
+												<option value="naver.com">naver.com</option>
+												<option value="gmail.com">gmail.com</option>
+												<option value="daum.net">daum.net</option>
+												<option value="hanmail.net">hanmail.net</option>
 											</select>
 										 
 										   <br>
 										<h5 id="contentPwd">인증번호</h5> <!-- sns로그인시 인증불필요 -->
 										   <input type="text" name="loginPwd" id="loginPwd" value="" />
-										   <a href="#" class="button">확인</a>
+										   <a class="button" id="emailCheckBtn">이메일 인증</a>
 										   <div id="emailCheck"></div>
 										   <br>
 											 
@@ -439,7 +509,17 @@ function makeListJson(jsonStr){
 									     
 										<h3 id="contentPwd">우편번호</h3>
 										   <input type="text" name="loginPwd" id="loginPwd" value="" />
-										   <a href="#" class="button">우편번호검색</a>
+										   <a href="#" class="button" id="zipcodeSearchBtn">우편번호검색</a>
+										   
+									<form name="zipform" id="zipform" method="post">    <!-- 요청 변수 설정 (검색결과형식 설정, json) -->     
+									<input type="hidden" name="currentPage" value="1"/>				<!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
+									  <input type="hidden" name="countPerPage" value="10"/>				<!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
+									  <input type="hidden" name="resultType" value="json"/> 			<!-- 요청 변수 설정 (검색결과형식 설정, json) --> 
+									  <input type="hidden" name="confmKey" value="TESTJUSOGOKR"/>		<!-- 요청 변수 설정 (승인키) -->  
+									  <input type="text"   name="keyword" value=""/>					<!-- 요청 변수 설정 (키워드) -->
+									</form> 
+ 	   								<div id="list"> <!-- 검색 결과 리스트 출력 영역 -->
+ 	   								 </div>
 										   <br>
 										   <br>
 										<h3 id="contentPwd">주소</h3>

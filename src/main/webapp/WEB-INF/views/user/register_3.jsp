@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>modify.jsp</title>
+		<title>register_3.jsp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
@@ -27,42 +27,16 @@
 								<div id="loginAll">
 									<header class="main">
 									
-										<h1>학교 수정 및 평가</h1>
-									
+										<h1>회원가입</h1>
+										<h3 class="subtitle">학교 선택 기준은?</h3>
 									</header>
+
+<br>
 
 									<!-- Content -->
 									<form id="loginForm" name="loginForm">
-								
-									
-									<h3 id="contentId">출신 고등학교</h3>
-										   <input type="text" name="loginId" id="loginId" value="" />
-										   <a href="#" class="button">학교 검색</a>
-										   <br>
-										<br>
-										<h3 id="contentPwd">출신 대학교</h3>
-										   <input type="text" name="loginPwd" id="loginPwd" value="" />
-										   <a href="#" class="button">학교 검색</a>
-										   <div id="idCheck"></div>
-										   <br><br>
-									
-							
-										<h3 id="contentPwd"><strong>고등학교</strong> 멘토 구분</h3>
-											<div class="col-6 col-12-small">
-																<input type="checkbox" id="demo-copy" name="demo-copy">
-																<label for="demo-copy">선택</label>
-															</div>
-										   <br>
-									
-										<h3 id="contentPwd"><strong>대학교</strong> 멘토 구분</h3>
-											<div class="col-6 col-12-small">
-												<input type="checkbox" id="demo-human" name="demo-human" checked>
-												<label for="demo-human">선택</label>
-															</div>
-										   <br><br>
-								
 									<div class="preference">
-										<h2>고등학교 선호도</h2>
+										<h2 class="schoolName">고등학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
 										  <select name="demo-category" id="demo-category">
 												<option value="">우선순위를 선택해주세요</option>
@@ -130,10 +104,9 @@
 											</select>
 											<br>
 									</div>
-								
-										
+									
 									<div class="preference">
-										<h2>대학교 선호도</h2>
+										<h2 class="schoolName">대학교 선호도</h2>
 										<h3 id="contentId">우선순위1</h3>
 										  <select name="demo-category" id="demo-category">
 												<option value="">우선순위를 선택해주세요</option>
@@ -200,17 +173,17 @@
 												<option value="1">동아리 활성화</option>
 											</select>
 											<br>
-											
 									</div>
+									
 									</form>
 										   <br>
 									<ul class="actions">
-										<li><a href="#" class="button primary">수정하기</a></li>
-										<li><a href="#" class="button primary">탈퇴</a></li>
-										<li><a href="#" class="button">취소</a></li>
+										<li>3/4</li>
+										<li><a href="#" class="button primary">다음페이지</a></li>
+										<li><a href="#" class="button">뒤로가기</a></li>
 									</ul>
 									
-									<hr class="major" />
+								
 								</div>
 
 						</div>
