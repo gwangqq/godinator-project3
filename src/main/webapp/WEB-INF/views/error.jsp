@@ -22,6 +22,10 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
+<<<<<<< Upstream, based on develop
+=======
+
+>>>>>>> 4861a4e DB 데이터 타입 수정 및 ERROR페이지 추가
 							<!-- Header -->
 								<header id="header">
 									<a href="index.html" class="logo">Mentoring</a>
