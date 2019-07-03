@@ -30,18 +30,22 @@ $(document).ready(function() {
 	$("#realSchoolSearchBtn").click(function() {
 		var schoolType = $("#schoolType option:selected").val();
 		var schoolName = $("#schoolName").val();
+		var param = JSON.stringify({'schoolType' : schoolType, 'schoolName' : schoolName});
 		if(schoolName == ""){
 			alert("학교 이름을 입력해주세요");
 		} else {
 			alert(schoolType+"|||||" + schoolName);
 			$.ajax({
-				url:'${root}/board/searchschool/'+schoolType+'/'+schoolName,
-				type: 'GET',
+				url:'${root}/board/searchschool/',
+				type: 'POST',
+				contentType:'application/json;charset=UTF-8',
 				dataType : 'json',
+				data: param,
 				success : function(response) {
-					alert(response);
-					/* listHSchool(response); */
-					$("#schoolName").val("");
+					alert("성공");
+					/* alert(response);
+					listHSchool(response);
+					$("#schoolName").val(""); */
 				}
 			});
 		}
@@ -192,6 +196,7 @@ $(document).ready(function() {
 									        <div class="modal-body">
 										        <div class = "row" style="margin:auto 0;"> 
 										        	<div class = "col-3" style="margin-left: 0;margin-right: 0;padding:0;">
+
 										        	<select id = "schoolType">
 										        		<option>고등학교</option>
 														<option>대학교</option>
