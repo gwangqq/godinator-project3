@@ -10,7 +10,11 @@
 				<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
 <<<<<<< Upstream, based on develop
 <<<<<<< Upstream, based on develop
+<<<<<<< Upstream, based on develop
 				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+=======
+				<property name="url" value="jdbc:oracle:thin:@192.168.14.21:1521:orcl" />
+>>>>>>> c811c1a 20190703 수정
 				<property name="username" value="godinator" />
 				<property name="password" value="godinator" />	
 		</bean> -->
