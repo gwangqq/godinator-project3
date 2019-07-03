@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-response.sendRedirect(request.getContextPath()+"/board/movelist");
+response.sendRedirect(request.getContextPath()+"/board/movewrite");
 
 
 MemberDto memberDto = new MemberDto();

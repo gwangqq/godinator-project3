@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kitri.godinator.board.service.BoardService;
@@ -45,12 +47,15 @@ public class BoardController {
 	  
 	  
 	  //학교 검색 모달창 학교 검색
-	  @RequestMapping(value = "/searchschool/{schoolType}/{schoolName}", method = RequestMethod.GET)
-	  public String searchSchool(@PathVariable(name = "schoolType") String schoolType,
-			  @PathVariable(name = "schoolName") String schoolName, Model model) {
+	  @RequestMapping(value = "/searchschool", method = RequestMethod.POST, consumes = "application/json", headers = {"Content-type=application/json"})
+	   public String searchSchool(@RequestBody Map<String, String> parameter, Model model) {
 		  
-		  System.out.println("Controller진입!");
+		  System.out.println("Controller진입!" + parameter);
+		  String schoolType = parameter.get("schoolType");
+		  String schoolName = parameter.get("schoolName");
+		  
 		  System.out.println("학교 유형 : "+schoolType +", 학교 이름 : " +schoolName);
+		  
 		  String json = "";
 		  if("고등학교".equals(schoolType)) {
 			 json = boardService.findHSchool(schoolName);
