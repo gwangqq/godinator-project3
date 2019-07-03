@@ -360,11 +360,11 @@ ALTER TABLE category
 CREATE TABLE u_school (
 	code varchar2(20) NOT NULL, /* 학교코드 */
 	name VARCHAR(50) NOT NULL, /* 학교명 */
-	type varchar2(20) NOT NULL, /* 학교종류 */
+	type varchar2(100), /* 학교종류 */
 	estType  varchar2(50), /* 설립구분 */
 	zipcode varchar2(5), /* 우편번호 */
 	region varchar2(100), /* 지역 */
-	address varchar2(100), /* 주소 */
+	address varchar2(200), /* 주소 */
 	link varchar2(100), /* 홈페이지주소 */
 	latitude varchar2(50), /* 위도 */
 	longitude varchar2(50), /* 경도 */
@@ -458,6 +458,7 @@ CREATE TABLE board (
 	b_school_code VARCHAR(20) NOT NULL, /* 학교 코드  */
 	b_school_cate1 CHAR(1), /* 학교 구분1 */
 	b_school_cate2 VARCHAR(50), /* 학교 구분2 */
+	region varchar2(20), /* 지역 */
 	b_view_count number DEFAULT 0, /* 조회수 */
 	del_stus CHAR(1) DEFAULT 0, /* 삭제여부 */
 	state CHAR(1), /* 상태 */
@@ -533,9 +534,9 @@ ALTER TABLE user_prefer
 /* 고등학교 */
 CREATE TABLE h_school (
 	school_code varchar2(20) NOT NULL, /* 학교코드 */
-	school_name VARCHAR(50), /* 학교명 */
-	school_cate1 varchar2(20) NOT NULL, /* 학교유형1 */
-	school_cate2 varchar2(20) NOT NULL, /* 학교유형2 */
+	school_name VARCHAR(100), /* 학교명 */
+	school_cate1 varchar2(100), /* 학교유형1 */
+	school_cate2 varchar2(100), /* 학교유형2 */
 	estbl_date DATE, /* 설립일 */
 	zipcode varchar2(5), /* 우편번호 */
 	address varchar2(100), /* 도로명주소 */
@@ -543,7 +544,7 @@ CREATE TABLE h_school (
 	latitude varchar2(50), /* 위도 */
 	longitude varchar2(50), /* 경도 */
 	phone varchar2(20), /* 전화번호 */
-	fax varchar2(20), /* 팩스번호 */
+	fax varchar2(100), /* 팩스번호 */
 	home_page varchar2(100), /* 홈페이지주소 */
 	mw_cate varchar2(20), /* 남녀공학구분 */
 	edu_office varchar2(50), /* 교육청 */

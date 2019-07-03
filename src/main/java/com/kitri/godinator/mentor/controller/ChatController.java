@@ -9,6 +9,6 @@ public class ChatController {
 
 	@RequestMapping("/findmentor")
 	public String findMentor() {
-		return "mentor/findmentor";
+		return "error";
 	}
 }

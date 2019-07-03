@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/godinator" auth="Container"
+      type="javax.sql.DataSource"
+      factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+      driverClassName="oracle.jdbc.driver.OracleDriver"
+      url="jdbc:oracle:thin:@192.168.14.21:1521:orcl" username="godinator"
+      password="godinator" maxTotal="100" maxIdle="20" maxWaitMillis="10000"
+      removeAbandoned="true" removeAbandonedTimeout="60"
+      logAbandoned="true" />
+
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
+</Context>
