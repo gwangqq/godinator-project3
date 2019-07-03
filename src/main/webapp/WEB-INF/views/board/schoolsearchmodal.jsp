@@ -1,33 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script>
+<!-- <script>
+
+
 $(document).ready(function() {
-		
 	
 //글 작성 완료 눌렀을 때 
-	$("#writeBtn").click(function() {
-		if($("#subject").val() == ""){
-			alert("제목입력!!!!");
+	$("#realschoolsearch").click(function() {
+	var schoolname = $("#schoolname").val();
+		if(schoolname == ""){
+			alert("학교이름을 입력해주세요!!!!");
 			return;
-		} else if($("#content").val() == ""){
-			alert("내용 입력!!!");
-			return;
-		} else {
-			$("#writeForm").attr("action", "${root}/board/write").submit();
+		} else{
+			alert(schoolname);
 		}
 	});
 });
-</script>
+</script> -->
   <div class="modal fade" id="schoolModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-      
+
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">학교이름 검색</h4>
           <input type="button" class="button close" data-dismiss="modal" value="&times;" style="width:10;height:10;padding-top: 0;">
         </div>
-        
+
         <!-- Modal body -->
         <div class="modal-body">
 	        <div class = "row" style="margin:auto 0;"> 
@@ -39,12 +38,12 @@ $(document).ready(function() {
 				</div>        
 	        </div>
         </div>
-        
+
         <!-- Modal footer -->
         <div class="modal-footer">
           <input type="button" class="button primary" data-dismiss="modal" value = "닫기">
         </div>
-        
+
       </div>
     </div>
-  </div>
+  </div> 
