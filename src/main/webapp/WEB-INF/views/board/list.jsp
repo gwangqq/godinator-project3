@@ -1,44 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+<%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
+<%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 
 
-<style>
-a{
-	color: 	#f56a6a;
-	text-decoration: none;
-	border-bottom: none;
-	text-decoration: none;
-}
-
-a:hover{
-	color:	#f56a6a;
-	text-decoration: none;
-	border-bottom: none;
-	text-decoration: none;
-	
-}
-
-select:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-
-input:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-
-textarea:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-</style>
 <script>
 $(document).ready(function() {
 	
 	$(".moveWriteBtn").click(function() {
-		alert("눌렸따!!");
 		//encodingURI, encodingComponent쓰면 쿼리스트링 encoding가능 form에 input hidden으로 보내는거 많이 사용
 		$("#bcode").val("${bcode}");
 		$("#pg").val("1");
