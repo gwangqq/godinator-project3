@@ -9,6 +9,7 @@
 	<!-- 	<bean id="ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 				<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
 <<<<<<< Upstream, based on develop
+<<<<<<< Upstream, based on develop
 				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
 				<property name="username" value="godinator" />
 				<property name="password" value="godinator" />	
@@ -19,6 +20,9 @@
 	   </bean>
 =======
 				<property name="url" value="jdbc:oracle:thin:@192.168.14.21:1521:orcl" />
+=======
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+>>>>>>> dfa4b36 20190703 설정수정
 				<property name="username" value="godinator" />
 				<property name="password" value="godinator" />	
 		</bean>
@@ -49,6 +53,7 @@
 					<value>/WEB-INF/mybatis/common/mapper_board_common.xml</value>
 					<value>/WEB-INF/mybatis/common/mapper_mentor_common.xml</value>
 					<value>/WEB-INF/mybatis/common/mapper_user_common.xml</value>
+
 				</list>
 			</property> 
 		</bean>
