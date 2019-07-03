@@ -6,11 +6,15 @@
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
 <%@ include file="/WEB-INF/views/board/mapsearchmodal.jsp" %>
+<<<<<<< Upstream, based on develop
 <!-- 학교이름 검색 모달 창 -->
+=======
+>>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 
 
 <script>
 $(document).ready(function() {
+<<<<<<< Upstream, based on develop
 		
 //	모달창
 
@@ -24,6 +28,68 @@ $(document).ready(function() {
 		}
 		$("#schoolname").val('');
 	}); 
+=======
+//학교 검색 모달창	
+	
+	//엔터 버튼
+	$("#schoolName").keypress(function(key) {
+		if(key.keyCode == 13){
+			
+			var schoolName = $("#schoolName").val();
+			if(schoolName == ""){
+				alert("학교 이름을 입력해주세요");
+			} else {
+				alert(schoolName);
+			}
+				$("#schoolName").val("");
+		}
+	});
+	
+	//검색 버튼
+	$("#realSchoolSearchBtn").click(function() {
+		var schoolType = $("#schoolType option:selected").val();
+		var schoolName = $("#schoolName").val();
+		if(schoolName == ""){
+			alert("학교 이름을 입력해주세요");
+		} else {
+			alert(schoolType+"|||||" + schoolName);
+			$.ajax({
+				url:'${root}/board/searchschool/'+schoolType+'/'+schoolName,
+				type: 'GET',
+				dataType : 'json',
+				success : function(response) {
+					alert(response);
+					/* listHSchool(response); */
+					$("#schoolName").val("");
+				}
+			});
+		}
+			
+	});
+
+	 function listHSchool(hschool) {
+		var hschoolcnt = hschool.hSchoolList.length;
+		var hschoolstr = '';
+		for(var i=0;i<hschoolcnt;i++){
+			var schoolName = hschool.hSchoolList[i];
+			hschoolstr += '<label>' +schoolName+ '</label>';
+		}
+		$("searchresult").empty();
+		$("searchresult").append(hschoolstr);
+	} 
+
+	$("#writeBtn").click(function() {
+		if($("#subject").val() == ""){
+			alert("제목입력!!!!");
+			return;
+		} else if($("#content").val() == ""){
+			alert("내용 입력!!!");
+			return;
+		} else {
+			$("#writeForm").attr("action", "${root}/board/write").submit();
+		}
+	});
+>>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 	
 	
 	$("#schoolname").keypress(function(key) {
@@ -110,7 +176,7 @@ $(document).ready(function() {
 								<!-- 제목 작성 -->
 								<div class = "col-2"></div>
 								<div class = "col-1">
-								<label>게시물 제목</label>
+								<label>제목</label>
 								</div>
 								<div class= "col-7">
 								<input type="text" name="subject" id="subject" value="" placeholder="게시물의 제목을 입력해주세요.(75자까지 입력가능)" maxlength="75"/>
@@ -123,7 +189,7 @@ $(document).ready(function() {
 								<div class = "col-1">
 								<label>지역 선택</label>
 								</div>
-								<div class = "col-4">
+								<div class = "col-3">
 								<select id = "region" style="color: #7f888f;">
 <option>전체</option><option>서울</option><option>부산</option><option>인천</option>
 <option>대구</option><option>광주</option><option>대전</option><option>울산</option>
@@ -131,41 +197,75 @@ $(document).ready(function() {
 <option>전남</option><option>전북</option><option>충남</option><option>충북</option><option>제주</option>
 								</select>
 								</div>
-								<div class = "col-5"></div>
 								
-								
-								<!-- 지도 파일 첨부 -->
-								<div class = "col-2"></div>
 								<div class = "col-1">
 								<label>장소 첨부</label>
 								</div>
 								<div class = "col-3">
-								<input type="button" class="button primary" data-toggle="modal" data-target="#mapModal" value="장소검색">
-								
-
-								
-								
-								
+								<input type="button" class="button" data-toggle="modal" data-target="#mapModal" value="장소검색">
 								</div>
-	
-								<div class = "col-6"></div>
-								
-								
+								<div class = "col-2"></div>
 								
 								<!-- 학교이름 검색 -->
 								<div class = "col-2"></div>
 								<div class = "col-1">
 								<label>학교 검색</label>
 								</div>
+<<<<<<< Upstream, based on develop
 								<div class = "col-6">
 								<input type="text" name="searchSchool" id="searchSchool" value="" placeholder="학교 이름 입력" 
 								style="margin-right:0;" data-toggle="modal" data-target="#schoolModal"/>
+=======
+								<div class = "col-7">
+								<input type="text" name="searchSchool" id="searchSchool" value="" maxlength="0"
+								placeholder="학교 이름 입력" style="margin-right:0;" readonly="readonly" data-toggle="modal" data-target="#schoolModal"/>
+>>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 								</div>
-								<div class = "col-1">
-								</div>
+								<!-----------------------------학교 검색  modal---------------------------->							
+									  <div class="modal fade" id="schoolModal">
+									    <div class="modal-dialog modal-lg">
+									      <div class="modal-content">
+									      
+									        <!-- Modal Header -->
+									        <div class="modal-header">
+									          <h4 class="modal-title">학교이름 검색</h4>
+									          <input type="button" class="button close" data-dismiss="modal" value="&times;" style="width:10;height:10;padding-top: 0;">
+									        </div>
+									        
+									        <!-- Modal body -->
+									        <div class="modal-body">
+										        <div class = "row" style="margin:auto 0;"> 
+										        	<div class = "col-3" style="margin-left: 0;margin-right: 0;padding:0;">
+										        	<select id = "schoolType">
+										        		<option>고등학교</option>
+														<option>대학교</option>
+										        	</select>
+										        	</div>
+									
+											        <div class = "col-7" style="margin-left: 0;margin-right: 0;padding:0;">
+											        <input type = "text" id = "schoolName" name = "schoolName">
+											        </div>
+													<div class = "col-2" style="margin-left: 0;margin-right: 0;padding:0;">
+													<input type = "button" id = "realSchoolSearchBtn" value = "검색">
+													</div>
+													<div id = "searchresult" class = "col-10" style = "overflow-y: auto;">
+													
+													</div>        
+										        </div>
+									        </div>
+									        
+									        <!-- Modal footer -->
+									        <div class="modal-footer">
+									          <input type="button" class="button primary" data-dismiss="modal" value = "닫기">
+									        </div>
+									        
+									      </div>
+									    </div>
+									  </div>				
 								<div class = "col-2"></div>
 								
 								
+<<<<<<< Upstream, based on develop
 									<!-- 학교검색 modal 시작 -->
 									 <div class="modal fade" id="schoolModal">
 									    <div class="modal-dialog modal-lg">
@@ -202,11 +302,15 @@ $(document).ready(function() {
 									  </div> 								
 								<!-- modal 끝 -->
 									
+=======
+								
+							
+>>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 								
 								<!-- 게시물 내용 -->
 								<div class = "col-2"></div>
 								<div class = "col-1">
-								<label>게시물 내용</label>
+								<label>내용</label>
 								</div>
 								<div class = "col-9"></div>
 								
