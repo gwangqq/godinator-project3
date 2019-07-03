@@ -19,6 +19,7 @@
 			$("#moveRegister").click(function() {
 				location.href="/godinator/view/user/register_1.jsp";
 			});
+<<<<<<< Upstream, based on develop
 		});
 	
 	</script>
@@ -192,6 +193,8 @@
 			$("#moveRegister").click(function() {
 				location.href="/godinator/view/user/register_1.jsp";
 			});
+=======
+>>>>>>> c8f5541 20190703
 		});
 	
 	</script>
