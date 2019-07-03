@@ -1,50 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/mentor/temp/tempheader.jsp" %>	
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
+<%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>	
 
-<style type="text/css">
-a{
-	color: 	#f56a6a;
-	text-decoration: none;
-	border-bottom: none;
-	text-decoration: none;
-}
+<!-- 모달창 들  -->
+<!--장소검색  Modal -->
+<%@ include file="/WEB-INF/views/board/mapsearchmodal.jsp" %>
+<!-- 학교이름 검색 모달 창 -->
+<%@ include file="/WEB-INF/views/board/schoolsearchmodal.jsp" %>
 
-a:hover{
-	color: 	#f56a6a;
-	text-decoration: none;
-	border-bottom: none;
-	text-decoration: none;
-}
-label{
-	text-align: center;
-	padding-top: 14%;
-}
-
-select:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-
-input:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-
-textarea:hover{
-	border-color: #f56a6a;
-	box-shadow: 0 0 0 1px #f56a6a;
-}
-</style>
 
 <script>
 $(document).ready(function() {
+		
 	
+//글 작성 완료 눌렀을 때 
 	$("#writeBtn").click(function() {
 		if($("#subject").val() == ""){
 			alert("제목입력!!!!");
@@ -55,6 +25,15 @@ $(document).ready(function() {
 		} else {
 			$("#writeForm").attr("action", "${root}/board/write").submit();
 		}
+	});
+	
+//글작성 취소 눌렀을 때 list로 돌아가기 
+	$("#cancelBtn").click(function() {
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		location.href="${root}/board/movelist";
 	});
 });
 </script>	
@@ -88,8 +67,8 @@ $(document).ready(function() {
 									</header>
 								<hr class = "major"/>	
 								<!-- 작성 전체 폼 -->
-			<!-- <form id="writeForm" name="writeForm" method="post" action=""
-				enctype="multipart/form-data"> -->
+			 <form id="writeForm" name="writeForm" method="post" action=""
+				enctype="multipart/form-data"> 
 								<div class = "row">
 				
 				<input type="hidden" name="bcode" value="${parameter.bcode}">
@@ -105,7 +84,7 @@ $(document).ready(function() {
 								<label>게시물 제목</label>
 								</div>
 								<div class= "col-7">
-								<input type="text" name="subject" id="subject" value="" placeholder="게시물의 제목을 입력해주세요" />
+								<input type="text" name="subject" id="subject" value="" placeholder="게시물의 제목을 입력해주세요.(75자까지 입력가능)" maxlength="75"/>
 								</div>
 								<div class = "col-2"></div>
 								
@@ -117,23 +96,10 @@ $(document).ready(function() {
 								</div>
 								<div class = "col-4">
 								<select id = "region" style="color: #7f888f;">
-									<option>전체</option>
-									<option>서울</option>
-									<option>부산</option>
-									<option>인천</option>
-									<option>대구</option>
-									<option>광주</option>
-									<option>대전</option>
-									<option>울산</option>
-									<option>강원</option>
-									<option>경기</option>
-									<option>경남</option>
-									<option>경북</option>
-									<option>전남</option>
-									<option>전북</option>
-									<option>충남</option>
-									<option>충북</option>
-									<option>제주</option>
+<option>전체</option><option>서울</option><option>부산</option><option>인천</option>
+<option>대구</option><option>광주</option><option>대전</option><option>울산</option>
+<option>강원</option><option>경기</option><option>경남</option><option>경북</option>
+<option>전남</option><option>전북</option><option>충남</option><option>충북</option><option>제주</option>
 								</select>
 								</div>
 								<div class = "col-5"></div>
@@ -145,69 +111,14 @@ $(document).ready(function() {
 								<label>장소 첨부</label>
 								</div>
 								<div class = "col-3">
-								<input type="button" class="button" data-toggle="modal" data-target="#myModal" value="장소검색">
+								<input type="button" class="button primary" data-toggle="modal" data-target="#mapModal" value="장소검색">
 								
+
 								
-								
-								
-								
-								
-								
-								
-								<!-- The Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Modal Heading</h4>
-          <input type="button" class="button close" data-dismiss="modal">
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <input type="button" class="button" data-dismiss="modal" value = "Close">
-        </div>
-        
-      </div>
-    </div>
-  </div>
 								
 								
 								</div>
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
+	
 								<div class = "col-6"></div>
 								
 								
@@ -217,15 +128,14 @@ $(document).ready(function() {
 								<div class = "col-1">
 								<label>학교 검색</label>
 								</div>
-								<div class = "col-6" style = "margin-right: 0;">
-								<input type="text" name="demo-name" id="demo-name" value="" placeholder="학교 이름 입력" style="margin-right:0;"/>
+								<div class = "col-6">
+								<input type="text" name="searchSchool" id="searchSchool" value="" placeholder="학교 이름 입력" style="margin-right:0;" data-toggle="modal" data-target="#schoolModal"/>
 								</div>
-								<div class = "col-1" style = "margin-left: 0;">
-								<input type = "button" class = "button medium" value = "검색">
+								<div class = "col-1">
 								</div>
 								<div class = "col-2"></div>
 								
-																
+									
 								
 								<!-- 게시물 내용 -->
 								<div class = "col-2"></div>
@@ -254,12 +164,12 @@ $(document).ready(function() {
 								
 								<div class = "col-8"></div>
 								<div class = "col-2" style="padding-right: 0;">
-									<button class = "button samll" >이전</button>
-									<button class = "button primary samll" id = "writeBtn">완료</button>
+									<input type ="button" class = "button samll" id = "cancelBtn" value = "취소">
+									<input type ="button" class = "button primary samll" id = "writeBtn" value = "완료">
 								</div>
 								<div class = "col-2"></div>
 								</div>
-	<!-- 	</form> -->
+		</form> 
 						</div>
 					</div>
 					
