@@ -2,6 +2,8 @@ package com.kitri.godinator.board.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +20,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kitri.godinator.board.service.BoardService;
 import com.kitri.godinator.model.BbsDto;
+import com.kitri.godinator.model.BoardDto;
 import com.kitri.godinator.model.MemberDto;
 
 @Controller
 @RequestMapping("/board")
-@SessionAttributes({"userInfo"})
 public class BoardController {
 	
 	  @Autowired
@@ -72,10 +74,25 @@ public class BoardController {
 		  return json;
 	  }
 	  
+//------------------------[글쓰기]-------------------------
 	  @RequestMapping(value = "/write", method = RequestMethod.POST)
-	  public void write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, 
-			  Model model) {
-		  model.addAttribute("parameter", parameter);
+	  public String write(BoardDto boardDto, @RequestParam Map<String, String> parameter, 
+			  Model model, HttpSession session) {
+		  MemberDto memberDto = (MemberDto)session.getAttribute("userInfo");
+		  String path = "";
+		  if (memberDto != null) {
+			  	
+			boardDto.setbUserId(memberDto.getUserId());
+			boardDto.setUserName(memberDto.getUserName());
+			System.out.println("C : " + boardDto);
+			int boardNo = boardService.writeArticle(boardDto);
+			model.addAttribute("boardNo", boardNo);
+		  } else {
+
+				path = "";
+			}
+			model.addAttribute("parameter", parameter);
+			return path;
 	  }
 	  
 }
