@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kitri.godinator.board.service.BoardService;
+import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.MemberDto;
 
 @Controller
 @RequestMapping("/board")
+@SessionAttributes({"userInfo"})
 public class BoardController {
 	
 	  @Autowired
@@ -48,28 +52,30 @@ public class BoardController {
 	  
 	  //학교 검색 모달창 학교 검색
 	  @RequestMapping(value = "/searchschool", method = RequestMethod.POST, consumes = "application/json", headers = {"Content-type=application/json"})
-	   public String searchSchool(@RequestBody Map<String, String> parameter, Model model) {
+	   public @ResponseBody String searchSchool(@RequestBody Map<String, String> parameter, Model model) {
 		  
-		  System.out.println("Controller진입!" + parameter);
+//		  System.out.println("Controller진입!" + parameter);
 		  String schoolType = parameter.get("schoolType");
 		  String schoolName = parameter.get("schoolName");
 		  
-		  System.out.println("학교 유형 : "+schoolType +", 학교 이름 : " +schoolName);
+//		  System.out.println("학교 유형 : "+schoolType +", 학교 이름 : " +schoolName);
 		  
 		  String json = "";
 		  if("고등학교".equals(schoolType)) {
 			 json = boardService.findHSchool(schoolName);
-			  System.out.println("C : " + json);
+//			  System.out.println("C : " + json);
 		  } else {
 			 json = boardService.findUSchool(schoolName);
+//			  System.out.println("C : " + json);
 		  }
 		  
 		  return json;
 	  }
 	  
-//	  @RequestMapping(value = "/write", method = RequestMethod.POST)
-//	  public void write(@RequestParam Map<String, String> parameter, Model model, ) {
-//		  model.addAttribute("parameter", parameter);
-//	  }
-//	  
+	  @RequestMapping(value = "/write", method = RequestMethod.POST)
+	  public void write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, 
+			  Model model) {
+		  model.addAttribute("parameter", parameter);
+	  }
+	  
 }

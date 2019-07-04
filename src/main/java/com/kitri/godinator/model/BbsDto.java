@@ -1,9 +1,13 @@
 package com.kitri.godinator.model;
 
+<<<<<<< Upstream, based on develop
 import lombok.Data;
 
 @Data
 public class BbsDto {
+=======
+public class BbsDto extends BoardDto{
+>>>>>>> 07d6897 19.07.04 학교 검색 기능 완료
 
 	private int bbsNo;				// 일련번호
 	private int boardNo;			// 글번호

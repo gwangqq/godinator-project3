@@ -6,13 +6,13 @@
   
 <mapper namespace="com.kitri.godinator.board.dao.BoardDao">
   	<select id="findHSchool" parameterType="String" resultType="String">
-  		select school_name schoolName
+  		select distinct school_name schoolName
 			from h_school
 			where school_name like '%'||#{schoolName}||'%'
   	</select>
   	
   	<select id="findUSchool" parameterType="String" resultType="String">
-  		select name schoolName
+  		select distinct name schoolName
 			from u_school
 			where name like '%'||#{schoolName}||'%'
   	</select>  
