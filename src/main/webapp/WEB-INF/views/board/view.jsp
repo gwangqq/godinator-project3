@@ -2,6 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>    
+<%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>    
+<script>
+
+$(document).ready(function() {
+	
+	
+	$("#moveListBtn").click(function() {
+		$("#bcode").val("${bcode}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#boardNo").val("");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/moveList").submit();
+	});
+	
+	
+});
+
+
+
+</script>
+
+
 
 </head>
 	<body class="is-preload">
@@ -34,7 +57,7 @@
 							<br><br>
 							<div class = "col-2"></div>
 							<div class = "col-8">
-								<font size="10">미국 고등학교 입학 설명회 홍보</font>
+								<font size="6">[${parameter.region}/${parameter.bSchoolName}]${parameter.boardSubject}</font>
 								<hr style="margin: 0;">
 							</div>
 							<div class = "col-2"></div>
@@ -44,15 +67,15 @@
 									<hr style="margin: 0;">
 										<span style = "float:left;">
 										<a href="#">
-											<img class="profile_icon" alt="작성자 프로필 사진" src="/design/godinator/images/pic11.jpg">
+											<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg">
 										</a>
 										</span>
 										
 										<span style = "float: left;">
-											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f; padding-top: 0;padding-bottom: 5em;" >lucky1123</a>
+											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f; padding-top: 0;padding-bottom: 5em;" >${parameter.bUserId}</a>
 										</span>
 									<!-- 작성시간 -->
-									<span style="float:right;">19.06.25</span>
+									<span style="float:right;">${parameter.bPostdate}</span>
 									<br>
 									<!-- 첨부파일 -->
 									<span style="float:right;"><a href = "#" id = "download"><i class = "fas fa-download"></i>첨부파일</a></span>&nbsp;
@@ -67,17 +90,10 @@
 									<div class = "col-2"></div>
 									<div class = "col-8" style = "clear: both;text-align: left;" >
 									
-										<p>
-										안녕하세요 미국 고등학교에서 2020년 입학 전형 안내 설명회를 개최합니다.
-										장소는 아래와 같습니다.<br>
-										1965년 이래 전통과 역사를 지닌 미국 고등학교에서<br> 
-										당신의 꿈을 이뤄나갈 수 있습니다.<br>
-										<br><br><br>
-										문의 전화번호: 02-9969-5555<br>
-										일시: 19.09.08<br>
-										장소: 올림픽 체육관(서울시 XXXXX)<br>
+										<p id = "viewcontent">
+										${parameter.boardContent}
 										</p>
-										<img src = "/design/godinator/images/pic02.jpg" width="600px"/>
+										<img src = "/godinator/resources/images/pic02.jpg" width="600px"/>
 									</div>
 									<div class = "col-2"></div>
 									<br><br><br><br>
@@ -89,11 +105,11 @@
 										<div class="rounded-lg" style="background-color: white; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
 											
 											<div class="btnLike" style="float:left; margin-left: 0.8em;">
-												<a href="#"><img alt="좋아요 아이콘" src="/design/godinator/images/like.png"></a>
+												<a href="#"><img alt="좋아요 아이콘" src="/godinator/resources/images/like.png"></a>
 												<span style="display: block;">27</span>
 											</div>
 											<div class="btnLike" style="float:right; margin-right: 0.8em;">
-												<a href="#"><img alt="싫어요 아이콘" src="/design/godinator/images/unlike.png"></a>
+												<a href="#"><img alt="싫어요 아이콘" src="/godinator/resources/images/unlike.png"></a>
 												<span style="display: block;">6</span>
 											</div>
 											
@@ -108,7 +124,7 @@
 								<!-- 글정보 및 신고하기 -->
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글2| 조회수  27| 좋아요 27|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글2| 조회수  ${parameter.bViewCount}| 좋아요 27|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>
@@ -120,7 +136,7 @@
 									<div class = "col-8" style="margin-bottom: 2em;">
 										<span class="font_light_small">
 										<a href="#">
-											<img class="profile_icon" alt="작성자 프로필 사진" src="/design/godinator/images/pic11.jpg">
+											<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg">
 										</a>
 											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f">lucky1123</a></span>
 								
@@ -152,9 +168,9 @@
 									<div class = "col-8">
 									<br><br>
 									<span style = "float:right;">
-									<button class = "button small">이전글</button>
-									<button class = "button small">다음글</button>
-									<button class = "button small">목록</button>
+									<button class = "button small" id = "preV">이전글</button>
+									<button class = "button small" id = "nextV">다음글</button>
+									<button class = "button small" id = "moveListBtn">목록</button>
 									</span>
 									</div>
 									<div class = "col-2"></div>

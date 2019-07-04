@@ -149,16 +149,18 @@ $(document).ready(function() {
 			return;
 		} else {
 			$("#writeForm").attr("action", "${root}/board/write").submit();
+			
 		}
 	});
 	
+		
 //글작성 취소 눌렀을 때 list로 돌아가기 
 	$("#cancelBtn").click(function() {
 		$("#bcode").val("${bcode}");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		location.href="${root}/board/movelist";
+		location.href="${root}/board/moveview";
 	});
 });
 </script>	
