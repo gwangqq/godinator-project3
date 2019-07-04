@@ -8,7 +8,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kitri.godinator.board.dao.BbsDao;
 import com.kitri.godinator.board.dao.BoardDao;
+import com.kitri.godinator.model.BbsDto;
+import com.kitri.godinator.model.BoardDto;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -16,26 +19,34 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Override
-	public String findUSchool(String schoolName) {
-		List<String> list = sqlSession.getMapper(BoardDao.class).findUSchool(schoolName);
-		JSONArray array = new JSONArray(list);
-		JSONObject json = new JSONObject();
-		json.put("uSchoolList", array);
-		System.out.println("service : " + json.toString());
-		return json.toString();
-	}
-
+	//고등학교 찾기 메소드
 	@Override
 	public String findHSchool(String schoolName) {
 		List<String> list = sqlSession.getMapper(BoardDao.class).findHSchool(schoolName);
 		JSONArray array = new JSONArray(list);
 		JSONObject json = new JSONObject();
 		json.put("hSchoolList", array);
-		System.out.println("service : " + json.toString());
+//		System.out.println("service : " + json.toString());
+		return json.toString();
+	}
+	
+	//대학찾기 메소드
+	@Override
+	public String findUSchool(String schoolName) {
+		List<String> list = sqlSession.getMapper(BoardDao.class).findUSchool(schoolName);
+		JSONArray array = new JSONArray(list);
+		JSONObject json = new JSONObject();
+		json.put("uSchoolList", array);
+//		System.out.println("service : " + json.toString());
 		return json.toString();
 	}
 
+//	기본 글 쓰기 메소드
+	@Override
+	public int writeArticle(BoardDto boardDto) {
+		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
+		return cnt != 0 ? boardDto.getBoardNo() : 0;
+	}
 
 	
 	

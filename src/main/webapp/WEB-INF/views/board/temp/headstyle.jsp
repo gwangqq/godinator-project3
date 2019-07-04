@@ -115,5 +115,5 @@ input:hover{
 textarea:hover{
 	border-color: #f56a6a;
 	box-shadow: 0 0 0 1px #f56a6a;
-}
+} 
 </style>
