@@ -16,6 +16,15 @@ public class BoardDto {
 	private String delStus;				// 삭제여부
 	private String state;				// 상태
 	private String bPostdate;			// 작성시간
+	private String region;				// 지역
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
 
 	public String getbPostdate() {
 		return bPostdate;
@@ -129,4 +138,14 @@ public class BoardDto {
 		this.state = state;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDto [boardNo=" + boardNo + ", bUserId=" + bUserId + ", boardCategory=" + boardCategory
+				+ ", userName=" + userName + ", boardSubject=" + boardSubject + ", boardContent=" + boardContent
+				+ ", bSchoolName=" + bSchoolName + ", bSchoolCode=" + bSchoolCode + ", bSchoolCate1=" + bSchoolCate1
+				+ ", bSchoolCate2=" + bSchoolCate2 + ", bViewCount=" + bViewCount + ", delStus=" + delStus + ", state="
+				+ state + ", bPostdate=" + bPostdate + ", region=" + region + "]";
+	}
+
+	
 }
