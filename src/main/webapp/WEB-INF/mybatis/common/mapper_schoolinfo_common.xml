@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   <mapper namespace="com.kitri.godinator.schoolinfo.dao.SchoolinfoCommonDao">
+  
+  <mapper namespace="com.kitri.godinator.schoolinfo.dao.SchoolInfoCommonDao">
+  	<select id="selectHSchoolName" parameterType="map" resultType="hSchoolDto">
+  		SELECT school_name schoolName, school_code schoolCode
+  		FROM h_school
+  		WHERE school_name LIKE '%'||#{keyword}||'%'
+  	</select>
+  	<select id="selectUSchoolName" parameterType="map" resultType="uSchoolDto">
+  		SELECT name, code
+  		FROM u_school
+  		WHERE name LIKE '%'||#{keyword}||'%'
+  	</select>
   </mapper>

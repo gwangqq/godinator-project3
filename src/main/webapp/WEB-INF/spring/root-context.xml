@@ -22,7 +22,7 @@
 			<property name="configLocation" value="/WEB-INF/mybatis/configuration.xml"/>  <!-- 설정파일이 어디있는지 property설정 -->
 			<property name="mapperLocations"> <!-- 여러 개일 때는 list로 처리 -->
 				<list>	
-					<value>/WEB-INF/mybatis/mentor/mapper_chat.xml</value>
+					<value>/WEB-INF/mybatis/mentor/mapper_mentor.xml</value>
 					<value>/WEB-INF/mybatis/mentor/mapper_msg.xml</value>
 					<value>/WEB-INF/mybatis/mentor/mapper_resume.xml</value>
 					<value>/WEB-INF/mybatis/admin/mapper_statistics.xml</value>

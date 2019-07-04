@@ -1,5 +1,5 @@
 package com.kitri.godinator.mentor.service;
 
-public class ChatServiceImpl {
+public class MentorServiceImpl {
 
 }

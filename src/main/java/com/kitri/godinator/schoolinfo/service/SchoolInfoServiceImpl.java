@@ -1,5 +1,8 @@
 package com.kitri.godinator.schoolinfo.service;
 
-public class SchoolInfoServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class SchoolInfoServiceImpl implements SchoolInfoService{
 
 }

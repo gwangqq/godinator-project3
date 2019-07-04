@@ -271,82 +271,82 @@ START WITH 1 INCREMENT BY 1 NOCACHE;
 CREATE SEQUENCE msg_seq
 START WITH 1 INCREMENT BY 1 NOCACHE;
 
-/* Ä«Å×°í¸® */
+/* ì¹´í…Œê³ ë¦¬ */
 DROP TABLE category 
 	CASCADE CONSTRAINTS;
 
-/* ´ëÇĞ±³ */
+/* ëŒ€í•™êµ */
 DROP TABLE u_school 
 	CASCADE CONSTRAINTS;
 
-/* ´ñ±Û */
+/* ëŒ“ê¸€ */
 DROP TABLE reply 
 	CASCADE CONSTRAINTS;
 
-/* ½Å°íÀ¯Çü */
+/* ì‹ ê³ ìœ í˜• */
 DROP TABLE report_cate 
 	CASCADE CONSTRAINTS;
 
-/* È¸¿ø */
+/* íšŒì› */
 DROP TABLE member 
 	CASCADE CONSTRAINTS;
 
-/* °Ô½ÃÆÇ */
+/* ê²Œì‹œíŒ */
 DROP TABLE board 
 	CASCADE CONSTRAINTS;
 
-/* ¹æ¹®±â·Ï */
+/* ë°©ë¬¸ê¸°ë¡ */
 DROP TABLE visit 
 	CASCADE CONSTRAINTS;
 
-/* ¸àÅä */
+/* ë©˜í†  */
 DROP TABLE mentor 
 	CASCADE CONSTRAINTS;
 
-/* ÁÁ¾Æ¿ä */
+/* ì¢‹ì•„ìš” */
 DROP TABLE love 
 	CASCADE CONSTRAINTS;
 
-/* È¸¿ø¼±È£µµ */
+/* íšŒì›ì„ í˜¸ë„ */
 DROP TABLE user_prefer 
 	CASCADE CONSTRAINTS;
 
-/* °íµîÇĞ±³ */
+/* ê³ ë“±í•™êµ */
 DROP TABLE h_school 
 	CASCADE CONSTRAINTS;
 
-/* Àå´ÜÁ¡ */
+/* ì¥ë‹¨ì  */
 DROP TABLE eval_school 
 	CASCADE CONSTRAINTS;
 
-/* °ø°¨·Î±× */
+/* ê³µê°ë¡œê·¸ */
 DROP TABLE eval_ud_log 
 	CASCADE CONSTRAINTS;
 
-/* Ã·»è */
+/* ì²¨ì‚­ */
 DROP TABLE edit 
 	CASCADE CONSTRAINTS;
 
-/* ½Å°í */
+/* ì‹ ê³  */
 DROP TABLE report 
 	CASCADE CONSTRAINTS;
 
-/* ÀÚ·á°Ô½ÃÆÇ */
+/* ìë£Œê²Œì‹œíŒ */
 DROP TABLE bbs 
 	CASCADE CONSTRAINTS;
 
-/* °Ë»ö±â·Ï */
+/* ê²€ìƒ‰ê¸°ë¡ */
 DROP TABLE search_log 
 	CASCADE CONSTRAINTS;
 
-/* ÂÊÁö */
+/* ìª½ì§€ */
 DROP TABLE msg 
 	CASCADE CONSTRAINTS;
 
-/* Ä«Å×°í¸® */
+/* ì¹´í…Œê³ ë¦¬ */
 CREATE TABLE category (
-	category_no number NOT NULL, /* Ä«Å×°í¸®¹øÈ£ */
-	catogroy_name varchar2(16) NOT NULL /* Ä«Å×°í¸®ÀÌ¸§ */
+	category_no number NOT NULL, /* ì¹´í…Œê³ ë¦¬ë²ˆí˜¸ */
+	catogroy_name varchar2(16) NOT NULL /* ì¹´í…Œê³ ë¦¬ì´ë¦„ */
 );
 
 ALTER TABLE category
@@ -356,26 +356,26 @@ ALTER TABLE category
 			category_no
 		);
 
-/* ´ëÇĞ±³ */
+/* ëŒ€í•™êµ */
 CREATE TABLE u_school (
-	code varchar2(20) NOT NULL, /* ÇĞ±³ÄÚµå */
-	name VARCHAR(50) NOT NULL, /* ÇĞ±³¸í */
-	type varchar2(100), /* ÇĞ±³Á¾·ù */
-	estType  varchar2(50), /* ¼³¸³±¸ºĞ */
-	zipcode varchar2(5), /* ¿ìÆí¹øÈ£ */
-	region varchar2(100), /* Áö¿ª */
-	address varchar2(200), /* ÁÖ¼Ò */
-	link varchar2(100), /* È¨ÆäÀÌÁöÁÖ¼Ò */
-	latitude varchar2(50), /* À§µµ */
-	longitude varchar2(50), /* °æµµ */
-	tel varchar2(20), /* ÀüÈ­¹øÈ£ */
-	fax varchar2(20), /* ÆÑ½º¹øÈ£ */
-	eval1_avg number, /* Æò°¡Ç×¸ñ1 Æò±Õ */
-	eval2_avg number, /* Æò°¡Ç×¸ñ2 Æò±Õ */
-	eval3_avg number, /* Æò°¡Ç×¸ñ3 Æò±Õ */
-	eval4_avg number, /* Æò°¡Ç×¸ñ4 Æò±Õ */
-	eval5_avg number, /* Æò°¡Ç×¸ñ5 Æò±Õ */
-	eval_cnt number /* Æò°¡ÀÎ¿ø¼ö */
+	code varchar2(20) NOT NULL, /* í•™êµì½”ë“œ */
+	name VARCHAR(50) NOT NULL, /* í•™êµëª… */
+	type varchar2(100), /* í•™êµì¢…ë¥˜ */
+	estType  varchar2(50), /* ì„¤ë¦½êµ¬ë¶„ */
+	zipcode varchar2(5), /* ìš°í¸ë²ˆí˜¸ */
+	region varchar2(100), /* ì§€ì—­ */
+	address varchar2(200), /* ì£¼ì†Œ */
+	link varchar2(100), /* í™ˆí˜ì´ì§€ì£¼ì†Œ */
+	latitude varchar2(50), /* ìœ„ë„ */
+	longitude varchar2(50), /* ê²½ë„ */
+	tel varchar2(20), /* ì „í™”ë²ˆí˜¸ */
+	fax varchar2(20), /* íŒ©ìŠ¤ë²ˆí˜¸ */
+	eval1_avg number, /* í‰ê°€í•­ëª©1 í‰ê·  */
+	eval2_avg number, /* í‰ê°€í•­ëª©2 í‰ê·  */
+	eval3_avg number, /* í‰ê°€í•­ëª©3 í‰ê·  */
+	eval4_avg number, /* í‰ê°€í•­ëª©4 í‰ê·  */
+	eval5_avg number, /* í‰ê°€í•­ëª©5 í‰ê·  */
+	eval_cnt number /* í‰ê°€ì¸ì›ìˆ˜ */
 );
 
 ALTER TABLE u_school
@@ -385,14 +385,14 @@ ALTER TABLE u_school
 			code
 		);
 
-/* ´ñ±Û */
+/* ëŒ“ê¸€ */
 CREATE TABLE reply (
-	comment_no number NOT NULL, /* ´ñ±Û¹øÈ£ */
-	board_no number, /* ±Û¹øÈ£ */
-	c_user_id varchar2(10), /* ÀÛ¼ºÀÚ¾ÆÀÌµğ */
-	c_postdate DATE NOT NULL, /* ÀÛ¼º½Ã°£ */
-	comment_content CLOB NOT NULL, /* ³»¿ë */
-	state CHAR(1) /* »óÅÂ */
+	comment_no number NOT NULL, /* ëŒ“ê¸€ë²ˆí˜¸ */
+	board_no number, /* ê¸€ë²ˆí˜¸ */
+	c_user_id varchar2(10), /* ì‘ì„±ìì•„ì´ë”” */
+	c_postdate DATE NOT NULL, /* ì‘ì„±ì‹œê°„ */
+	comment_content CLOB NOT NULL, /* ë‚´ìš© */
+	state CHAR(1) /* ìƒíƒœ */
 );
 
 ALTER TABLE reply
@@ -402,10 +402,10 @@ ALTER TABLE reply
 			comment_no
 		);
 
-/* ½Å°íÀ¯Çü */
+/* ì‹ ê³ ìœ í˜• */
 CREATE TABLE report_cate (
-	code number NOT NULL, /* ½Å°íÄÚµå */
-	subject varchar2(32) /* ½Å°íÀ¯Çü */
+	code number NOT NULL, /* ì‹ ê³ ì½”ë“œ */
+	subject varchar2(32) /* ì‹ ê³ ìœ í˜• */
 );
 
 ALTER TABLE report_cate
@@ -415,28 +415,28 @@ ALTER TABLE report_cate
 			code
 		);
 
-/* È¸¿ø */
+/* íšŒì› */
 CREATE TABLE member (
-	user_id varchar2(10) NOT NULL, /* È¸¿ø¾ÆÀÌµğ */
-	user_name varchar2(8) NOT NULL, /* ÀÌ¸§ */
-	pass varchar2(10) NOT NULL, /* ºñ¹Ğ¹øÈ£ */
-	email varchar2(50), /* ÀÌ¸ŞÀÏ */
-	email_domain varchar2(50), /* ÀÌ¸ŞÀÏµµ¸ŞÀÎ */
-	phone1 varchar2(3), /* ÀüÈ­¹øÈ£1 */
-	phone2 varchar2(4), /* ÀüÈ­¹øÈ£2 */
-	phone3 varchar2(4), /* ÀüÈ­¹øÈ£3 */
-	zipcode varchar2(5), /* ¿ìÆí¹øÈ£ */
-	address varchar2(100), /* ±âº»ÁÖ¼Ò */
-	address_detail varchar2(100), /* »ó¼¼ÁÖ¼Ò */
-	h_school_code varchar2(20), /* °íµîÇĞ±³ÄÚµå */
-	h_school_cate varchar2(50), /* °íµîÇĞ±³ ±¸ºĞ */
-	u_school_code varchar2(20), /* ´ëÇĞ±³ÄÚµå */
-	u_school_cate varchar2(50), /* ´ëÇĞ±³ ±¸ºĞ */
-	user_cate CHAR(1) NOT NULL, /* È¸¿ø±¸ºĞ */
-	join_date DATE, /* °¡ÀÔÀÏ */
-	withdraw  CHAR(1) DEFAULT 'n', /* Å»Åğ¿©ºÎ */
-	latitude varchar2(50), /* À§µµ */
-	longitude varchar2(50) /* °æµµ */
+	user_id varchar2(10) NOT NULL, /* íšŒì›ì•„ì´ë”” */
+	user_name varchar2(8) NOT NULL, /* ì´ë¦„ */
+	pass varchar2(10) NOT NULL, /* ë¹„ë°€ë²ˆí˜¸ */
+	email varchar2(50), /* ì´ë©”ì¼ */
+	email_domain varchar2(50), /* ì´ë©”ì¼ë„ë©”ì¸ */
+	phone1 varchar2(3), /* ì „í™”ë²ˆí˜¸1 */
+	phone2 varchar2(4), /* ì „í™”ë²ˆí˜¸2 */
+	phone3 varchar2(4), /* ì „í™”ë²ˆí˜¸3 */
+	zipcode varchar2(5), /* ìš°í¸ë²ˆí˜¸ */
+	address varchar2(100), /* ê¸°ë³¸ì£¼ì†Œ */
+	address_detail varchar2(100), /* ìƒì„¸ì£¼ì†Œ */
+	h_school_code varchar2(20), /* ê³ ë“±í•™êµì½”ë“œ */
+	h_school_cate varchar2(50), /* ê³ ë“±í•™êµ êµ¬ë¶„ */
+	u_school_code varchar2(20), /* ëŒ€í•™êµì½”ë“œ */
+	u_school_cate varchar2(50), /* ëŒ€í•™êµ êµ¬ë¶„ */
+	user_cate CHAR(1) NOT NULL, /* íšŒì›êµ¬ë¶„ */
+	join_date DATE, /* ê°€ì…ì¼ */
+	withdraw  CHAR(1) DEFAULT 'n', /* íƒˆí‡´ì—¬ë¶€ */
+	latitude varchar2(50), /* ìœ„ë„ */
+	longitude varchar2(50) /* ê²½ë„ */
 );
 
 ALTER TABLE member
@@ -446,23 +446,23 @@ ALTER TABLE member
 			user_id
 		);
 
-/* °Ô½ÃÆÇ */
+/* ê²Œì‹œíŒ */
 CREATE TABLE board (
-	board_no number NOT NULL, /* ±Û¹øÈ£ */
-	b_user_id varchar2(10) NOT NULL, /* ¾ÆÀÌµğ */
-	board_category number, /* Ä«Å×°í¸®¹øÈ£ */
-	user_name varchar2(8), /* ÀÌ¸§ */
-	board_subject varchar2(50) NOT NULL, /* Á¦¸ñ */
-	board_content clob NOT NULL, /* ³»¿ë */
-	b_school_name varchar2(20) NOT NULL, /* ÇĞ±³ÀÌ¸§ */
-	b_school_code VARCHAR(20) NOT NULL, /* ÇĞ±³ ÄÚµå  */
-	b_school_cate1 CHAR(1), /* ÇĞ±³ ±¸ºĞ1 */
-	b_school_cate2 VARCHAR(50), /* ÇĞ±³ ±¸ºĞ2 */
-	region varchar2(20), /* Áö¿ª */
-	b_view_count number DEFAULT 0, /* Á¶È¸¼ö */
-	del_stus CHAR(1) DEFAULT 0, /* »èÁ¦¿©ºÎ */
-	state CHAR(1), /* »óÅÂ */
-	b_postdate DATE /* ÀÛ¼º½Ã°£ */
+	board_no number NOT NULL, /* ê¸€ë²ˆí˜¸ */
+	b_user_id varchar2(10) NOT NULL, /* ì•„ì´ë”” */
+	board_category number, /* ì¹´í…Œê³ ë¦¬ë²ˆí˜¸ */
+	user_name varchar2(8), /* ì´ë¦„ */
+	board_subject varchar2(50) NOT NULL, /* ì œëª© */
+	board_content clob NOT NULL, /* ë‚´ìš© */
+	b_school_name varchar2(20) NOT NULL, /* í•™êµì´ë¦„ */
+	b_school_code VARCHAR(20) NOT NULL, /* í•™êµ ì½”ë“œ  */
+	b_school_cate1 CHAR(1), /* í•™êµ êµ¬ë¶„1 */
+	b_school_cate2 VARCHAR(50), /* í•™êµ êµ¬ë¶„2 */
+	region varchar2(20), /* ì§€ì—­ */
+	b_view_count number DEFAULT 0, /* ì¡°íšŒìˆ˜ */
+	del_stus CHAR(1) DEFAULT 0, /* ì‚­ì œì—¬ë¶€ */
+	state CHAR(1), /* ìƒíƒœ */
+	b_postdate DATE /* ì‘ì„±ì‹œê°„ */
 );
 
 ALTER TABLE board
@@ -472,10 +472,10 @@ ALTER TABLE board
 			board_no
 		);
 
-/* ¹æ¹®±â·Ï */
+/* ë°©ë¬¸ê¸°ë¡ */
 CREATE TABLE visit (
-	visti_date varchar(10) NOT NULL, /* ¹æ¹®ÀÏÀÚ */
-	visti_cnt number DEFAULT 1 /* ¹æ¹®ÀÚ¼ö */
+	visti_date varchar(10) NOT NULL, /* ë°©ë¬¸ì¼ì */
+	visti_cnt number DEFAULT 1 /* ë°©ë¬¸ììˆ˜ */
 );
 
 ALTER TABLE visit
@@ -485,21 +485,21 @@ ALTER TABLE visit
 			visti_date
 		);
 
-/* ¸àÅä */
+/* ë©˜í†  */
 CREATE TABLE mentor (
-	user_id varchar2(10) NOT NULL, /* È¸¿ø¾ÆÀÌµğ */
-	mentor CHAR(1) DEFAULT 'n', /* ¸àÅä */
-	aprvl_date DATE, /* ½ÂÀÎÀÏÀÚ */
-	cate CHAR(1) /* ±¸ºĞ */
+	user_id varchar2(10) NOT NULL, /* íšŒì›ì•„ì´ë”” */
+	mentor CHAR(1) DEFAULT 'n', /* ë©˜í†  */
+	aprvl_date DATE, /* ìŠ¹ì¸ì¼ì */
+	cate CHAR(1) /* êµ¬ë¶„ */
 );
 
-/* ÁÁ¾Æ¿ä */
+/* ì¢‹ì•„ìš” */
 CREATE TABLE love (
-	like_no number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	board_no number, /* ±Û¹øÈ£ */
-	user_id varchar2(10) NOT NULL, /* È¸¿ø¾ÆÀÌµğ */
-	comment_no number, /* ´ñ±Û¹øÈ£ */
-	like_unlike CHAR(1) /* ÁÁ¾Æ¿ä½È¾î¿ä */
+	like_no number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	board_no number, /* ê¸€ë²ˆí˜¸ */
+	user_id varchar2(10) NOT NULL, /* íšŒì›ì•„ì´ë”” */
+	comment_no number, /* ëŒ“ê¸€ë²ˆí˜¸ */
+	like_unlike CHAR(1) /* ì¢‹ì•„ìš”ì‹«ì–´ìš” */
 );
 
 ALTER TABLE love
@@ -509,19 +509,19 @@ ALTER TABLE love
 			like_no
 		);
 
-/* È¸¿ø¼±È£µµ */
+/* íšŒì›ì„ í˜¸ë„ */
 CREATE TABLE user_prefer (
-	user_id varchar2(10) NOT NULL, /* È¸¿ø¾ÆÀÌµğ */
-	h_eval1 number, /* °íµîÇ×¸ñ1 */
-	h_eval2 number, /* °íµîÇ×¸ñ2 */
-	h_eval3 number, /* °íµîÇ×¸ñ3 */
-	h_eval4 NUMBER, /* °íµîÇ×¸ñ4 */
-	h_eval5 number, /* °íµîÇ×¸ñ5 */
-	u_eval1 number, /* ´ëÇĞÇ×¸ñ1 */
-	u_eval2 number, /* ´ëÇĞÇ×¸ñ2 */
-	u_eval3 number, /* ´ëÇĞÇ×¸ñ3 */
-	u_eval4 number, /* ´ëÇĞÇ×¸ñ4 */
-	u_eval5 number /* ´ëÇĞÇ×¸ñ5 */
+	user_id varchar2(10) NOT NULL, /* íšŒì›ì•„ì´ë”” */
+	h_eval1 number, /* ê³ ë“±í•­ëª©1 */
+	h_eval2 number, /* ê³ ë“±í•­ëª©2 */
+	h_eval3 number, /* ê³ ë“±í•­ëª©3 */
+	h_eval4 NUMBER, /* ê³ ë“±í•­ëª©4 */
+	h_eval5 number, /* ê³ ë“±í•­ëª©5 */
+	u_eval1 number, /* ëŒ€í•™í•­ëª©1 */
+	u_eval2 number, /* ëŒ€í•™í•­ëª©2 */
+	u_eval3 number, /* ëŒ€í•™í•­ëª©3 */
+	u_eval4 number, /* ëŒ€í•™í•­ëª©4 */
+	u_eval5 number /* ëŒ€í•™í•­ëª©5 */
 );
 
 ALTER TABLE user_prefer
@@ -531,30 +531,30 @@ ALTER TABLE user_prefer
 			user_id
 		);
 
-/* °íµîÇĞ±³ */
+/* ê³ ë“±í•™êµ */
 CREATE TABLE h_school (
-	school_code varchar2(20) NOT NULL, /* ÇĞ±³ÄÚµå */
-	school_name VARCHAR(100), /* ÇĞ±³¸í */
-	school_cate1 varchar2(100), /* ÇĞ±³À¯Çü1 */
-	school_cate2 varchar2(100), /* ÇĞ±³À¯Çü2 */
-	estbl_date DATE, /* ¼³¸³ÀÏ */
-	zipcode varchar2(5), /* ¿ìÆí¹øÈ£ */
-	address varchar2(100), /* µµ·Î¸íÁÖ¼Ò */
-	address_detail varchar2(100), /* »ó¼¼ÁÖ¼Ò */
-	latitude varchar2(50), /* À§µµ */
-	longitude varchar2(50), /* °æµµ */
-	phone varchar2(20), /* ÀüÈ­¹øÈ£ */
-	fax varchar2(100), /* ÆÑ½º¹øÈ£ */
-	home_page varchar2(100), /* È¨ÆäÀÌÁöÁÖ¼Ò */
-	mw_cate varchar2(20), /* ³²³à°øÇĞ±¸ºĞ */
-	edu_office varchar2(50), /* ±³À°Ã» */
-	estType  varchar2(50), /* ¼³¸³±¸ºĞ */
-	eval1_avg number, /* Æò°¡Ç×¸ñ1 Æò±Õ */
-	eval2_avg number, /* Æò°¡Ç×¸ñ2 Æò±Õ */
-	eval3_avg number, /* Æò°¡Ç×¸ñ3 Æò±Õ */
-	eval4_avg number, /* Æò°¡Ç×¸ñ4 Æò±Õ */
-	eval5_avg number, /* Æò°¡Ç×¸ñ5 Æò±Õ */
-	eval_cnt number /* Æò°¡ÀÎ¿ø¼ö */
+	school_code varchar2(20) NOT NULL, /* í•™êµì½”ë“œ */
+	school_name VARCHAR(100), /* í•™êµëª… */
+	school_cate1 varchar2(100), /* í•™êµìœ í˜•1 */
+	school_cate2 varchar2(100), /* í•™êµìœ í˜•2 */
+	estbl_date DATE, /* ì„¤ë¦½ì¼ */
+	zipcode varchar2(5), /* ìš°í¸ë²ˆí˜¸ */
+	address varchar2(100), /* ë„ë¡œëª…ì£¼ì†Œ */
+	address_detail varchar2(100), /* ìƒì„¸ì£¼ì†Œ */
+	latitude varchar2(50), /* ìœ„ë„ */
+	longitude varchar2(50), /* ê²½ë„ */
+	phone varchar2(20), /* ì „í™”ë²ˆí˜¸ */
+	fax varchar2(100), /* íŒ©ìŠ¤ë²ˆí˜¸ */
+	home_page varchar2(100), /* í™ˆí˜ì´ì§€ì£¼ì†Œ */
+	mw_cate varchar2(20), /* ë‚¨ë…€ê³µí•™êµ¬ë¶„ */
+	edu_office varchar2(50), /* êµìœ¡ì²­ */
+	estType  varchar2(50), /* ì„¤ë¦½êµ¬ë¶„ */
+	eval1_avg number, /* í‰ê°€í•­ëª©1 í‰ê·  */
+	eval2_avg number, /* í‰ê°€í•­ëª©2 í‰ê·  */
+	eval3_avg number, /* í‰ê°€í•­ëª©3 í‰ê·  */
+	eval4_avg number, /* í‰ê°€í•­ëª©4 í‰ê·  */
+	eval5_avg number, /* í‰ê°€í•­ëª©5 í‰ê·  */
+	eval_cnt number /* í‰ê°€ì¸ì›ìˆ˜ */
 );
 
 ALTER TABLE h_school
@@ -564,18 +564,17 @@ ALTER TABLE h_school
 			school_code
 		);
 
-/* Àå´ÜÁ¡ */
+/* ì¥ë‹¨ì  */
 CREATE TABLE eval_school (
-	ad_no number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	ad_div CHAR(1), /* Àå´ÜÁ¡ */
-	user_id varchar2(10), /* È¸¿ø¾ÆÀÌµğ */
-	school_cate CHAR(1), /* ÇĞ±³±¸ºĞ */
-	school_code varchar2(20), /* ÇĞ±³ÄÚµå */
-	advan clob, /* ÀåÁ¡ */
-	disad clob, /* ´ÜÁ¡ */
-	upvote number, /* °ø°¨ */
-	downvote number, /* ºñ°ø°¨ */
-	state CHAR(1) /* »óÅÂ */
+	ad_no number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	ad_div CHAR(1), /* ì¥ë‹¨ì  */
+	user_id varchar2(10), /* íšŒì›ì•„ì´ë”” */
+	school_cate CHAR(1), /* í•™êµêµ¬ë¶„ */
+	school_code varchar2(20), /* í•™êµì½”ë“œ */
+	content clob, /* ë‚´ìš© */
+	upvote number, /* ê³µê° */
+	downvote number, /* ë¹„ê³µê° */
+	state CHAR(1) /* ìƒíƒœ */
 );
 
 ALTER TABLE eval_school
@@ -585,22 +584,22 @@ ALTER TABLE eval_school
 			ad_no
 		);
 
-/* °ø°¨·Î±× */
+/* ê³µê°ë¡œê·¸ */
 CREATE TABLE eval_ud_log (
-	user_id varchar2(10), /* È¸¿ø¾ÆÀÌµğ */
-	ad_no number, /* Àå´ÜÁ¡ÀÏ·Ã¹øÈ£ */
-	updown CHAR(1) /* °ø°¨/ºñ°ø°¨ */
+	user_id varchar2(10), /* íšŒì›ì•„ì´ë”” */
+	ad_no number, /* ì¥ë‹¨ì ì¼ë ¨ë²ˆí˜¸ */
+	updown CHAR(1) /* ê³µê°/ë¹„ê³µê° */
 );
 
-/* Ã·»è */
+/* ì²¨ì‚­ */
 CREATE TABLE edit (
-	edit_no number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	board_no number, /* ±Û¹øÈ£ */
-	ref number, /* ±×·ì¹øÈ£ */
-	pseq number, /* ¿ø±Û¹øÈ£ */
-	state CHAR(1), /* ¿Ï·á¿©ºÎ */
-	mentee_id varchar2(10), /* ¸àÆ¼ ¾ÆÀÌµğ */
-	mentor_id varchar2(10) /* ¸àÅä ¾ÆÀÌµğ */
+	edit_no number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	board_no number, /* ê¸€ë²ˆí˜¸ */
+	ref number, /* ê·¸ë£¹ë²ˆí˜¸ */
+	pseq number, /* ì›ê¸€ë²ˆí˜¸ */
+	state CHAR(1), /* ì™„ë£Œì—¬ë¶€ */
+	mentee_id varchar2(10), /* ë©˜í‹° ì•„ì´ë”” */
+	mentor_id varchar2(10) /* ë©˜í†  ì•„ì´ë”” */
 );
 
 ALTER TABLE edit
@@ -610,12 +609,12 @@ ALTER TABLE edit
 			edit_no
 		);
 
-/* ½Å°í */
+/* ì‹ ê³  */
 CREATE TABLE report (
-	report_seq number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	code number, /* ½Å°íÄÚµå */
-	rel_seq number, /* ÇØ´çÀÏ·Ã¹øÈ£ */
-	report_time DATE /* ½Å°íÀÏ */
+	report_seq number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	code number, /* ì‹ ê³ ì½”ë“œ */
+	rel_seq number, /* í•´ë‹¹ì¼ë ¨ë²ˆí˜¸ */
+	report_time DATE /* ì‹ ê³ ì¼ */
 );
 
 ALTER TABLE report
@@ -625,16 +624,16 @@ ALTER TABLE report
 			report_seq
 		);
 
-/* ÀÚ·á°Ô½ÃÆÇ */
+/* ìë£Œê²Œì‹œíŒ */
 CREATE TABLE bbs (
-	bbs_no number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	board_no number, /* ±Û¹øÈ£ */
-	save_folder varchar2(8), /* ÀúÀåÆú´õ */
-	orginal_name varchar2(100), /* ¿øº»ÆÄÀÏÀÌ¸§ */
-	saved_name varchar2(100), /* ÀúÀåÆÄÀÏÀÌ¸§ */
-	file_size number, /* ÆÄÀÏÅ©±â */
-	latitude number, /* À§µµ */
-	longitude number /* °æµµ */
+	bbs_no number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	board_no number, /* ê¸€ë²ˆí˜¸ */
+	save_folder varchar2(8), /* ì €ì¥í´ë” */
+	orginal_name varchar2(100), /* ì›ë³¸íŒŒì¼ì´ë¦„ */
+	saved_name varchar2(100), /* ì €ì¥íŒŒì¼ì´ë¦„ */
+	file_size number, /* íŒŒì¼í¬ê¸° */
+	latitude number, /* ìœ„ë„ */
+	longitude number /* ê²½ë„ */
 );
 
 ALTER TABLE bbs
@@ -644,13 +643,13 @@ ALTER TABLE bbs
 			bbs_no
 		);
 
-/* °Ë»ö±â·Ï */
+/* ê²€ìƒ‰ê¸°ë¡ */
 CREATE TABLE search_log (
-	school_code varchar2(20) NOT NULL, /* ÇĞ±³ÄÚµå */
-	user_id varchar2(10) NOT NULL, /* È¸¿ø¾ÆÀÌµğ */
-	school_cate varchar2(50), /* ÇĞ±³À¯Çü */
-	search_cnt number, /* °Ë»ö¼ö */
-	search_date DATE /* ¸¶Áö¸·°Ë»ö½Ã°£ */
+	school_code varchar2(20) NOT NULL, /* í•™êµì½”ë“œ */
+	user_id varchar2(10) NOT NULL, /* íšŒì›ì•„ì´ë”” */
+	school_cate varchar2(50), /* í•™êµìœ í˜• */
+	search_cnt number, /* ê²€ìƒ‰ìˆ˜ */
+	search_date DATE /* ë§ˆì§€ë§‰ê²€ìƒ‰ì‹œê°„ */
 );
 
 ALTER TABLE search_log
@@ -661,17 +660,17 @@ ALTER TABLE search_log
 			user_id
 		);
 
-/* ÂÊÁö */
+/* ìª½ì§€ */
 CREATE TABLE msg (
-	msg_no number NOT NULL, /* ÀÏ·Ã¹øÈ£ */
-	send_id varchar2(10), /* º¸³½»ç¶÷ */
-	recv_id varchar2(10), /* ¹ŞÀº»ç¶÷ */
-	send_date DATE, /* ¼Û½ÅÀÏ */
-	recv_date DATE, /* ¼ö½ÅÀÏ */
-	msg_title varchar2(200), /* Á¦¸ñ */
-	msg_content clob, /* ³»¿ë */
-	send_stus CHAR(1) DEFAULT 0, /* ¼Û½ÅÀÚ º¸°ü */
-	recv_stus CHAR(1) DEFAULT 0 /* ¼ö½ÅÀÚ º¸°ü */
+	msg_no number NOT NULL, /* ì¼ë ¨ë²ˆí˜¸ */
+	send_id varchar2(10), /* ë³´ë‚¸ì‚¬ëŒ */
+	recv_id varchar2(10), /* ë°›ì€ì‚¬ëŒ */
+	send_date DATE, /* ì†¡ì‹ ì¼ */
+	recv_date DATE, /* ìˆ˜ì‹ ì¼ */
+	msg_title varchar2(200), /* ì œëª© */
+	msg_content clob, /* ë‚´ìš© */
+	send_stus CHAR(1) DEFAULT 0, /* ì†¡ì‹ ì ë³´ê´€ */
+	recv_stus CHAR(1) DEFAULT 0 /* ìˆ˜ì‹ ì ë³´ê´€ */
 );
 
 ALTER TABLE msg
