@@ -10,31 +10,52 @@
 
 <script>
 $(document).ready(function() {
-//학교 검색 모달창	
+//------------------------------[학교 검색 모달창 시작]-----------------------------------	
 	
-	//엔터 버튼
+	//모달 엔터 클릭시 
 	$("#schoolName").keypress(function(key) {
+		$("#searchresult").empty();
+		var schoolType = $("#schoolType option:selected").val();
+		var schoolName = $("#schoolName").val();
+		var param = JSON.stringify({'schoolType' : schoolType, 'schoolName' : schoolName});
 		if(key.keyCode == 13){
 			
 			var schoolName = $("#schoolName").val();
 			if(schoolName == ""){
 				alert("학교 이름을 입력해주세요");
 			} else {
-				alert(schoolName);
+				//alert(schoolName);
+				$.ajax({
+					url:'${root}/board/searchschool/',
+					type: 'POST',
+					contentType:'application/json;charset=UTF-8',
+					dataType : 'json',
+					data: param,
+					success : function(response) {
+						if(schoolType == "고등학교"){
+							listHSchool(response);
+							$("#schoolName").val(""); 
+						} else {
+							//alert(response.uSchoolList);
+							listUSchool(response);
+							$("#schoolName").val(""); 										
+						}
+					}
+				});
 			}
-				$("#schoolName").val("");
 		}
 	});
 	
-	//검색 버튼
+	//모달 검색 버튼
 	$("#realSchoolSearchBtn").click(function() {
+		$("#searchresult").empty();
 		var schoolType = $("#schoolType option:selected").val();
 		var schoolName = $("#schoolName").val();
 		var param = JSON.stringify({'schoolType' : schoolType, 'schoolName' : schoolName});
 		if(schoolName == ""){
 			alert("학교 이름을 입력해주세요");
 		} else {
-			alert(schoolType+"|||||" + schoolName);
+			//alert(schoolType+"|||||" + schoolName);
 			$.ajax({
 				url:'${root}/board/searchschool/',
 				type: 'POST',
@@ -42,46 +63,89 @@ $(document).ready(function() {
 				dataType : 'json',
 				data: param,
 				success : function(response) {
-					alert("성공");
-					/* alert(response);
-					listHSchool(response);
-					$("#schoolName").val(""); */
+					if(schoolType == "고등학교"){
+						listHSchool(response);
+						$("#schoolName").val(""); 
+					} else {
+						//alert(response.uSchoolList);
+						listUSchool(response);
+						$("#schoolName").val(""); 										
+					}
+					
 				}
 			});
 		}
 			
 	});
-
+	
+	//학교 이름 동적으로 뿌려주는 메소드 (고등학교, 대학교)
 	 function listHSchool(hschool) {
+		 $("#searchresult").empty();
 		var hschoolcnt = hschool.hSchoolList.length;
+		//alert(hschoolcnt);
 		var hschoolstr = '';
-		for(var i=0;i<hschoolcnt;i++){
-			var schoolName = hschool.hSchoolList[i];
-			hschoolstr += '<label>' +schoolName+ '</label>';
-		}
-		$("searchresult").empty();
-		$("searchresult").append(hschoolstr);
-	} 
-
-	$("#writeBtn").click(function() {
-		if($("#subject").val() == ""){
-			alert("제목입력!!!!");
-			return;
-		} else if($("#content").val() == ""){
-			alert("내용 입력!!!");
-			return;
+		if(hschoolcnt != 0){
+			for(var i=0; i<hschoolcnt; i++){
+				var schoolName = hschool.hSchoolList[i];
+				hschoolstr += '<label class = "searchresult" style = "padding:0;margin:0;">' +schoolName+ '</label><br>';
+			}
+			$("#searchresult").append(hschoolstr);
 		} else {
-			$("#writeForm").attr("action", "${root}/board/write").submit();
+			hschoolstr += '<label class = "searchresult" style = "padding:0;margin:0;">' +"검색결과가 없습니다."+ '</label><br>';
+			$("#searchresult").append(hschoolstr);
 		}
-	});
+	} 
+	
+	 function listUSchool(uschool) {
+		 $("#searchresult").empty();
+		var uschoolcnt = uschool.uSchoolList.length;
+		//alert(uschoolcnt);
+		var uschoolstr = '';
+		if(uschoolcnt != 0){
+			for(var i=0; i<uschoolcnt; i++){
+				var schoolName = uschool.uSchoolList[i];
+				uschoolstr += '<label class = "searchresult" style = "padding:0;margin:0;">' +schoolName+ '</label><br>';
+			}
+			$("#searchresult").append(uschoolstr);
+		} else {
+			uschoolcnt += '<label class = "searchresult" style = "padding:0;margin:0;">' +"검색결과가 없습니다."+ '</label><br>';
+			$("#searchresult").append(uschoolstr);
+			
+		}
+	} 
+	
+//선택한 학교 label에 보여주기 
+	$(document).on("click", ".searchresult", function(){
+		var checkschool = $(this).text();
+		//alert(checkschool);
+		if(checkschool != "검색결과가 없습니다."){
+			$(this).parent().siblings("#checkedschool").find("#finalcheck").text(checkschool);
+		} else {
+			$(this).parent().siblings("#checkedschool").find("#finalcheck").text("");
+		}
+	});  
+		
+//modal창 확인 눌렀을 때 바깥 textfield에 학교 이름 뿌리기
+	$(document).on("click", "#confirmschool", function(){
+		var checkschool = $(this).parent().prev().find("#finalcheck").text();
+		//alert(checkschool);
+		$("#searchSchool").val(checkschool);
+		$("#searchresult").empty();
+		$("#finalcheck").empty();
+	}); 
+	
+	//------------------------------[학교 검색 모달창 끝]-----------------------------------	
 	
 //글 작성 완료 눌렀을 때 
 	$("#writeBtn").click(function() {
 		if($("#subject").val() == ""){
-			alert("제목입력!!!!");
+			alert("제목을 입력해주세요");
+			return;
+		} else if($("#searchSchool").val() == ""){
+			alert("학교 이름을 입력해주세요");
 			return;
 		} else if($("#content").val() == ""){
-			alert("내용 입력!!!");
+			alert("내용을 입력해주세요");
 			return;
 		} else {
 			$("#writeForm").attr("action", "${root}/board/write").submit();
@@ -128,8 +192,8 @@ $(document).ready(function() {
 									</header>
 								<hr class = "major"/>	
 								<!-- 작성 전체 폼 -->
-			 <form id="writeForm" name="writeForm" method="post" action=""
-				enctype="multipart/form-data"> 
+<form id="writeForm" name="writeForm" method="post" action="">
+				<!-- enctype="multipart/form-data" --> 
 								<div class = "row">
 				
 				<input type="hidden" name="bcode" value="${parameter.bcode}">
@@ -156,7 +220,7 @@ $(document).ready(function() {
 								<label>지역 선택</label>
 								</div>
 								<div class = "col-3">
-								<select id = "region" style="color: #7f888f;">
+								<select name ="region" id = "region" style="color: #7f888f;">
 <option>전체</option><option>서울</option><option>부산</option><option>인천</option>
 <option>대구</option><option>광주</option><option>대전</option><option>울산</option>
 <option>강원</option><option>경기</option><option>경남</option><option>경북</option>
@@ -177,8 +241,8 @@ $(document).ready(function() {
 								<div class = "col-1">
 								<label>학교 검색</label>
 								</div>
-								<div class = "col-7">
-								<input type="text" name="searchSchool" id="searchSchool" value="" maxlength="0"
+								<div class = "col-7" id = "schooltext">
+								<input name = "sname" type="text" name="searchSchool" id="searchSchool" value=""
 								placeholder="학교 이름 입력" style="margin-right:0;" readonly="readonly" data-toggle="modal" data-target="#schoolModal"/>
 								</div>
 								<!-----------------------------학교 검색  modal---------------------------->							
@@ -209,15 +273,23 @@ $(document).ready(function() {
 													<div class = "col-2" style="margin-left: 0;margin-right: 0;padding:0;">
 													<input type = "button" id = "realSchoolSearchBtn" value = "검색">
 													</div>
-													<div id = "searchresult" class = "col-10" style = "overflow-y: auto;">
 													
+													<div class = "col-4"></div>
+													<div id = "searchresult" class = "col-6" style = "overflow-y: auto;height: 150px; margin: 0 auto;" >
 													</div>        
+													<div class = "col-2"></div>
+													<hr>
+													<div class = "col-4"></div>
+													<div class = "col-4" id = "checkedschool">
+														<label id = "finalcheck"></label>
+													</div>
+													<div class = "col-4"></div>
 										        </div>
 									        </div>
 									        
 									        <!-- Modal footer -->
 									        <div class="modal-footer">
-									          <input type="button" class="button primary" data-dismiss="modal" value = "닫기">
+									          <input id = "confirmschool" type="button" class="button primary" data-dismiss="modal" value = "확인">
 									        </div>
 									        
 									      </div>
@@ -250,7 +322,7 @@ $(document).ready(function() {
 								
 								<div class = "col-2"></div>
 								<div class = "col-8">
-									<input type="file" class="form-control-file border" name="file">
+									<!-- <input type="file" class="form-control-file border" name="file"> -->
 								</div>
 								<div class = "col-2"></div>
 								
@@ -261,7 +333,7 @@ $(document).ready(function() {
 								</div>
 								<div class = "col-2"></div>
 								</div>
-		</form> 
+</form> 
 						</div>
 					</div>
 					

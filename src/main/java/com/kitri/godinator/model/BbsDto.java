@@ -1,6 +1,6 @@
 package com.kitri.godinator.model;
 
-public class BbsDto {
+public class BbsDto extends BoardDto{
 
 	private int bbsNo;				// 일련번호
 	private int boardNo;			// 글번호

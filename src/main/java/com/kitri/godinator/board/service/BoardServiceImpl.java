@@ -16,23 +16,25 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Override
-	public String findUSchool(String schoolName) {
-		List<String> list = sqlSession.getMapper(BoardDao.class).findUSchool(schoolName);
-		JSONArray array = new JSONArray(list);
-		JSONObject json = new JSONObject();
-		json.put("uSchoolList", array);
-		System.out.println("service : " + json.toString());
-		return json.toString();
-	}
-
+	//고등학교 찾기 메소드
 	@Override
 	public String findHSchool(String schoolName) {
 		List<String> list = sqlSession.getMapper(BoardDao.class).findHSchool(schoolName);
 		JSONArray array = new JSONArray(list);
 		JSONObject json = new JSONObject();
 		json.put("hSchoolList", array);
-		System.out.println("service : " + json.toString());
+//		System.out.println("service : " + json.toString());
+		return json.toString();
+	}
+	
+	//대학찾기 메소드
+	@Override
+	public String findUSchool(String schoolName) {
+		List<String> list = sqlSession.getMapper(BoardDao.class).findUSchool(schoolName);
+		JSONArray array = new JSONArray(list);
+		JSONObject json = new JSONObject();
+		json.put("uSchoolList", array);
+//		System.out.println("service : " + json.toString());
 		return json.toString();
 	}
 
