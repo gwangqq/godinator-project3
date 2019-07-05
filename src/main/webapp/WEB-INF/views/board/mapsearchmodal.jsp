@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
+  
   <div class="modal fade" id="mapModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -12,7 +15,12 @@
         
         <!-- Modal body -->
         <div class="modal-body">
-          Modal body..
+        	<div class = "row">
+         	<div class = "col-12" id = "map">
+         	
+         	</div>
+         	<div class = "col-12"></div>
+       		</div>
         </div>
         
         <!-- Modal footer -->

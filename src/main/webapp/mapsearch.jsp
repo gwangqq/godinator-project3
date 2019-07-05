@@ -27,23 +27,14 @@ $(document).ready(function() {
             
         place = $("#search").val();
         	//경고창을 출력한다.
-            //alert(place);
+            alert(place);
 
          // 키워드로 장소를 검색합니다
          ps.keywordSearch(place, placesSearchCB); 
-	        $("#search").empty();	
-         
-         
+	        $("#search").val("");	
         }
     });
-    
-    
-
-
-
 });
-
-
 
 	// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 	var infowindow = new kakao.maps.InfoWindow({zIndex:1});
@@ -82,6 +73,8 @@ function placesSearchCB (data, status, pagination) {
         var bounds = new kakao.maps.LatLngBounds();
 
         for (var i=0; i<data.length; i++) {
+        	console.log(data[i].x);
+        	console.log(data[i].y);
             displayMarker(data[i]);    
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }       
@@ -110,27 +103,10 @@ function displayMarker(place) {
 		// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
 	    infowindow.setContent('<div class = "result" style="padding:5px;font-size:12px;">' + searchresult + '</div>');
 	    infowindow.open(map, marker); 
-    	
-/* 	    
-	    var latlng = mouseEvent.latLng; 
-	    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-	    message += '경도는 ' + latlng.getLng() + ' 입니다';
-	    alert(message); */
-		
+
 	});
 	
-	
-	geocoder.addressSearch(searchresult, function(result, status) {
 
-        // 정상적으로 검색이 완료됐으면 
-         if (status === kakao.maps.services.Status.OK) {
-
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-			
-            alert(coords);
-        } 
-    });     
-	
 	}
 
  

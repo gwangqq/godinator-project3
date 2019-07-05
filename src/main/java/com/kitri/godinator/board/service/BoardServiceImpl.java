@@ -1,6 +1,7 @@
 package com.kitri.godinator.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
@@ -54,6 +55,18 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int getNextSeq() {
 		return sqlSession.getMapper(BoardCommonDao.class).getNextSeq();
+	}
+
+	@Override
+	public List<BoardDto> listArticle(Map<String, String> parameter) {
+//		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
+//		int end = pg * CafeConstance.ARTICLE_SIZE;
+//		int start = end - CafeConstance.ARTICLE_SIZE;
+//
+//		parameter.put("start", start + "");
+//		parameter.put("end", end + "");
+
+		return sqlSession.getMapper(BoardDao.class).listArticle(parameter);
 	}
 
 	
