@@ -3,13 +3,22 @@
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>	
 
+
+
+
+
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
+<<<<<<< Upstream, based on develop
 <%@ include file="/WEB-INF/views/board/mapsearchmodal.jsp" %>
 <<<<<<< Upstream, based on develop
 <!-- 학교이름 검색 모달 창 -->
 =======
 >>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
+=======
+
+
+>>>>>>> 745f968 19.07.05
 
 
 <script>
@@ -280,7 +289,155 @@ $(document).ready(function() {
 								<label>장소 첨부</label>
 								</div>
 								<div class = "col-3">
-								<input type="button" class="button" data-toggle="modal" data-target="#mapModal" value="장소검색">
+								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색">
+								<!-----------------------------------[지도 modal]----------------------------------------------->
+ 								  
+  <div class="modal fade" id="mapModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+        <!--  modal header-->
+          <h4 class="modal-title">장소검색</h4>
+          <input type="button" class="button close" data-dismiss="modal" value="&times;" style="width:10;height:10;padding-top: 0;">
+        </div>
+        
+		<!--  modal body-->
+        <div class="modal-body">
+        	
+<!----------------------------[다음 지도 ]-------------------------------------------------------------->
+
+<div id = "map" style="width:100%;height:300px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing&autoload=false"></script>
+<script type="text/javascript">
+	
+$(document).ready(function(){
+		
+	 $("#search").keypress(function(key) {
+		
+		// ID를 alpreah_input로 가지는 곳에서 키를 누를 경우
+	    	var place = "";
+	        //키의 코드가 13번일 경우 (13번은 엔터키)
+	        if (key.keyCode == 13) {
+	            
+	        place = $("#search").val();
+	        	//경고창을 출력한다.
+	            alert(place);
+	        	
+	         // 키워드로 장소를 검색합니다
+	         ps.keywordSearch(place, placesSearchCB); 
+		        $("#search").val("");	
+	        }
+		}); 
+	 
+});
+
+	
+
+kakao.maps.load(function() {
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+       center: new daum.maps.LatLng(37.485087, 126.898855),
+       level: 3
+    };
+    
+ // 지도를 생성합니다 
+	    map = new daum.maps.Map(mapContainer, mapOption); 
+
+		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+		
+	//지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		var mapTypeControl = new kakao.maps.MapTypeControl();
+		//kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+		
+		//지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+		var zoomControl = new kakao.maps.ZoomControl();
+		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		// 장소 검색 객체를 생성합니다
+		var ps = new kakao.maps.services.Places();   
+});
+
+
+
+
+
+/* function resizeMap() {
+    var mapContainer = document.getElementById('map');
+    mapContainer.style.width = '100%';
+    mapContainer.style.height = '300px'; 
+}
+
+function relayout() {    
+    
+    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+    map.relayout();
+} */
+function placesSearchCB (data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        var bounds = new kakao.maps.LatLngBounds();
+
+        for (var i=0; i<data.length; i++) {
+        	//console.log(data[i].x);
+        	//console.log(data[i].y);
+            //displayMarker(data[i]);    
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        }       
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+        map.setBounds(bounds);
+    } 
+}
+
+
+ 
+
+// 지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+    
+    // 마커를 생성하고 지도에 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(place.y, place.x)
+    });
+
+	var searchresult = "";
+	// 마커에 클릭이벤트를 등록합니다
+	kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
+	   	searchresult = place.place_name;
+		// 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+	    infowindow.setContent('<div class = "result" style="padding:5px;font-size:12px;">' + searchresult + '</div>');
+	    infowindow.open(map, marker); 
+	});
+}
+
+</script> 		
+
+<!----------------------------[다음 지도 끝]-------------------------------------------------------------->
+
+
+		<div class = "row">
+         	<div class = "col-12">
+         	<input type="text" name = "search" id = "search">
+         	</div>
+       		</div>
+        </div>
+        
+         <!--  modal footer-->
+        <div class="modal-footer">
+          <input type="button" class="button" data-dismiss="modal" value = "Close">
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+								
 								</div>
 								<div class = "col-2"></div>
 								

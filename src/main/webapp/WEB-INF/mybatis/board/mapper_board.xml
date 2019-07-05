@@ -22,4 +22,35 @@
 		B_SCHOOL_CATE1, B_SCHOOL_CATE2, REGION, B_VIEW_COUNT, DEL_STUS, STATE, B_POSTDATE )
 		values(#{boardNo}, #{bUserId}, 1, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
 	</insert>
+	
+	<!-- <select id="listArticle" parameterType="map" resultType="BoardDto">
+	select c.bcode, c.content, c.email, c.id, 
+   		 decode(to_char(c.logtime,'yymmdd'),
+	            to_char(sysdate,'yymmdd'), to_char(sysdate,'hh:mi:ss'),
+	            to_char(c.logtime,'yy.mm.dd')) logtime,
+        c.name, c.seq, c.subject, c.lev, c.pseq, c.ref, c.reply, c.rseq, c.step, c.hit
+	from(
+	    select rownum r, total.*
+	    from(
+	        select b.bcode, b.content, b.email, b.id, b.logtime, b.name, b.seq, b.subject, 
+	            r.lev, r.pseq, r.ref, r.reply, r.rseq, r.step, b.hit
+	            from board b, reboard r
+	            where b.seq = r.seq
+	            and b.bcode = #{bcode}
+	            <if test="word != null and word != ''" >
+	            	<if test="key == 'subject'">
+	            	and b.subject like '%'||#{word}||'%'
+	            	</if>
+	            	<if test="key != 'subject'">
+	            	and b.${key} = #{word}
+	            	</if>
+	            </if>
+	            order by ref DESC, step
+	            ) total
+	    where rownum &lt;= #{end}
+	    ) c
+	where c.r &gt; #{start}
+	</select> -->
+	
+	
 </mapper>

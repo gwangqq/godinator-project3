@@ -1,7 +1,9 @@
 package com.kitri.godinator.board.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,4 +109,20 @@ public class BoardController {
 		
 		return "";
 	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public void list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
+		List<BoardDto> list = boardService.listArticle(parameter);
+		
+//		PageNavigation pageNavigation = commonService.getPageNavigation(parameter);
+//		pageNavigation.setRoot(requset.getContextPath());
+//		pageNavigation.makeNavigator();
+
+		model.addAttribute("parameter", parameter);
+		model.addAttribute("articleList", list);
+//		model.addAttribute("navigator", pageNavigation);
+	}
+	
+	
+	
 }
