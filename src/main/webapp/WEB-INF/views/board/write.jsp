@@ -2,13 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>	
-
-
-
-
-
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
+<<<<<<< Upstream, based on develop
 <<<<<<< Upstream, based on develop
 <%@ include file="/WEB-INF/views/board/mapsearchmodal.jsp" %>
 <<<<<<< Upstream, based on develop
@@ -21,6 +17,8 @@
 >>>>>>> 745f968 19.07.05
 
 
+=======
+>>>>>>> 59ed2fb 19.07.05
 <script>
 $(document).ready(function() {
 <<<<<<< Upstream, based on develop
@@ -144,7 +142,7 @@ $(document).ready(function() {
 			}
 			$("#searchresult").append(uschoolstr);
 		} else {
-			uschoolcnt += '<label class = "searchresult" style = "padding:0;margin:0;">' +"검색결과가 없습니다."+ '</label><br>';
+			uschoolstr += '<label class = "searchresult" style = "padding:0;margin:0;">' +"검색결과가 없습니다."+ '</label><br>';
 			$("#searchresult").append(uschoolstr);
 			
 		}
@@ -288,8 +286,8 @@ $(document).ready(function() {
 								<div class = "col-1">
 								<label>장소 첨부</label>
 								</div>
-								<div class = "col-3">
-								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색">
+								<div class = "col-3">																<!-- onclick="resizeMap();" -->
+								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색" >
 								<!-----------------------------------[지도 modal]----------------------------------------------->
  								  
   <div class="modal fade" id="mapModal">
@@ -309,13 +307,12 @@ $(document).ready(function() {
 <div id = "map" style="width:100%;height:300px;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing&autoload=false"></script>
 <script type="text/javascript">
-	
 $(document).ready(function(){
-		
+	
+    	var place = "";
 	 $("#search").keypress(function(key) {
 		
 		// ID를 alpreah_input로 가지는 곳에서 키를 누를 경우
-	    	var place = "";
 	        //키의 코드가 13번일 경우 (13번은 엔터키)
 	        if (key.keyCode == 13) {
 	            
@@ -324,29 +321,24 @@ $(document).ready(function(){
 	            alert(place);
 	        	
 	         // 키워드로 장소를 검색합니다
-	         ps.keywordSearch(place, placesSearchCB); 
-		        $("#search").val("");	
+	       ps.keywordSearch(place, placesSearchCB);    
+	       $("#search").val("");
 	        }
 		}); 
 	 
-});
+ 
 
-	
+setTimeout(function() { 
+	kakao.maps.load(function() {
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
 
-kakao.maps.load(function() {
-    var mapContainer = document.getElementById('map');
-    var mapOption = {
-       center: new daum.maps.LatLng(37.485087, 126.898855),
-       level: 3
-    };
-    
- // 지도를 생성합니다 
-	    map = new daum.maps.Map(mapContainer, mapOption); 
-
-		// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-		var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-		
-	//지도에 컨트롤을 추가해야 지도위에 표시됩니다
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+		//지도에 컨트롤을 추가해야 지도위에 표시됩니다
 		var mapTypeControl = new kakao.maps.MapTypeControl();
 		//kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
 		map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
@@ -355,26 +347,14 @@ kakao.maps.load(function() {
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 		// 장소 검색 객체를 생성합니다
-		var ps = new kakao.maps.services.Places();   
-});
-
-
-
-
-
-/* function resizeMap() {
-    var mapContainer = document.getElementById('map');
-    mapContainer.style.width = '100%';
-    mapContainer.style.height = '300px'; 
-}
-
-function relayout() {    
-    
-    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
-    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
-    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
-    map.relayout();
-} */
+		var ps = new kakao.maps.services.Places();  	
+		
+	}); 
+	
+			
+	}, 2000);
+	
+	
 function placesSearchCB (data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
 
@@ -395,8 +375,6 @@ function placesSearchCB (data, status, pagination) {
 }
 
 
- 
-
 // 지도에 마커를 표시하는 함수입니다
 function displayMarker(place) {
     
@@ -414,7 +392,11 @@ function displayMarker(place) {
 	    infowindow.setContent('<div class = "result" style="padding:5px;font-size:12px;">' + searchresult + '</div>');
 	    infowindow.open(map, marker); 
 	});
-}
+} 
+
+});
+
+
 
 </script> 		
 
