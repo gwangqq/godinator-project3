@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<c:set var = "bcode" value = "${parameter.bcode}"/>
+<c:set var = "boardCategory" value = "${parameter.boardCategory}"/>
 <c:set var = "pg" value = "${parameter.pg}"/>
 <c:set var = "key" value = "${parameter.key}"/>
 <c:set var = "word" value = "${parameter.word}"/>

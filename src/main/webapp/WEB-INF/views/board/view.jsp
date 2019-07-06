@@ -87,7 +87,7 @@ $(document).ready(function() {
 										<p id = "viewcontent">
 										${parameter.boardContent}
 										</p>
-										<img src = "/godinator/resources/images/pic02.jpg" width="600px"/>
+										
 									</div>
 									<div class = "col-2"></div>
 									<br><br><br><br>
@@ -100,11 +100,11 @@ $(document).ready(function() {
 											
 											<div class="btnLike" style="float:left; margin-left: 0.8em;">
 												<a href="#"><img alt="좋아요 아이콘" src="/godinator/resources/images/like.png"></a>
-												<span style="display: block;">27</span>
+												<span style="display: block;">0</span>
 											</div>
 											<div class="btnLike" style="float:right; margin-right: 0.8em;">
 												<a href="#"><img alt="싫어요 아이콘" src="/godinator/resources/images/unlike.png"></a>
-												<span style="display: block;">6</span>
+												<span style="display: block;">0</span>
 											</div>
 											
 											<div style="clear: both;"></div>
@@ -118,7 +118,7 @@ $(document).ready(function() {
 								<!-- 글정보 및 신고하기 -->
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글2| 조회수  ${parameter.bViewCount}| 좋아요 27|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글0| 조회수  ${parameter.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>

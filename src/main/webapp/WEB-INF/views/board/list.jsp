@@ -7,6 +7,13 @@
 
 <script>
 $(document).ready(function() {
+	$.ajax({
+		url:'${root}/board/list',
+		type: 'GET',
+		success : function(response) {
+			alert("list넘어옴!!!");
+		}
+	});
 	
 	$(".moveWriteBtn").click(function() {
 		//encodingURI, encodingComponent쓰면 쿼리스트링 encoding가능 form에 input hidden으로 보내는거 많이 사용
@@ -66,103 +73,22 @@ $(document).ready(function() {
 														<th>NO</th>
 														<th>제목</th>
 														<th>작성자</th>
-														<th>지역</th>
 														<th>작성일</th>
 														<th>조회</th>
 														<th>좋아요</th>
 													</tr>
 												</thead>
 												<tbody>
+												<c:forEach var = "article" items = "${articleList}">
 													<tr>
-														<td>10</td>
-														<td>[미국고등학교]입학설명회 안내드립니다</td>
-														<td>미국고등학교알림이</td>
-														<td>서울</td>
-														<td>19.06.22</td>
-														<td>23</td>
-														<td>7</td>
+														<td>${article.boardNo }</td>
+														<td>[${article.region }/${article.bSchoolName}]${article.boardSubject}</td>
+														<td>${article.bUserId}</td>
+														<td>${article.bPostdate }</td>
+														<td>${article.bViewCount }</td>
+														<td>좋아요 숫자</td>
 													</tr>
-													<tr>
-														<td>9</td>
-														<td>[영국고등학교]입학설명회 안내드립니다</td>
-														<td>영국고등학교알림이</td>
-														<td>서울</td>
-														<td>19.06.22</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
-													<tr>
-														<td>8</td>
-														<td>[중국고등학교]중국고등학교 축제 홍보</td>
-														<td>중국고알림이</td>
-														<td>서울</td>
-														<td>19.06.22</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
-													<tr>
-														<td>7</td>
-														<td>[대만고등학교]입학설명회 안내드립니다</td>
-														<td>대만고등학교알림이</td>
-														<td>서울</td>
-														<td>19.06.22</td>
-														<td>28</td>
-														<td>0</td>
-													</tr>
-													<tr>
-														<td>6</td>
-														<td>[일본외국어고등학교]입학설명회 및 입학전형 변경 홍보</td>
-														<td>일본외고짱짱</td>
-														<td>서울</td>
-														<td>19.06.22</td>
-														<td>44</td>
-														<td>10</td>
-													</tr>
-													<tr>
-														<td>5</td>
-														<td>[북한대학교]대학교 공동 설명회 개최 안내</td>
-														<td>북한대마스터</td>
-														<td>서울</td>
-														<td>19.06.20</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
-													<tr>
-														<td>4</td>
-														<td>[스리랑카대학교]스리랑카 대학교 고등학생 대상 진로탐색 프로그램 개최</td>
-														<td>스리랑카대지박령</td>
-														<td>서울</td>
-														<td>19.06.19</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
-													<tr>
-														<td>3</td>
-														<td>[필리핀고등학교]입학설명회 안내드립니다</td>
-														<td>필리핀고컴컴</td>
-														<td>서울</td>
-														<td>19.06.19</td>
-														<td>27</td>
-														<td>3</td>
-													</tr>
-													<tr>
-														<td>2</td>
-														<td>[미국고등학교]입학설명회 안내드립니다</td>
-														<td>미국고등학교알림이</td>
-														<td>서울</td>
-														<td>19.06.19</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
-													<tr>
-														<td>1</td>
-														<td>[미국고등학교]입학설명회 안내드립니다</td>
-														<td>미국고등학교알림이</td>
-														<td>서울</td>
-														<td>19.06.19</td>
-														<td>23</td>
-														<td>7</td>
-													</tr>
+												</c:forEach>
 												</tbody>
 											</table>
 									</div>

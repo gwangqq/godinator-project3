@@ -201,14 +201,14 @@ $(document).ready(function() {
 			return;
 		} else {
 			$("#writeForm").attr("action", "${root}/board/write").submit();
-			
+			alert("글 작성을 완료했습니다.")
 		}
 	});
 	
 		
 //글작성 취소 눌렀을 때 list로 돌아가기 
 	$("#cancelBtn").click(function() {
-		$("#bcode").val("${bcode}");
+		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
@@ -251,7 +251,7 @@ $(document).ready(function() {
 				<!-- enctype="multipart/form-data" --> 
 								<div class = "row">
 				
-				<input type="hidden" name="bcode" value="${parameter.bcode}">
+				<input type="hidden" name="boardCategory" value="${parameter.boardCategory}">
 				<input type="hidden" name="pg" value="1">
 				<input type="hidden" name="key" value="">
 				<input type="hidden" name="word" value="">
