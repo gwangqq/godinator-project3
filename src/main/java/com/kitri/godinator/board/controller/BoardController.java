@@ -94,16 +94,19 @@ public class BoardController {
 			boardNo = boardService.writeArticle(boardDto);
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
-				path = "board/view";
-			} 
+				path = "board/list";
+			} else {
+				path = "오류 페이지 넣어야됨";
+			}
+		
 		} else {
-			path = "";
+			path = "redirect:/index.jsp";
 		}
 		model.addAttribute("parameter", parameter);
 		return path;
 	}
 	
-	@RequestMapping(value = "/view", method = RequestMethod.POST)
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
 		
@@ -112,8 +115,9 @@ public class BoardController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
+		System.out.println("get으로 넘어왔다" + parameter.toString());
 		List<BoardDto> list = boardService.listArticle(parameter);
-		
+		System.out.println(list);
 //		PageNavigation pageNavigation = commonService.getPageNavigation(parameter);
 //		pageNavigation.setRoot(requset.getContextPath());
 //		pageNavigation.makeNavigator();
