@@ -5,4 +5,51 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.kitri.godinator.user.dao.UserDao">
+  	<select id="idCheck" parameterType="String" resultType="int">
+  		select count(*)
+  		from member
+  		where user_id = #{id}
+  	</select>
+  	
+  	<insert id="register" parameterType="memberDto">
+  		insert into member
+  		(user_id, user_name, pass, email, email_domain, phone1, phone2, phone3, zipcode, address, address_detail, user_cate, withdraw, join_date)
+  		values(#{userId}, #{userName}, #{pass}, #{email}, #{emailDomain}, #{phone1},
+  				#{phone2}, #{phone3}, #{zipcode}, #{address}, #{addressDetail},#{userCate},'N', sysdate)
+
+  	</insert>
+  	
+  	<update id="updateMemberh" parameterType="map">
+  		update member
+		set h_school_code = (select school_code 
+		                     from h_school
+		                     where school_name = #{highSchool}),
+		    h_school_cate = #{hSchoolCate}
+		where user_id = #{registerId}
+  	</update>
+  	
+  	<update id="updateMemberu" parameterType="map">
+  		update member
+		set u_school_code = (select code 
+		                     from u_school
+		                     where name=#{university}),
+		    u_school_cate= #{uSchoolCate}
+		where user_id = #{registerId}
+  	</update>
+  	
+  	<insert id="insertMentorh" parameterType="String">
+  		insert into mentor (user_id, mentor, aprvl_date, cate)
+		values(#{registerId}, 'R', '', 'h')
+  	</insert>
+  	
+  	<insert id="insertMentoru" parameterType="String">
+  		insert into mentor (user_id, mentor, aprvl_date, cate)
+		values(#{registerId}, 'R', '', 'u')
+  	</insert>
+  	
+  	<insert id="insertMentor" parameterType="String">
+  		insert into mentor (user_id, mentor, aprvl_date, cate)
+		values(#{registerId}, 'N', '', '')
+  	</insert>
+  	
   </mapper>

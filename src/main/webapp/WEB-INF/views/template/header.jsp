@@ -14,13 +14,15 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="${root}/css/main.css" />
+<link rel="stylesheet" href="${root}/css/recommendation.css"/>
+<link rel="stylesheet" href="${root}/css/schooldetail.css"/>
+<link rel="stylesheet" href="${root}/css/schoolnews.css"/>
+<link rel="stylesheet" href="${root}/css/schoolrating.css"/>
+<link rel="stylesheet" href="${root}/css/searchschool.css"/>
+<link rel="stylesheet" href="${root}/css/morris.css"/>
 
 <!-- Scripts -->
 <script src="${root}/js/jquery.min.js"></script>
-<script src="${root}/js/browser.min.js"></script>
-<script src="${root}/js/breakpoints.min.js"></script>
-<script src="${root}/js/util.js"></script>
-<script src="${root}/js/main.js"></script>
 </head>
 
 <body class="is-preload">

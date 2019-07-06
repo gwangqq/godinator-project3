@@ -1,9 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="root" value="${pageContext.request.contextPath}"/>	
 <!DOCTYPE HTML>
+<style>
+
+.pre{
+	font-size: 2em;
+	line-height: 100px;
+	text-align: left;
+}
+
+.iconHigh{
+	text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    WIDTH: 150PX;
+    float: left;
+    margin-left: 30px;
+
+}
+
+.iconUni{
+	text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    WIDTH: 150PX;
+    float: left;
+    margin-left: 30px;
+
+}
+
+.icon {
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    WIDTH: 150PX;
+    margin-left: 30px;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+	function allowDrop(ev){
+		ev.preventDefault();
+	}
+	
+	function drag(ev){
+		ev.dataTransfer.setData("text", ev.target.id);
+	}
+	
+	function drop(ev){
+		var a = $("#attr").text();
+		
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		
+		var dataTemp = document.getElementById(data);
+		console.log(dataTemp);
+		$(dataTemp).css("width","40px");
+		$(dataTemp).css("height","40px");
+		$(dataTemp).css("font-size","small");
+		$(dataTemp).attr("class","");
+		$(dataTemp).click(function(e) {
+			alert("이미지 클릭!");
+		});
+		
+		ev.target.appendChild(dataTemp);
+		var text = $(ev.target).text();
+		
+		var data = year + "/" + month + "/" + text;
+		init
+	}
+</script>
 <html>
 	<head>
-		<title>register.jsp</title>
+		<title>register_3.jsp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
@@ -28,78 +99,69 @@
 									<header class="main">
 									
 										<h1>회원가입</h1>
-										<h3 class="subtitle">우리학교의 점수는?</h3>
+										<h3 class="subtitle">학교 선택 기준은?</h3>
 									</header>
 
-
 <br>
+
 									<!-- Content -->
-									<form id="loginForm" name="loginForm">
-									<div class="preference">
-										<h2 class="schoolName">고등학교</h2>
-										<h3 id="contentId">시설</h3> 
-										<div>별점</div>
-										   <br>
-										   <br>
-										   <h3 id="contentId">학업분위기</h3>
-										<div>별점</div>
-										<br>
-										 <br>
-										<h3 id="contentId">교직원(교육, 인성)</h3>
-										<div>별점</div>
-										   <br>
-										    <br>
-											<h3 id="contentId">진로교육</h3>
-										<div>별점</div>
-										   <br>
-										    <br>
-											<h3 id="contentId">취업진학률</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">동아리활성화</h3>
-										<div>별점</div>
-										   <br> <br>
-										   
-										   <h3>후배들을 위한 조언</h3>
-										   <div class="col-12">
-																<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-															</div>
-										   
+									<h2 class="schoolName">고등학교 우선순위</h2>
+									<form id="HighPreferenceForm" name="HighPreferenceForm">
+									<div id="boardsHigh">
+											<div title="firstH" class="pre">우선순위1</div>
+											<div title="secondH" class="pre">우선순위2</div>
+											<div title="thirdH" class="pre">우선순위3</div>
+											<div title="fourthH" class="pre">우선순위4</div>
+											<div title="fifthH" class="pre">우선순위5</div>
+											<div title="sixthH" class="pre">우선순위6</div>
+									</div>	
+										
+									<br>									
+									<div id="imagesHigh">
+											<div><img src="/godinator/resources/images/user/facility.jpg" id="facilityH" class="iconHigh"
+													draggable="true" ondragstart="drag(event)"></div>
+											<div><img src="/godinator/resources/images/user/group.jpg" id="groupH" class="iconHigh"
+													draggable="true" ondragstart="drag(event)"></div>
+											<div><img src="/godinator/resources/images/user/result_instruct.jpg" id="instructH" class="iconHigh"
+												draggable="true" ondragstart="drag(event)"></div>
+											<div><img src="/godinator/resources/images/user/result.jpg" id="resultH" class="iconHigh"
+													draggable="true" ondragstart="drag(event)"></div>
+											<div><img src="/godinator/resources/images/user/study_atmos.jpg" id="studyH" class="iconHigh"
+													draggable="true" ondragstart="drag(event)"></div>
+											<div><img src="/godinator/resources/images/user/teacher.jpg" id="teacherH" class="icon"
+													draggable="true" ondragstart="drag(event)"></div>
 									</div>
+									</form>
+									<br>
+									<hr>
+									<br>
+										<h2 class="schoolName">대학교 우선순위</h2>
+									<form id="UniPreferenceForm" name="UniPreferenceForm">
 									
-									<div class="preference">
-										<h2 class="schoolName">대학교</h2>
-										<h3 id="contentId">시설</h3>
-										<div>별점</div>
-										   <br> <br>
-										   <h3 id="contentId">학업분위기</h3>
-										<div>별점</div>
-										<br> <br>
-										<h3 id="contentId">교직원(교육, 인성)</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">진로교육</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">취업진학률</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">동아리활성화</h3>
-										<div>별점</div>
-										   <br> <br>
-										   <h3>후배들을 위한 조언</h3>
-										   <div class="col-12">
-																<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-															</div>
+									<div id="boardsUni">
+											<div title="firstU" class="pre">우선순위1</div>
+											<div title="secondU" class="pre">우선순위2</div>
+											<div title="thirdU" class="pre">우선순위3</div>
+											<div title="fourthU" class="pre">우선순위4</div>
+											<div title="fifthU" class="pre">우선순위5</div>
+											<div title="sixthU" class="pre">우선순위6</div>
 									</div>
+									<br>	
+									<div id="imagesUni">
+											<div><img src="/godinator/resources/images/user/facility.jpg" id="facilityU" class="iconUni"></div>
+											<div><img src="/godinator/resources/images/user/group.jpg" id="groupU" class="iconUni"></div>
+											<div><img src="/godinator/resources/images/user/result_instruct.jpg" id="instructU" class="iconUni"></div>
+											<div><img src="/godinator/resources/images/user/result.jpg" id="resultU" class="iconUni"></div>
+											<div><img src="/godinator/resources/images/user/study_atmos.jpg" id="studyU" class="iconUni"></div>
+											<div><img src="/godinator/resources/images/user/teacher.jpg" id="teacherU" class="icon"></div>
+									</div>
+										
 									</form>
 										   <br>
 									<ul class="actions">
-										<li>4/4</li>
-										<li><a href="#" class="button primary">회원가입</a></li>
+										<li>3/4</li>
+										<li><a href="#" class="button primary" id="registerPreferenceBtn">다음페이지</a></li>
 									</ul>
-									
-									<hr class="major" />
 								</div>
 
 						</div>

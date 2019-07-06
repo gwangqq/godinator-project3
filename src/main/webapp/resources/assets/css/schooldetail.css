@@ -1,0 +1,27 @@
+h2.schooldetail {
+	text-align: center;
+}
+
+section span>img {
+	max-width: 100%;
+	height: inherit;
+}
+
+p>span.adis:hover {
+	cursor: pointer;
+	color: black;
+	font-weight: bold;
+}
+
+p.adis {
+	vertical-align: middle !important;
+}
+
+div.textarea {
+	border: 1px solid red;
+	margin: 1% auto;
+}
+
+ul.school-detail {
+	text-align: center;
+}

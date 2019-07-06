@@ -1,0 +1,43 @@
+div.school-recommendation p {
+	margin: 3px;
+	text-align: center;
+}
+
+p.simpleInfo {
+	text-align: center;
+}
+
+div.img {
+	margin-bottom: 3px;
+}
+
+hr {
+	margin: 3px;
+}
+
+p.url:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+p.url {
+	margin-bottom: 20px;
+}
+
+div.school-recommendation>div {
+	padding: 0px 0px 0px 0px;
+	border-left: 1px solid;
+	border-right: 1px solid;
+}
+
+p.shcool-name:hover {
+	cursor: pointer;
+}
+
+div.school-recommendation img {
+	cursor: pointer;
+}
+
+.image {
+	margin: 0px 0px 2px 0px !important;
+}

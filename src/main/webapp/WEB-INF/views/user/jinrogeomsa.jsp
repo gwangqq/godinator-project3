@@ -92,15 +92,15 @@
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic07.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic08.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<a href="#" class="image"><img src="/godinator/resources/images/pic09.jpg" alt="" /></a>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
 										</article>
 									</div>
@@ -134,11 +134,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="godinator/assets/js/jquery.min.js"></script>
-			<script src="godinator/assets/js/browser.min.js"></script>
-			<script src="godinator/assets/js/breakpoints.min.js"></script>
-			<script src="godinator/assets/js/util.js"></script>
-			<script src="godinator/assets/js/main.js"></script>
+			<script src="/godinator/resources/assets/js/jquery.min.js"></script>
+			<script src="/godinator/resources/assets/js/browser.min.js"></script>
+			<script src="/godinator/resources/assets/js/breakpoints.min.js"></script>
+			<script src="/godinator/resources/assets/js/util.js"></script>
+			<script src="/godinator/resources/assets/js/main.js"></script>
 
 	</body>
 </html>

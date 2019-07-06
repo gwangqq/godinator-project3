@@ -68,7 +68,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="${root}/js/jquery.min.js"></script>
 <script src="${root}/js/browser.min.js"></script>
 <script src="${root}/js/breakpoints.min.js"></script>
 <script src="${root}/js/util.js"></script>

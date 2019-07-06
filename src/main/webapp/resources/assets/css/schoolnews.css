@@ -1,0 +1,54 @@
+h1.newsH1C {
+	text-align: center;
+}
+
+h3.newsH3C {
+	text-align: center;
+}
+
+div#newsarea {
+	margin: 4%;
+	padding: 3%;
+	border: 1px solid red;
+}
+
+div#newsarea p.newsContent {
+	margin-bottom: 1px;
+}
+
+div#newsarea p.subject {
+	font-size: 1em;
+	color: #622DB7;
+	font-weight: bold;
+}
+
+div#newsarea p.press_date>span.press {
+	color: #29703E;
+}
+
+div#newsarea p.subject:hover {
+	cursor: pointer;
+}
+
+ul#schoolScrollDiv {
+	float: left;
+}
+
+ul#schoolScrollUl {
+	overflow-y: auto;
+	height: 100px;
+	top: 1px;
+	left: 1px;
+	display: none;
+	list-style: none;
+	z-index: 10;
+}
+
+ul#schoolScrollUl>li:hover {
+	cursor: pointer;
+	font-weight: bold;
+}
+
+img {
+	width: 60% !important;
+}

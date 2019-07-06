@@ -27,3 +27,26 @@ hr{
 .schoolName{
 	color: #84799F;
 }
+
+#imagesHigh, #imagesUni{
+	float: left;
+	width: 100px;
+	height: 100px;
+	border: 1px solid #000;
+	margin: 5px;
+}
+
+div #imagesHigh div>img.icon{
+	width: 10px;
+	height: 10px
+}
+
+#boardsHigh, #boardsUni{
+	clear: both;
+}
+
+.pre{
+	font-size: 2em;
+	line-height: 100px;
+	text-align: center;
+}

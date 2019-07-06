@@ -1,14 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>    
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>register.jsp</title>
+		<title>login.jsp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="/godinator/css/main.css" />
-		<link rel="stylesheet" href="/godinator/css/register.css"/>
+		<link rel="stylesheet" href="/godinator/css/login.css"/>
 	</head>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#moveRegister").click(function() {
+				location.href="/godinator/view/user/register_1.jsp";
+			});
+		});
+	
+	</script>
 	<body class="is-preload">
 
 		<!-- Wrapper -->
@@ -26,79 +37,33 @@
 							<!-- Content -->
 								<div id="loginAll">
 									<header class="main">
-									
-										<h1>회원가입</h1>
-										<h3 class="subtitle">우리학교의 점수는?</h3>
+										<h1>로그인</h1>
 									</header>
 
-
-<br>
 									<!-- Content -->
 									<form id="loginForm" name="loginForm">
-									<div class="preference">
-										<h2 class="schoolName">고등학교</h2>
-										<h3 id="contentId">시설</h3> 
-										<div>별점</div>
-										   <br>
-										   <br>
-										   <h3 id="contentId">학업분위기</h3>
-										<div>별점</div>
-										<br>
-										 <br>
-										<h3 id="contentId">교직원(교육, 인성)</h3>
-										<div>별점</div>
-										   <br>
-										    <br>
-											<h3 id="contentId">진로교육</h3>
-										<div>별점</div>
-										   <br>
-										    <br>
-											<h3 id="contentId">취업진학률</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">동아리활성화</h3>
-										<div>별점</div>
-										   <br> <br>
-										   
-										   <h3>후배들을 위한 조언</h3>
-										   <div class="col-12">
-																<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-															</div>
-										   
+									<div>
+										<h2 id="contentId">아이디</h2>
+										   <input type="text" name="loginId" id="loginId" value="" placeholder="아이디를 입력하세요" />
 									</div>
-									
-									<div class="preference">
-										<h2 class="schoolName">대학교</h2>
-										<h3 id="contentId">시설</h3>
-										<div>별점</div>
-										   <br> <br>
-										   <h3 id="contentId">학업분위기</h3>
-										<div>별점</div>
-										<br> <br>
-										<h3 id="contentId">교직원(교육, 인성)</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">진로교육</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">취업진학률</h3>
-										<div>별점</div>
-										   <br> <br>
-											<h3 id="contentId">동아리활성화</h3>
-										<div>별점</div>
-										   <br> <br>
-										   <h3>후배들을 위한 조언</h3>
-										   <div class="col-12">
-																<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-															</div>
+										   <br>
+									<div> 
+										<h2 id="contentPwd">비밀번호</h2>
+										   <input type="text" name="loginPwd" id="loginPwd" value="" placeholder="비밀번호를 입력하세요" />
 									</div>
 									</form>
 										   <br>
 									<ul class="actions">
-										<li>4/4</li>
-										<li><a href="#" class="button primary">회원가입</a></li>
+										<li><a href="#" class="button primary">로그인</a></li>
+										<li><a href="#" class="button" id="moveRegister">회원가입</a></li>
+									</ul>
+									<br>
+									<ul class="snslogin">
+										<img src="/godinator/img/snslogin/naver.png">
+										<img src="/godinator/img/snslogin/kakao.png">
 									</ul>
 									
+								
 									<hr class="major" />
 								</div>
 

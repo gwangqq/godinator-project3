@@ -1,0 +1,65 @@
+div.search-condition {
+	margin: 3% auto;
+}
+
+input#searchInput {
+	background-image: url('images/search.PNG');
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+
+div.hr-sect {
+	display: flex;
+	flex-basis: 100%;
+	align-items: center;
+	color: black;
+	font-size: 1em;
+	margin: 8px 0px;
+}
+
+div.hr-sect::before, div.hr-sect::after {
+	content: "";
+	flex-grow: 1;
+	background: rgba(0, 0, 0, 0.35);
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	margin: 0px 16px;
+}
+
+div.adis-content {
+	padding: 2% 2%;
+	margin: 0 2em;
+}
+
+p.simpleInfo {
+	margin: 0 2em;
+}
+
+span.school-name {
+	font-size: 2em;
+}
+
+span.school-name:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+span.location {
+	color: black;
+}
+
+span.url:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+div.search-condition select:hover {
+	border-color: #f56a6a;
+	box-shadow: 0 0 0 1px #f56a6a;
+}
+
+input:hover {
+	border-color: #f56a6a;
+	box-shadow: 0 0 0 1px #f56a6a;
+}
