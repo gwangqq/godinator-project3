@@ -14,4 +14,27 @@
 			set b_view_count =  b_view_count+1
 			where board_no = #{boardNo}
    		</update>
+   		
+   		<select id = "getNewArticleCount" parameterType="int" resultType="int">
+			select count(board_no)
+			from board
+			where board_category = #{boardCategory}
+			and to_char(b_postdate, 'yymmdd') = to_char(sysdate,'yymmdd')
+	</select>
+	
+	<select id = "getTotalArticleCount" parameterType="map" resultType="int">
+			select count(board_no)
+			from board
+			where board_category = #{boardCategory}
+				<if test="word != null and word != ''" >
+		           	<if test="key == 'board_subject'">
+		           	and board_subject like '%'||#{word}||'%'
+		           	</if>
+		           	<if test="key != 'board_subject'">
+		           	and ${key} = #{word}
+		           	</if>
+		   	    </if>
+	</select>
+   		
+   		
    </mapper>

@@ -27,9 +27,29 @@ $(document).ready(function() {
 		$("#boardNo").val($(this).attr("data-seq"));
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/view").submit();
 	});
+	
+	$(".firstListBtn").click(function() {
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
+	});
+	
+	$(".moveListBtn").click(function() {
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val($(this).attr("data-pg"));
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
+	});
 });
 </script>	
-
+<!-- <style>
+.page { width:1200px; margin:0 auto;  }
+.pagination { float:left; text-align:center; }
+.page li { display:inline-block; text-align:center; }
+</style> -->
 </head>
 <body class="is-preload">
 
@@ -105,11 +125,16 @@ $(document).ready(function() {
 									
 									
 									<!-- ===============page 처리============ -->
-										<div class = "row">
-										<div class = "col-3"></div>
-										<div class = "col-6">
-											<ul class="pagination" style="display: inline-block;">
-												<li><span class="button disabled">Prev</span></li>
+										<div class = "row" align="center" style="margin: auto 0;">
+										<div class = "col-2"></div>
+										<div class = "col-8 page">
+											<ul class="pagination">
+												${navigator.navigator}
+											</ul>
+										</div>
+										<div class = "col-2"></div>
+										<!-- <li><span class="button disabled">최신게시물</span></li>
+												<li><span class="button disabled">이전</span></li>
 												<li><a href="#" class="page active">1</a></li>
 												<li><a href="#" class="page">2</a></li>
 												<li><a href="#" class="page">3</a></li>
@@ -120,18 +145,15 @@ $(document).ready(function() {
 												<li><a href="#" class="page">8</a></li>
 												<li><a href="#" class="page">9</a></li>
 												<li><a href="#" class="page">10</a></li>
-												<li><a href="#" class="button">Next</a></li>
-											</ul>
-										</div>
-										<div class = "col-3"></div>	
-										
+												<li><a href="#" class="button">다음</a></li>
+												<li><a href="#" class="button">끝 게시물</a></li> -->
 								
 								
 								<!-- =============== 조건 검색 창 ===========-->
 									
 										<div class = "col-1"></div>
 										<div class = "col-3" style="margin-right: 0; padding:0;">
-										<select name = "key" id="demo-category">
+										<select name = "key" id="key">
 											<option value="1">전체</option>
 											<option value="2">글제목</option>
 											<option value="3">작성자</option>
@@ -141,7 +163,7 @@ $(document).ready(function() {
 										</select>
 										</div>
 										<div class = "col-6" style="margin-left: 0;margin-right: 0;padding:0;">
-										<input type="text" placeholder="검색내용을 입력해주세요">					
+										<input type="text" placeholder="검색내용을 입력해주세요" name = "word" id = "word">					
 										</div>
 										<div class = "col-1" style="margin-left: 0; margin-right: 0;padding:0;">
 										<button class="button icon solid fa-search">검색</button>
