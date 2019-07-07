@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
-<%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>	
+<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+<%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
 <<<<<<< Upstream, based on develop

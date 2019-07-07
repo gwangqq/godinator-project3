@@ -17,8 +17,7 @@ public interface BoardService {
 	//글 작성 완료
 	int writeArticle(BoardDto boardDto);
 	
-	//common method
-	int getNextBoardNo();
+	
 	//게시판 LIST 보여주기
 	List<BoardDto> listArticle(Map<String, String> parameter);
 	

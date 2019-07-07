@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kitri.godinator.board.controller.NumberCheck;
 import com.kitri.godinator.board.dao.BoardCommonDao;
 import com.kitri.godinator.board.dao.BoardDao;
+import com.kitri.godinator.model.BoardConstance;
 import com.kitri.godinator.model.BoardDto;
 import com.kitri.godinator.model.CategoryDto;
 
@@ -60,20 +62,16 @@ public class BoardServiceImpl implements BoardService{
 		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
 
-// boardNo 넘기는 method
-	@Override
-	public int getNextBoardNo() {
-		return sqlSession.getMapper(BoardCommonDao.class).getNextBoardNo();
-	}
 
+//page처리 + 게시판 list 보기
 	@Override
 	public List<BoardDto> listArticle(Map<String, String> parameter) {
-//		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
-//		int end = pg * CafeConstance.ARTICLE_SIZE;
-//		int start = end - CafeConstance.ARTICLE_SIZE;
-//
-//		parameter.put("start", start + "");
-//		parameter.put("end", end + "");
+		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
+		int end = pg * BoardConstance.ARTICLE_SIZE;
+		int start = end - BoardConstance.ARTICLE_SIZE;
+
+		parameter.put("start", start + "");
+		parameter.put("end", end + "");
 
 		return sqlSession.getMapper(BoardDao.class).listArticle(parameter);
 	}

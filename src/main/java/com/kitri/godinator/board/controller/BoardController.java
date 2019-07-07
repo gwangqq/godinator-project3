@@ -9,23 +9,25 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
 import com.kitri.godinator.model.BoardDto;
-import com.kitri.godinator.model.CategoryDto;
 import com.kitri.godinator.model.MemberDto;
+import com.kitri.godinator.model.PageNavigation;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-
+	
+	@Autowired
+	private BoardCommonService boardCommonService;
+	
 	@Autowired
 	private BoardService boardService;
 	
@@ -88,7 +90,7 @@ public class BoardController {
 		
 		if (memberDto != null) {
 			
-			int boardNo = boardService.getNextBoardNo();
+			int boardNo = boardCommonService.getNextBoardNo();
 			boardDto.setBoardNo(boardNo);
 			boardDto.setbUserId(memberDto.getUserId());
 			boardDto.setUserName(memberDto.getUserName());
@@ -136,13 +138,13 @@ public class BoardController {
 		
 		String path = "";
 //		System.out.println(list);
-//		PageNavigation pageNavigation = commonService.getPageNavigation(parameter);
-//		pageNavigation.setRoot(requset.getContextPath());
-//		pageNavigation.makeNavigator();
+		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
+		pageNavigation.setRoot(requset.getContextPath());
+		pageNavigation.makeNavigator();
 
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
-//		model.addAttribute("navigator", pageNavigation);
+		model.addAttribute("navigator", pageNavigation);
 		
 		return path = "board/list";
 	}
