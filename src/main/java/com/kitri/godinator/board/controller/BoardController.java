@@ -9,21 +9,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.kitri.godinator.board.dao.BoardCommonDao;
 import com.kitri.godinator.board.service.BoardService;
-import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.CategoryDto;
 import com.kitri.godinator.model.MemberDto;
 
 @Controller
@@ -32,16 +28,21 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-
-	@RequestMapping(value = "/movelist", method = RequestMethod.GET)
-	public String move() {
-		return "board/list";
+	
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String main(@RequestParam Map<String, String> parameter, Model model) {
+		return "board/main";
 	}
-
-	@RequestMapping(value = "/movewrite", method = RequestMethod.GET)
-	public String move2() {
-		return "board/write";
-	}
+	
+//	@RequestMapping(value = "/movelist", method = RequestMethod.GET)
+//	public String move() {
+//		return "board/list";
+//	}
+//
+//	@RequestMapping(value = "/movewrite", method = RequestMethod.GET)
+//	public String move2() {
+//		return "board/write";
+//	}
 
 	@RequestMapping(value = "/moveview", method = RequestMethod.GET)
 	public String move3() {
@@ -81,12 +82,13 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
+		System.out.println(parameter.toString());
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		
 		if (memberDto != null) {
 			
-			int boardNo = boardService.getNextSeq();
+			int boardNo = boardService.getNextBoardNo();
 			boardDto.setBoardNo(boardNo);
 			boardDto.setbUserId(memberDto.getUserId());
 			boardDto.setUserName(memberDto.getUserName());
@@ -94,7 +96,7 @@ public class BoardController {
 			boardNo = boardService.writeArticle(boardDto);
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
-				path = "board/list";
+				path = "board/writeok";
 			} else {
 				path = "오류 페이지 넣어야됨";
 			}
@@ -106,18 +108,34 @@ public class BoardController {
 		return path;
 	}
 	
+//------------------------[게시물 보여주기]------------------------------
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
+	public String view(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-		
-		return "";
+//		System.out.println("view/c : " + parameter.toString() + boardNo);
+		String path = "";
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if (memberDto != null) {
+			BoardDto boardDto = boardService.viewArticle(boardNo);
+			model.addAttribute("article", boardDto);
+			model.addAttribute("parameter", parameter);
+			path = "board/view";
+		} else {
+			path = "redirect:/index.jsp";
+		}
+		return path;
 	}
-	
+
+
+//------------------------[게시판 리스트]------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
-		System.out.println("get으로 넘어왔다" + parameter.toString());
+	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
+
+//		System.out.println("get으로 넘어왔다" + parameter.toString());
 		List<BoardDto> list = boardService.listArticle(parameter);
-		System.out.println(list);
+		
+		String path = "";
+//		System.out.println(list);
 //		PageNavigation pageNavigation = commonService.getPageNavigation(parameter);
 //		pageNavigation.setRoot(requset.getContextPath());
 //		pageNavigation.makeNavigator();
@@ -125,6 +143,8 @@ public class BoardController {
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 //		model.addAttribute("navigator", pageNavigation);
+		
+		return path = "board/list";
 	}
 	
 	

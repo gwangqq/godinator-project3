@@ -2,15 +2,15 @@ package com.kitri.godinator.model;
 
 public class CategoryDto {
 
-	private int categoryNo; 		// 카테고리 번호
+	private int boardCategory; 		// 카테고리 번호
 	private String categoryName;	// 카테고리 이름
 
-	public int getCategoryNo() {
-		return categoryNo;
+	public int getboardCategory() {
+		return boardCategory;
 	}
 
-	public void setCategoryNo(int categoryNo) {
-		this.categoryNo = categoryNo;
+	public void setboardCategory(int boardCategory) {
+		this.boardCategory = boardCategory;
 	}
 
 	public String getCategoryName() {
@@ -21,4 +21,10 @@ public class CategoryDto {
 		this.categoryName = categoryName;
 	}
 
+	@Override
+	public String toString() {
+		return "CategoryDto [boardCategory=" + boardCategory + ", categoryName=" + categoryName + "]";
+	}
+	
+	
 }

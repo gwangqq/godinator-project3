@@ -7,22 +7,25 @@
 
 <script>
 $(document).ready(function() {
-	$.ajax({
-		url:'${root}/board/list',
-		type: 'GET',
-		success : function(response) {
-			alert("list넘어옴!!!");
-		}
-	});
 	
 	$(".moveWriteBtn").click(function() {
-		//encodingURI, encodingComponent쓰면 쿼리스트링 encoding가능 form에 input hidden으로 보내는거 많이 사용
-		$("#bcode").val("${bcode}");
+		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		$("#seq").val("");
+		$("#boardNo").val("");
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
+	});
+	
+	
+	$(".viewBtn").click(function() {
+		alert("tr 눌렸음!!!");
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#boardNo").val($(this).attr("data-seq"));
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/view").submit();
 	});
 });
 </script>	
@@ -80,12 +83,12 @@ $(document).ready(function() {
 												</thead>
 												<tbody>
 												<c:forEach var = "article" items = "${articleList}">
-													<tr>
-														<td>${article.boardNo }</td>
-														<td>[${article.region }/${article.bSchoolName}]${article.boardSubject}</td>
+													<tr class = "viewBtn" data-seq="${article.boardNo}">
+														<td>${article.boardNo}</td>
+														<td>[${article.region}/${article.bSchoolName}]${article.boardSubject}</td>
 														<td>${article.bUserId}</td>
-														<td>${article.bPostdate }</td>
-														<td>${article.bViewCount }</td>
+														<td>${article.bPostdate}</td>
+														<td>${article.bViewCount}</td>
 														<td>좋아요 숫자</td>
 													</tr>
 												</c:forEach>
