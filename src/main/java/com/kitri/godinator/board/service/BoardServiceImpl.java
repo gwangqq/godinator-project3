@@ -8,16 +8,28 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kitri.godinator.board.dao.BoardCommonDao;
 import com.kitri.godinator.board.dao.BoardDao;
 import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.CategoryDto;
 
 @Service
 public class BoardServiceImpl implements BoardService{
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	//main 페이지 커뮤니티 menu
+	@Override
+	public List<CategoryDto> menuList() {
+		System.out.println("service : "  + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
+		return sqlSession.getMapper(BoardDao.class).getBoardMenuList();
+		
+	}	
+	
+	
 	
 	//고등학교 찾기 메소드
 	@Override
@@ -44,17 +56,14 @@ public class BoardServiceImpl implements BoardService{
 //	기본 글 쓰기 메소드
 	@Override
 	public int writeArticle(BoardDto boardDto) {
-		
-		
 		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
-		boardDto.setBoardContent(boardDto.getBoardContent().replace("<br>","\n"));
 		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
 
 // boardNo 넘기는 method
 	@Override
-	public int getNextSeq() {
-		return sqlSession.getMapper(BoardCommonDao.class).getNextSeq();
+	public int getNextBoardNo() {
+		return sqlSession.getMapper(BoardCommonDao.class).getNextBoardNo();
 	}
 
 	@Override
@@ -68,6 +77,22 @@ public class BoardServiceImpl implements BoardService{
 
 		return sqlSession.getMapper(BoardDao.class).listArticle(parameter);
 	}
+
+
+//	list에서 작성 된 글 보기
+	@Override
+	@Transactional
+	public BoardDto viewArticle(int boardNo) {
+		//조회수 증가
+		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(boardNo);
+		//글쓴 내용 가져오기
+		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
+		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
+		return boardDto;
+	}
+
+	
+	
 
 	
 	

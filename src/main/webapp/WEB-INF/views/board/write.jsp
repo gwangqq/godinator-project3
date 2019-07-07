@@ -87,7 +87,7 @@ $(document).ready(function() {
 		} else {
 			//alert(schoolType+"|||||" + schoolName);
 			$.ajax({
-				url:'${root}/board/searchschool/',
+				url:'${root}/board/searchschool',
 				type: 'POST',
 				contentType:'application/json;charset=UTF-8',
 				dataType : 'json',
@@ -201,7 +201,7 @@ $(document).ready(function() {
 			return;
 		} else {
 			$("#writeForm").attr("action", "${root}/board/write").submit();
-			alert("글 작성을 완료했습니다.")
+			alert("글 작성을 완료했습니다.");
 		}
 	});
 	
@@ -212,7 +212,7 @@ $(document).ready(function() {
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
-		location.href="${root}/board/moveview";
+		location.href="${root}/board/list";
 	});
 });
 </script>	

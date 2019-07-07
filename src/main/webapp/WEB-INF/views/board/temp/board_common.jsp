@@ -6,7 +6,7 @@
 <c:set var = "word" value = "${parameter.word}"/>
 <c:set var = "boardNo" value = "${boardNo}"/>
 <form id = "commonForm">
-	<input type="hidden" name = "bcode" id = "bcode">
+	<input type="hidden" name = "boardCategory" id = "boardCategory">
 	<input type="hidden" name = "pg" id = "pg">
 	<input type="hidden" name = "key" id = "key">
 	<input type="hidden" name = "word" id = "word">

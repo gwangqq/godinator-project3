@@ -7,15 +7,15 @@
 
 $(document).ready(function() {
 	
-	
 	$("#moveListBtn").click(function() {
-		$("#bcode").val("${bcode}");
+		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
 		$("#boardNo").val("");
-		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/moveList").submit();
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
 	});
+	
 	
 	
 });
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>${parameter.bUserId}</strong></a>님 환영합니다.
+									<a href="index.html" class="logo"><strong>${article.bUserId}</strong></a>님 환영합니다.
 									<a>로그인</a><a>마이페이지</a>
 								</header>
 
@@ -51,7 +51,7 @@ $(document).ready(function() {
 							<br><br>
 							<div class = "col-2"></div>
 							<div class = "col-8">
-								<font size="6">[${parameter.region}/${parameter.bSchoolName}]${parameter.boardSubject}</font>
+								<font size="6">[${article.region}/${article.bSchoolName}]${article.boardSubject}</font>
 								<hr style="margin: 0;">
 							</div>
 							<div class = "col-2"></div>
@@ -66,10 +66,10 @@ $(document).ready(function() {
 										</span>
 										
 										<span style = "float: left;">
-											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f; padding-top: 0;padding-bottom: 5em;" >${parameter.bUserId}</a>
+											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f; padding-top: 0;padding-bottom: 5em;" >${article.bUserId}</a>
 										</span>
 									<!-- 작성시간 -->
-									<span style="float:right;">${parameter.bPostdate}</span>
+									<span style="float:right;">${article.bPostdate}</span>
 									<br>
 									<!-- 첨부파일 -->
 									<span style="float:right;"><a href = "#" id = "download"><i class = "fas fa-download"></i>첨부파일</a></span>&nbsp;
@@ -85,7 +85,7 @@ $(document).ready(function() {
 									<div class = "col-8" style = "clear: both;text-align: left;" >
 									
 										<p id = "viewcontent">
-										${parameter.boardContent}
+										${article.boardContent}
 										</p>
 										
 									</div>
@@ -118,7 +118,7 @@ $(document).ready(function() {
 								<!-- 글정보 및 신고하기 -->
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글0| 조회수  ${parameter.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글0| 조회수  ${article.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>

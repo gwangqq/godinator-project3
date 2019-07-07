@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Sidebar -->
+
+ 
 					<div id="sidebar">
 						<div class="inner">
 
@@ -18,14 +20,14 @@
 									<ul>
 										<li><a href="index.html">Homepage</a></li>
 										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
+										<li><a href="#" ></a></li>
 										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
+											<span class="opener" id = "community">커뮤니티</span>
+											<ul id ="communityMenu">
+													<li><a href="${root}/board/list?boardCategory=1&pg=1&key=&word=">홍보게시판</a></li>
+													<li><a href="${root}/board/list?boardCategory=2&pg=1&key=&word=">고등학교 게시판</a></li>
+													<li><a href="${root}/board/list?boardCategory=3&pg=1&key=&word=">대학교 게시판</a></li>
+													<li><a href="${root}/board/list?boardCategory=4&pg=1&key=&word=">핫 게시물</a></li>
 											</ul>
 										</li>
 										<li><a href="#">Etiam Dolore</a></li>

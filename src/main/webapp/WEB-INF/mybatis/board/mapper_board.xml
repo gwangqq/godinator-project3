@@ -5,6 +5,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.kitri.godinator.board.dao.BoardDao">
+	
+  	
+  	
+  	<!-- 학교 이름 찾기  -->
   	<select id="findHSchool" parameterType="String" resultType="String">
   		select distinct school_name schoolName
 			from h_school
@@ -16,18 +20,47 @@
 			from u_school
 			where name like '%'||#{schoolName}||'%'
   	</select>  
+  	
+  	<!-- 글 작성 완료  -->
   	<insert id="writeArticle" parameterType="boardDto">
 	insert 
 		into board (BOARD_NO, B_USER_ID, BOARD_CATEGORY, USER_NAME, BOARD_SUBJECT, BOARD_CONTENT, B_SCHOOL_NAME, B_SCHOOL_CODE,
 		B_SCHOOL_CATE1, B_SCHOOL_CATE2, REGION, B_VIEW_COUNT, DEL_STUS, STATE, B_POSTDATE )
-		values(#{boardNo}, #{bUserId}, 1, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
+		values(#{boardNo}, #{bUserId}, #{boardCategory}, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
 	</insert>
 	
+	<!-- list에 뿌려주기 -->
 	<select id="listArticle" parameterType="map" resultType="BoardDto">
-	select board_no, b_user_id, board_subject, board_content, b_school_name, b_view_count, b_postdate, region
-	from board
-	where where board_category = #{boardCategory}
+	select c.board_no boardNo, board_category boardCategory,c.b_user_id bUserId, c.board_subject boardSubject, c.b_school_name bSchoolName, c.b_view_count bViewCount, 
+    decode(to_char(c.b_postdate ,'yymmdd'),
+                    to_char(sysdate,'yymmdd'), to_char(c.b_postdate,'hh24:mi:ss'),
+                    to_char(c.b_postdate ,'yy.mm.dd')) bPostdate, 
+		    c.region region
+		from
+		    (
+		    select rownum r, total.* 
+		    from
+		        (
+		        select board_no,board_category, b_user_id, board_subject, b_school_name, b_view_count, b_postdate, region
+		            from board
+		            where board_category = #{boardCategory}
+		            order by board_no DESC
+		            ) total
+		        where rownum &lt;= 15
+		    )c
+		where c.r &gt; 15-15
 	</select> 
+	
+	<!-- 게시물 보기 -->
+	<select id = "viewArticle" parameterType="int" resultType="boardDto">
+	select board_no boardNo, b_user_id bUserId, board_subject boardSubject, board_content boardContent, b_school_name bSchoolName,
+        decode(to_char(b_postdate ,'yymmdd'),
+                    to_char(sysdate,'yymmdd'), to_char(b_postdate,'hh24:mi:ss'),
+                    to_char(b_postdate ,'yy.mm.dd')) bPostdate, region region, b_view_count bViewCount
+	from board
+	where board_no = #{boardNo}
+	</select>
+	
 	
 	
 </mapper>

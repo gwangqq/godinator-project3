@@ -4,5 +4,8 @@ package com.kitri.godinator.board.dao;
 
 public interface BoardCommonDao {
 	
-	public int getNextSeq();
+	//boardNo가져오기
+	public int getNextBoardNo();
+
+	public void updateViewCount(int boardNo);
 }
