@@ -82,7 +82,7 @@ public class BoardController {
 			
 			int boardNo = boardCommonService.getNextBoardNo();
 			boardDto.setBoardNo(boardNo);
-			boardDto.setbUserId(memberDto.getUserId());
+			boardDto.setBUserId(memberDto.getUserId());
 			boardDto.setUserName(memberDto.getUserName());
 //			System.out.println("C : " + boardDto);
 			boardNo = boardService.writeArticle(boardDto);

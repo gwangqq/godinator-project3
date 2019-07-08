@@ -34,7 +34,6 @@
       <beans:property name="maxUploadSize" value="5242880"/>
    </beans:bean>
 	
-<<<<<<< Upstream, based on develop
 <!-- 	웹소켓 매핑 -->
 	
 	<websocket:handlers>
@@ -53,8 +52,6 @@
       </websocket:handlers>
       <beans:bean id="connChatHandler"  class="com.kitri.godinator.mentor.controller.ConnChatHandler" />
       
-=======
->>>>>>> 8450a33 20190702 파일업로드 관련 xml수정 (pom.xml & servlet-context.xml)
        <annotation-driven>
 		<message-converters>
 			<beans:bean class="org.springframework.http.converter.StringHttpMessageConverter">
