@@ -368,6 +368,7 @@ ALTER TABLE category
 
 /* ëŒ€í•™êµ */
 CREATE TABLE u_school (
+<<<<<<< Upstream, based on develop
 	code varchar2(20) NOT NULL, /* í•™êµì½”ë“œ */
 	name VARCHAR(50) NOT NULL, /* í•™êµëª… */
 	type varchar2(100), /* í•™êµì¢…ë¥˜ */
@@ -386,6 +387,26 @@ CREATE TABLE u_school (
 	eval4_avg number, /* í‰ê°€í•­ëª©4 í‰ê·  */
 	eval5_avg number, /* í‰ê°€í•­ëª©5 í‰ê·  */
 	eval_cnt number /* í‰ê°€ì¸ì›ìˆ˜ */
+=======
+	code varchar2(20) NOT NULL, /* ÇÐ±³ÄÚµå */
+	name VARCHAR(50) NOT NULL, /* ÇÐ±³¸í */
+	type varchar2(100), /* ÇÐ±³Á¾·ù */
+	estType  varchar2(50), /* ¼³¸³±¸ºÐ */
+	zipcode varchar2(5), /* ¿ìÆí¹øÈ£ */
+	region varchar2(100), /* Áö¿ª */
+	address varchar2(200), /* ÁÖ¼Ò */
+	link varchar2(100), /* È¨ÆäÀÌÁöÁÖ¼Ò */
+	latitude varchar2(50), /* À§µµ */
+	longitude varchar2(50), /* °æµµ */
+	tel varchar2(20), /* ÀüÈ­¹øÈ£ */
+	fax varchar2(20), /* ÆÑ½º¹øÈ£ */
+	eval1_avg number, /* Æò°¡Ç×¸ñ1 Æò±Õ */
+	eval2_avg number, /* Æò°¡Ç×¸ñ2 Æò±Õ */
+	eval3_avg number, /* Æò°¡Ç×¸ñ3 Æò±Õ */
+	eval4_avg number, /* Æò°¡Ç×¸ñ4 Æò±Õ */
+	eval5_avg number, /* Æò°¡Ç×¸ñ5 Æò±Õ */
+	eval_cnt number /* Æò°¡ÀÎ¿ø¼ö */
+>>>>>>> 4861a4e DB ë°ì´í„° íƒ€ìž… ìˆ˜ì • ë° ERRORíŽ˜ì´ì§€ ì¶”ê°€
 );
 
 ALTER TABLE u_school
@@ -458,6 +479,7 @@ ALTER TABLE member
 
 /* ê²Œì‹œíŒ */
 CREATE TABLE board (
+<<<<<<< Upstream, based on develop
 	board_no number NOT NULL, /* ê¸€ë²ˆí˜¸ */
 	b_user_id varchar2(10) NOT NULL, /* ì•„ì´ë”” */
 	board_category number, /* ì¹´í…Œê³ ë¦¬ë²ˆí˜¸ */
@@ -473,6 +495,23 @@ CREATE TABLE board (
 	del_stus CHAR(1) DEFAULT 0, /* ì‚­ì œì—¬ë¶€ */
 	state CHAR(1), /* ìƒíƒœ */
 	b_postdate DATE /* ìž‘ì„±ì‹œê°„ */
+=======
+	board_no number NOT NULL, /* ±Û¹øÈ£ */
+	b_user_id varchar2(10) NOT NULL, /* ¾ÆÀÌµð */
+	board_category number, /* Ä«Å×°í¸®¹øÈ£ */
+	user_name varchar2(8), /* ÀÌ¸§ */
+	board_subject varchar2(50) NOT NULL, /* Á¦¸ñ */
+	board_content clob NOT NULL, /* ³»¿ë */
+	b_school_name varchar2(20) NOT NULL, /* ÇÐ±³ÀÌ¸§ */
+	b_school_code VARCHAR(20) NOT NULL, /* ÇÐ±³ ÄÚµå  */
+	b_school_cate1 CHAR(1), /* ÇÐ±³ ±¸ºÐ1 */
+	b_school_cate2 VARCHAR(50), /* ÇÐ±³ ±¸ºÐ2 */
+	region varchar2(20), /* Áö¿ª */
+	b_view_count number DEFAULT 0, /* Á¶È¸¼ö */
+	del_stus CHAR(1) DEFAULT 0, /* »èÁ¦¿©ºÎ */
+	state CHAR(1), /* »óÅÂ */
+	b_postdate DATE /* ÀÛ¼º½Ã°£ */
+>>>>>>> 4861a4e DB ë°ì´í„° íƒ€ìž… ìˆ˜ì • ë° ERRORíŽ˜ì´ì§€ ì¶”ê°€
 );
 
 ALTER TABLE board
@@ -543,6 +582,7 @@ ALTER TABLE user_prefer
 
 /* ê³ ë“±í•™êµ */
 CREATE TABLE h_school (
+<<<<<<< Upstream, based on develop
 	school_code varchar2(20) NOT NULL, /* í•™êµì½”ë“œ */
 	school_name VARCHAR(100), /* í•™êµëª… */
 	school_cate1 varchar2(100), /* í•™êµìœ í˜•1 */
@@ -565,6 +605,30 @@ CREATE TABLE h_school (
 	eval4_avg number, /* í‰ê°€í•­ëª©4 í‰ê·  */
 	eval5_avg number, /* í‰ê°€í•­ëª©5 í‰ê·  */
 	eval_cnt number /* í‰ê°€ì¸ì›ìˆ˜ */
+=======
+	school_code varchar2(20) NOT NULL, /* ÇÐ±³ÄÚµå */
+	school_name VARCHAR(100), /* ÇÐ±³¸í */
+	school_cate1 varchar2(100), /* ÇÐ±³À¯Çü1 */
+	school_cate2 varchar2(100), /* ÇÐ±³À¯Çü2 */
+	estbl_date DATE, /* ¼³¸³ÀÏ */
+	zipcode varchar2(5), /* ¿ìÆí¹øÈ£ */
+	address varchar2(100), /* µµ·Î¸íÁÖ¼Ò */
+	address_detail varchar2(100), /* »ó¼¼ÁÖ¼Ò */
+	latitude varchar2(50), /* À§µµ */
+	longitude varchar2(50), /* °æµµ */
+	phone varchar2(20), /* ÀüÈ­¹øÈ£ */
+	fax varchar2(100), /* ÆÑ½º¹øÈ£ */
+	home_page varchar2(100), /* È¨ÆäÀÌÁöÁÖ¼Ò */
+	mw_cate varchar2(20), /* ³²³à°øÇÐ±¸ºÐ */
+	edu_office varchar2(50), /* ±³À°Ã» */
+	estType  varchar2(50), /* ¼³¸³±¸ºÐ */
+	eval1_avg number, /* Æò°¡Ç×¸ñ1 Æò±Õ */
+	eval2_avg number, /* Æò°¡Ç×¸ñ2 Æò±Õ */
+	eval3_avg number, /* Æò°¡Ç×¸ñ3 Æò±Õ */
+	eval4_avg number, /* Æò°¡Ç×¸ñ4 Æò±Õ */
+	eval5_avg number, /* Æò°¡Ç×¸ñ5 Æò±Õ */
+	eval_cnt number /* Æò°¡ÀÎ¿ø¼ö */
+>>>>>>> 4861a4e DB ë°ì´í„° íƒ€ìž… ìˆ˜ì • ë° ERRORíŽ˜ì´ì§€ ì¶”ê°€
 );
 
 ALTER TABLE h_school

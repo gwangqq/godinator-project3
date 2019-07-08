@@ -26,6 +26,8 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/view").submit();
 	});
 	
+	alert("${article}");
+	alert("${parameter}");
 });
 
 

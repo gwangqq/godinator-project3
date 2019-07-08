@@ -1,24 +1,11 @@
 package com.kitri.godinator.model;
 
+import lombok.Data;
+
+@Data
 public class OnChatDto {
 
 	private String userId;
 	private String oncate;
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getOncate() {
-		return oncate;
-	}
-
-	public void setOncate(String oncate) {
-		this.oncate = oncate;
-	}
 
 }

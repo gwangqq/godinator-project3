@@ -23,4 +23,8 @@ public interface BoardService {
 	
 	//게시물 하나씩 보여주기 
 	BoardDto viewArticle(int boardNo);
+	BoardDto getArticle(int boardNo);
+	
+	//게시물 수정 완료 버튼
+	int modifyArticle(BoardDto boardDto);
 }

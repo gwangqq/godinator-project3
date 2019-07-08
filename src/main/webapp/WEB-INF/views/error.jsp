@@ -22,6 +22,13 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
+<<<<<<< Upstream, based on develop
+<<<<<<< Upstream, based on develop
+=======
+
+>>>>>>> 4861a4e DB 데이터 타입 수정 및 ERROR페이지 추가
+=======
+>>>>>>> dfa4b36 20190703 설정수정
 							<!-- Header -->
 								<header id="header">
 									<a href="index.html" class="logo">Mentoring</a>

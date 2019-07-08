@@ -19,6 +19,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 		<commons-fileupload-version>1.3.1</commons-fileupload-version>
 		<spring-websocket-version>5.1.5.RELEASE</spring-websocket-version>
+		<lombok-version>1.18.8</lombok-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -166,6 +167,13 @@
 		    <artifactId>spring-websocket</artifactId>
 		    <version>${spring-websocket-version}</version>
 		</dependency>  
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>${lombok-version}</version>
+		    <scope>provided</scope>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>
@@ -206,4 +214,3 @@
         </plugins>
     </build>
 </project>
-	

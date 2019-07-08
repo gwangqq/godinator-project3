@@ -1,5 +1,8 @@
 package com.kitri.godinator.model;
 
+import lombok.Data;
+
+@Data
 public class MsgDto {
 
 	private int msgNo;			 // 일련번호
@@ -11,79 +14,5 @@ public class MsgDto {
 	private String msgContent;	// 내용
 	private String sendStus;	// 송신자 보관
 	private String recvStus;	// 수신자 보관
-
-	public int getMsgNo() {
-		return msgNo;
-	}
-
-	public void setMsgNo(int msgNo) {
-		this.msgNo = msgNo;
-	}
-
-	public String getSendId() {
-		return sendId;
-	}
-
-	public void setSendId(String sendId) {
-		this.sendId = sendId;
-	}
-
-	public String getRecvId() {
-		return recvId;
-	}
-
-	public void setRecvId(String recvId) {
-		this.recvId = recvId;
-	}
-
-	public String getSendDate() {
-		return sendDate;
-	}
-
-	public void setSendDate(String sendDate) {
-		this.sendDate = sendDate;
-	}
-
-	public String getRecvDate() {
-		return recvDate;
-	}
-
-	public void setRecvDate(String recvDate) {
-		this.recvDate = recvDate;
-	}
-
-	public String getMsgTitle() {
-		return msgTitle;
-	}
-
-	public void setMsgTitle(String msgTitle) {
-		this.msgTitle = msgTitle;
-	}
-
-	public String getMsgContent() {
-		return msgContent;
-	}
-
-	public void setMsgContent(String msgContent) {
-		this.msgContent = msgContent;
-	}
-
-	public String getSendStus() {
-		return sendStus;
-	}
-
-	public void setSendStus(String sendStus) {
-		this.sendStus = sendStus;
-	}
-
-	public String getRecvStus() {
-		return recvStus;
-	}
-
-	public void setRecvStus(String recvStus) {
-		this.recvStus = recvStus;
-	}
-
-	
 
 }

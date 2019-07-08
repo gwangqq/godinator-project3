@@ -85,11 +85,28 @@ public class BoardServiceImpl implements BoardService{
 		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(boardNo);
 		//글쓴 내용 가져오기
 		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
+		System.out.println("service view : " + boardDto); 
 		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
 		return boardDto;
 	}
 
-	
+
+// 수정에서 사용할 게시물 가져오기
+	@Override
+	public BoardDto getArticle(int boardNo) {
+		return sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
+	}
+
+
+	//게시물 수정 버튼 누르기
+	@Override
+	public int modifyArticle(BoardDto boardDto) {
+		int cnt = sqlSession.getMapper(BoardDao.class).modifyArticle(boardDto);
+//		System.out.println("service : " + boardDto + "||" + cnt);
+		return cnt != 0 ? boardDto.getBoardNo() : 0 ;
+	}
+
+
 	
 
 	
