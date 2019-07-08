@@ -61,7 +61,7 @@
 	
 	<!-- 게시물 보기 -->
 	<select id = "viewArticle" parameterType="int" resultType="boardDto">
-	select board_no boardNo, b_user_id bUserId, board_subject boardSubject, board_content boardContent, b_school_name bSchoolName,
+	select board_no boardNo, board_category boardCategory, b_user_id bUserId, board_subject boardSubject, board_content boardContent, b_school_name bSchoolName,
         decode(to_char(b_postdate ,'yymmdd'),
                     to_char(sysdate,'yymmdd'), to_char(b_postdate,'hh24:mi:ss'),
                     to_char(b_postdate ,'yy.mm.dd')) bPostdate, region region, b_view_count bViewCount
@@ -69,6 +69,14 @@
 	where board_no = #{boardNo}
 	</select>
 	
+	<update id="modifyArticle" parameterType="boardDto">
+		update board
+		  set 
+		     board_subject = #{boardSubject},
+		     board_content = #{boardContent},
+		     b_postdate = sysdate
+		  where board_no = #{boardNo}
+	</update>
 	
 	
 </mapper>

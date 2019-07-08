@@ -4,43 +4,10 @@
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
-<<<<<<< Upstream, based on develop
-<<<<<<< Upstream, based on develop
-<%@ include file="/WEB-INF/views/board/mapsearchmodal.jsp" %>
-<<<<<<< Upstream, based on develop
-<!-- 학교이름 검색 모달 창 -->
-=======
->>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
-=======
-
-
->>>>>>> 745f968 19.07.05
-
-
-=======
->>>>>>> 59ed2fb 19.07.05
+<c:set var = "selected" value = "${article.region}"/>
 <script>
 $(document).ready(function() {
-<<<<<<< Upstream, based on develop
-<<<<<<< Upstream, based on develop
-		
-//	모달창
-
-	 $("#realschoolsearch").click(function() {
-		var schoolname = $("#schoolname").val();
-		if(schoolname == ""){
-			alert("학교이름을 입력해주세요!!!!");
-			return;
-		} else{
-			alert(schoolname);
-		}
-		$("#schoolname").val('');
-	}); 
-=======
-//학교 검색 모달창	
-=======
 //------------------------------[학교 검색 모달창 시작]-----------------------------------	
->>>>>>> 07d6897 19.07.04 학교 검색 기능 완료
 	
 	//모달 엔터 클릭시 
 	$("#schoolName").keypress(function(key) {
@@ -124,10 +91,6 @@ $(document).ready(function() {
 			hschoolstr += '<label class = "searchresult" style = "padding:0;margin:0;">' +"검색결과가 없습니다."+ '</label><br>';
 			$("#searchresult").append(hschoolstr);
 		}
-<<<<<<< Upstream, based on develop
-	});
->>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
-=======
 	} 
 	
 	 function listUSchool(uschool) {
@@ -169,27 +132,9 @@ $(document).ready(function() {
 	}); 
 	
 	//------------------------------[학교 검색 모달창 끝]-----------------------------------	
->>>>>>> 07d6897 19.07.04 학교 검색 기능 완료
-	
-	
-	$("#schoolname").keypress(function(key) {
+//글 수정 완료 눌렀을 때 
+	$("#modifyBtn").click(function() {
 		
-		if(key.keyCode == 13){			
-		var schoolname = $("#schoolname").val();
-			if(schoolname == ""){
-				alert("학교이름을 입력해주세요!!!!");
-				return;
-			} else{
-				alert(schoolname);
-			}  
-			
-			$("#schoolname").val('');
-		} 
-			
-	});
-
-//글 작성 완료 눌렀을 때 
-	$("#writeBtn").click(function() {
 		if($("#subject").val() == ""){
 			alert("제목을 입력해주세요");
 			return;
@@ -200,16 +145,29 @@ $(document).ready(function() {
 			alert("내용을 입력해주세요");
 			return;
 		} else {
-			$("#writeForm").attr("action", "${root}/board/write").submit();
-			alert("글 작성을 완료했습니다.");
+			$("#modifyForm").attr("action", "${root}/board/modify").submit();
+			alert("글 수정을 완료했습니다.");
 		}
 	});
-
+	
 		
 //글작성 취소 눌렀을 때 list로 돌아가기 
 	$("#cancelBtn").click(function() {
 		history.back();
 	});
+	
+//셀렉트 박스 셀렉트 해놓기
+	
+	//alert(choice);
+	var selected = "${selected}";
+	var options = $("#region").children(".regionchoice");
+		
+	for(var i = 0; i < options.length; i ++){
+		if(options[i].value == selected){
+			options[i].selected = "selected";
+		}
+	}
+	
 });
 </script>	
 
@@ -222,7 +180,6 @@ $(document).ready(function() {
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-
 
 							<!-- Header -->
 								<header id="header">
@@ -243,11 +200,12 @@ $(document).ready(function() {
 									</header>
 								<hr class = "major"/>	
 								<!-- 작성 전체 폼 -->
-<form id="writeForm" name="writeForm" method="post" action="">
+<form id="modifyForm" name="modifyForm" method="post" action="">
 				<!-- enctype="multipart/form-data" --> 
 								<div class = "row">
 				
 				<input type="hidden" name="boardCategory" value="${parameter.boardCategory}">
+				<input type="hidden" name="boardNo" value="${article.boardNo}">
 				<input type="hidden" name="pg" value="1">
 				<input type="hidden" name="key" value="">
 				<input type="hidden" name="word" value="">
@@ -260,7 +218,7 @@ $(document).ready(function() {
 								<label>제목</label>
 								</div>
 								<div class= "col-7">
-								<input type="text" name="boardSubject" id="subject" value="" placeholder="게시물의 제목을 입력해주세요.(75자까지 입력가능)" maxlength="75"/>
+								<input type="text" name="boardSubject" id="subject" value="${article.boardSubject.replace('<','&lt;')}" placeholder="게시물의 제목을 입력해주세요.(75자까지 입력가능)" maxlength="75"/>
 								</div>
 								<div class = "col-2"></div>
 								
@@ -272,10 +230,10 @@ $(document).ready(function() {
 								</div>
 								<div class = "col-3">
 								<select name ="region" id = "region" style="color: #7f888f;">
-<option>전국</option><option>서울</option><option>부산</option><option>인천</option>
-<option>대구</option><option>광주</option><option>대전</option><option>울산</option>
-<option>강원</option><option>경기</option><option>경남</option><option>경북</option>
-<option>전남</option><option>전북</option><option>충남</option><option>충북</option><option>제주</option>
+<option class = "regionchoice" value="전국">전국</option><option class = "regionchoice" value="서울">서울</option><option class = "regionchoice" value="부산">부산</option><option class = "regionchoice" value="인천">인천</option>
+<option class = "regionchoice" value="대구">대구</option><option class = "regionchoice" value="광주">광주</option><option class = "regionchoice" value="대전">대전</option><option class = "regionchoice" value="울산">울산</option>
+<option class = "regionchoice" value="강원">강원</option><option class = "regionchoice" value="경기">경기</option><option class = "regionchoice" value="경남">경남</option><option class = "regionchoice" value="경북">경북</option>
+<option class = "regionchoice" value="전남">전남</option><option class = "regionchoice" value="전북">전북</option><option class = "regionchoice" value="충남">충남</option><option class = "regionchoice" value="충북">충북</option><option class = "regionchoice" value="제주">제주</option>
 								</select>
 								</div>
 								
@@ -323,7 +281,6 @@ $(document).ready(function(){
 		}); 
 	 
  
-
 setTimeout(function() { 
 	kakao.maps.load(function() {
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -331,7 +288,6 @@ setTimeout(function() {
 	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	        level: 3 // 지도의 확대 레벨
 	    };
-
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 		//지도에 컨트롤을 추가해야 지도위에 표시됩니다
@@ -353,24 +309,19 @@ setTimeout(function() {
 	
 function placesSearchCB (data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
-
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         var bounds = new kakao.maps.LatLngBounds();
-
         for (var i=0; i<data.length; i++) {
         	//console.log(data[i].x);
         	//console.log(data[i].y);
             //displayMarker(data[i]);    
             bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         }       
-
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
         map.setBounds(bounds);
     } 
 }
-
-
 // 지도에 마커를 표시하는 함수입니다
 function displayMarker(place) {
     
@@ -379,7 +330,6 @@ function displayMarker(place) {
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x)
     });
-
 	var searchresult = "";
 	// 마커에 클릭이벤트를 등록합니다
 	kakao.maps.event.addListener(marker, 'click', function(mouseEvent) {
@@ -389,11 +339,7 @@ function displayMarker(place) {
 	    infowindow.open(map, marker); 
 	});
 } 
-
 });
-
-
-
 </script> 		
 
 <!----------------------------[다음 지도 끝]-------------------------------------------------------------->
@@ -424,24 +370,9 @@ function displayMarker(place) {
 								<div class = "col-1">
 								<label>학교 검색</label>
 								</div>
-<<<<<<< Upstream, based on develop
-<<<<<<< Upstream, based on develop
-								<div class = "col-6">
-								<input type="text" name="searchSchool" id="searchSchool" value="" placeholder="학교 이름 입력" 
-								style="margin-right:0;" data-toggle="modal" data-target="#schoolModal"/>
-=======
-								<div class = "col-7">
-								<input type="text" name="searchSchool" id="searchSchool" value="" maxlength="0"
-=======
 								<div class = "col-7" id = "schooltext">
-<<<<<<< Upstream, based on develop
-								<input name = "sname" type="text" name="searchSchool" id="searchSchool" value=""
->>>>>>> 07d6897 19.07.04 학교 검색 기능 완료
-=======
-								<input name = "bSchoolName" type="text" name="searchSchool" id="searchSchool" value=""
->>>>>>> 708cae0 19.07.04
+								<input name = "bSchoolName" type="text" name="searchSchool" id="searchSchool" value="${article.bSchoolName}"
 								placeholder="학교 이름 입력" style="margin-right:0;" readonly="readonly" data-toggle="modal" data-target="#schoolModal"/>
->>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 								</div>
 								<!-----------------------------학교 검색  modal---------------------------->							
 									  <div class="modal fade" id="schoolModal">
@@ -496,47 +427,8 @@ function displayMarker(place) {
 								<div class = "col-2"></div>
 								
 								
-<<<<<<< Upstream, based on develop
-									<!-- 학교검색 modal 시작 -->
-									 <div class="modal fade" id="schoolModal">
-									    <div class="modal-dialog modal-lg">
-									      <div class="modal-content">
-									
-									        <!-- Modal Header -->
-									        <div class="modal-header">
-									          <h4 class="modal-title">학교이름 검색</h4>
-									          <input type="button" class="button close" data-dismiss="modal" value="&times;" style="width:10;height:10;padding-top: 0;">
-									        </div>
-									
-									        <!-- Modal body -->
-									        <div class="modal-body">
-										        <div class = "row" style="margin:auto 0;">
-										        	
-													
-													<!-- 학교 검색창 -->
-											        <div class = "col-10" style="margin-left: 0;margin-right: 0;padding:0;">
-											        <input type = "text" id = "schoolname">
-											        </div>
-													<div class = "col-2" style="margin-left: 0;margin-right: 0;padding:0;">
-													<input type = "button" id = "realschoolsearch" value = "검색">
-													</div>        
-										        </div>
-									        </div>
-									
-									        <!-- Modal footer -->
-									        <div class="modal-footer">
-									          <input type="button" class="button primary" data-dismiss="modal" value = "닫기">
-									        </div>
-									
-									      </div>
-									    </div>
-									  </div> 								
-								<!-- modal 끝 -->
-									
-=======
 								
 							
->>>>>>> dbbacca 19.07.04 학교 검색 뿌려주기 필요!!
 								
 								<!-- 게시물 내용 -->
 								<div class = "col-2"></div>
@@ -548,7 +440,7 @@ function displayMarker(place) {
 								<div class = "col-2"></div>
 								<div class = "col-8">
 								<textarea name="boardContent" id="content" placeholder="게시물의 내용을 작성해주세요" 
-								rows="20" style="resize: none;"></textarea>
+								rows="20" style="resize: none;">${article.boardContent}</textarea>
 								</div>
 								<div class = "col-2"></div>
 								
@@ -566,7 +458,7 @@ function displayMarker(place) {
 								<div class = "col-8"></div>
 								<div class = "col-2" style="padding-right: 0;">
 									<input type ="button" class = "button samll" id = "cancelBtn" value = "취소">
-									<input type ="button" class = "button primary samll" id = "writeBtn" value = "완료">
+									<input type ="button" class = "button primary samll" id = "modifyBtn" value = "수정">
 								</div>
 								<div class = "col-2"></div>
 								</div>

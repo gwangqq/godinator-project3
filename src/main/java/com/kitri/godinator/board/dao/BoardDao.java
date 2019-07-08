@@ -25,4 +25,7 @@ public interface BoardDao {
 	//게시물 가져오는 메소드
 	BoardDto viewArticle(int boardNo);
 	
+	//글 수정 완료 메소드
+	int modifyArticle(BoardDto boardDto);
+	
 }

@@ -16,6 +16,15 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
 	});
 	
+	<%-- 수정 버튼--%>
+	$(".moveModifyBtn").click(function() {
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val("${pg}");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#boardNo").val("${boardNo}");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/modify").submit();
+	});
 	
 	
 });
@@ -51,7 +60,7 @@ $(document).ready(function() {
 							<br><br>
 							<div class = "col-2"></div>
 							<div class = "col-8">
-								<font size="6">[${article.region}/${article.bSchoolName}]${article.boardSubject}</font>
+								<font size="6">[${article.region}/${article.bSchoolName}]${article.boardSubject.replace('<','&lt;')}</font>
 								<hr style="margin: 0;">
 							</div>
 							<div class = "col-2"></div>
@@ -111,7 +120,16 @@ $(document).ready(function() {
 										</div>
 									</div>
 									<div class = "col-5"></div>
-									
+									<!-- 수정 삭제 버튼  -->	
+									<div class = "col-2"></div>
+									<div class = "col-6"></div>
+									<div class = "col-2">	
+									<c:if test="${userInfo.userId == article.bUserId}">		
+										<input type="button" class = "button small moveModifyBtn" value="글수정"> 
+										<input type="button" class = "button small moveDeleteBtn" value="글삭제">
+									</c:if>	
+									</div>
+									<div class = "col-2"></div>
 								
 								
 								
@@ -122,9 +140,9 @@ $(document).ready(function() {
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>
+									
+									
 									<br><br>
-									
-									
 								<!-- 댓글 하나  -->
 									<div class = "col-2"></div>
 									<div class = "col-8" style="margin-bottom: 2em;">
@@ -154,8 +172,8 @@ $(document).ready(function() {
 									<span><textarea  cols="4" style="resize: none;"></textarea></span>
 									<span style="float: right;"><button class = "button primary" style="height: 100%;">등록</button></span>
 									</div>
-									
 									<div class = "col-2"></div>
+								
 								<!-- 댓글 쓰기 끝 -->	
 								
 									<div class = "col-2"></div>

@@ -36,16 +36,6 @@ public class BoardController {
 		return "board/main";
 	}
 	
-//	@RequestMapping(value = "/movelist", method = RequestMethod.GET)
-//	public String move() {
-//		return "board/list";
-//	}
-//
-//	@RequestMapping(value = "/movewrite", method = RequestMethod.GET)
-//	public String move2() {
-//		return "board/write";
-//	}
-
 	@RequestMapping(value = "/moveview", method = RequestMethod.GET)
 	public String move3() {
 		return "board/view";
@@ -84,7 +74,7 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-		System.out.println(parameter.toString());
+//		System.out.println(parameter.toString());
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		
@@ -114,13 +104,15 @@ public class BoardController {
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-//		System.out.println("view/c : " + parameter.toString() + boardNo);
+		System.out.println("view/c : " + parameter.toString() + boardNo);
 		String path = "";
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNo);
 			model.addAttribute("article", boardDto);
 			model.addAttribute("parameter", parameter);
+			model.addAttribute("boardNo", boardNo);
+			System.out.println(parameter);
 			path = "board/view";
 		} else {
 			path = "redirect:/index.jsp";
@@ -148,7 +140,53 @@ public class BoardController {
 		
 		return path = "board/list";
 	}
+
 	
-	
+//-----------------------------------[수정기능]--------------------------------------------------
+		
+		//수정페이지로 이동
+		@RequestMapping(value = "/modify", method = RequestMethod.GET)
+		public String modify(@RequestParam("boardNo") int boardNo, 
+								@RequestParam Map<String, String> parameter, Model model) {
+//			System.out.println("글 수정 C : " + parameter +  "/" + boardNo );
+				String path = "";
+			
+				BoardDto boardDto = boardService.getArticle(boardNo);
+				boardDto.setBoardCategory(Integer.parseInt(parameter.get("boardCategory")));
+				model.addAttribute("article", boardDto);
+//				System.out.println(boardDto);
+				model.addAttribute("parameter", parameter);
+				path = "board/modify";
+			return path;
+		}
+		//수정 완료 버튼 클릭
+		
+		
+		@RequestMapping(value = "/modify", method = RequestMethod.POST)
+		public String modify(BoardDto boardDto, 
+				@RequestParam Map<String, String> parameter, Model model,
+				HttpSession session) {
+//			System.out.println("수정 완료 " + boardDto);
+			String path = "";
+			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+
+			if (memberDto != null) {
+
+				int boardNo = boardService.modifyArticle(boardDto);
+				if (boardNo != 0) {
+					model.addAttribute("boardNo", boardNo);
+					path = "board/writeok";
+				} else {
+					//수정 실패했습니다 만들어야
+					path = "redirect:/index.jsp";
+				}
+			} else {
+
+				path = "";
+			}
+			model.addAttribute("parameter", parameter);
+			return path;
+		}
+		
 	
 }

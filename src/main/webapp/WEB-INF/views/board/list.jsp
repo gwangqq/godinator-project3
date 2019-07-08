@@ -19,7 +19,6 @@ $(document).ready(function() {
 	
 	
 	$(".viewBtn").click(function() {
-		alert("tr 눌렸음!!!");
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("${pg}");
 		$("#key").val("${key}");
@@ -105,7 +104,7 @@ $(document).ready(function() {
 												<c:forEach var = "article" items = "${articleList}">
 													<tr class = "viewBtn" data-seq="${article.boardNo}">
 														<td>${article.boardNo}</td>
-														<td>[${article.region}/${article.bSchoolName}]${article.boardSubject}</td>
+														<td>[${article.region}/${article.bSchoolName}]${article.boardSubject.replace('<','&lt;')}</td>
 														<td>${article.bUserId}</td>
 														<td>${article.bPostdate}</td>
 														<td>${article.bViewCount}</td>
