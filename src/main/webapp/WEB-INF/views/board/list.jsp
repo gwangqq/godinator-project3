@@ -44,11 +44,7 @@ $(document).ready(function() {
 	});
 });
 </script>	
-<!-- <style>
-.page { width:1200px; margin:0 auto;  }
-.pagination { float:left; text-align:center; }
-.page li { display:inline-block; text-align:center; }
-</style> -->
+
 </head>
 <body class="is-preload">
 

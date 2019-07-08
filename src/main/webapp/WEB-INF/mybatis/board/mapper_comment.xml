@@ -3,8 +3,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.kitri.godinator.board.dao.CommentDao">
-  
-  
-  </mapper>
+
+<mapper namespace="com.kitri.godinator.board.dao.CommentDao">
+	<insert id="writeMemo" parameterType="replyDto">
+		insert into
+		REPLY(comment_no, board_no, c_user_id,c_postdate, comment_content, state)
+		values(comment_seq.nextval, ${boardNo}, #{cUserId}, sysdate, #{commentContent}, 0)
+	</insert>
+
+	<select id="listMemo" parameterType="int" resultType="replyDto">
+		select
+		comment_no, board_no, c_user_id, c_postdate, comment_content, state
+		from reply
+		where board_no = #{boardNo}
+		order by comment_no desc
+	</select>
+
+
+</mapper>

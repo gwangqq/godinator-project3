@@ -3,6 +3,11 @@
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %> 
+<style>
+.micro{
+	s
+}
+</style>
 <script>
 
 $(document).ready(function() {
@@ -25,6 +30,102 @@ $(document).ready(function() {
 		$("#boardNo").val("${boardNo}");
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/modify").submit();
 	});
+	
+	
+	
+	
+	
+	<%--댓글 기능 시작--%>
+	<%--댓글 작성--%>
+	$("#commentBtn").click(function() {
+		if('${userInfo == null}' == true){
+			alert("로그인 하세요");
+		} else {
+			var boardNo ='${article.boardNo}';
+			var commentContent = $("#commentContent").val();
+			alert(boardNo + "|" + commentContent);
+			var param = JSON.stringify({'boardNo' : boardNo, 'commentContent' : commentContent});
+			if(commentContent.trim().length != 0){
+				$.ajax({
+					url:'${root}/comment',
+					type: 'POST',
+					contentType:'application/json;charset=UTF-8',
+					dataType : 'json',
+					data:param,
+					success : function(response) {
+						makeMemoList(response);
+						$("#commentContent").val('');
+					}
+				});
+			}
+		}
+	});
+	
+	<%--댓글을 리스트로 보여주기--%>
+	 getMemoList();
+	$(document).on("click",".mdeleteBtn", function() {
+		$.ajax({
+			url:'${root}/memo/'+$(this).parent("td").attr("data-seq")+'/'+$(this).parent("td").attr("data-mseq"),
+			type: 'DELETE',
+			contentType:'application/json;charset=UTF-8',
+			dataType : 'json',
+			success : function(response) {
+				makeMemoList(response);
+				$("#commentContent").val('');
+			}
+		});
+	});
+	
+	function makeMemoList(memos) {
+		var memocnt = memos.commentList.length;
+		var memostr = '';
+		for(var i=0;i<memocnt;i++){
+			var memo = memos.commentList[i];
+			//댓글 하나 달기 
+		memostr += '<span class="font_light_small"><a href="#">';
+		memostr += '<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg"></a>';
+		memostr +=	'<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f">' + memo.cUserId+ '</a></span>';
+		memostr +=	'&nbsp;&nbsp;&nbsp;&nbsp;<span>';
+		memostr += 	memo.commentContent;
+		memostr +=	'</span>';
+		memostr +=	'<span style="float: right;" data-seq="'+memo.boardNo+'" data-mseq="'+memo.commentNo+'">'+memo.cPostdate+'<a href = "#" class="mdeleteBtn">&times;</a> <br>';
+		memostr +=  '<a href = "#">댓글</a> &nbsp;<a href= "#">신고</a>';
+		memostr += ' </span>';
+		//자기가 작성한 댓글에 수정 삭제 
+		if('${userInfo.userId}' == memo.cUserId){
+			memostr += '<a href = "#">댓글</a> &nbsp;<a href= "#" class = "modifyComment">수정</a>';
+			memostr += '</span>'
+			
+			memostr +='<span class = "modifyComment" style = "display : none;">';
+			memostr +='	<td colspan = "3" style="padding: 10px">';
+			memostr +='		<textarea class="commentContent" cols="160" rows="5">'+memo.commentContent+'</textarea>';
+			memostr +='	</td>';
+			memostr +='	<td width="100" style="padding: 10px" data-mseq="'+memo.commentNo+'">';
+			memostr +='		<input type="button" class= "memoModifyBtn" value = "수정">';
+			memostr +='		<input type="button" class= "memoModifyCancelBtn" value = "취소">';
+			memostr +='	</td>';
+			memostr +='</tr>';
+		}
+		memostr +='<hr style="margin: 1em;">';
+		}
+		$("#mlist").empty();
+		$("#mlist").append(memostr);
+	}
+	
+	
+	//기본 댓글 불러들이는 메소드
+	function getMemoList(memos) {
+		$.ajax({
+			url:'${root}/comment',
+			type: 'GET',
+			contentType:'application/json;charset=UTF-8',
+			dataType : 'json',
+			data:{boardNo : '${article.boardNo}'},
+			success : function(response) {
+				makeMemoList(response);
+			}
+		});
+	}
 	
 	
 });
@@ -144,33 +245,15 @@ $(document).ready(function() {
 									
 									<br><br>
 								<!-- 댓글 하나  -->
-									<div class = "col-2"></div>
-									<div class = "col-8" style="margin-bottom: 2em;">
-										<span class="font_light_small">
-										<a href="#">
-											<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg">
-										</a>
-											<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f">lucky1123</a></span>
-								
-								<!-- 댓글 내용 -->
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									<span>
-									정확한 시간을 알려주실 수 있나요????
-									</span>
-									<span style="float: right;"><a href = "#">댓글</a> &nbsp;<a href = "#">신고</a></span>
-									<hr style="margin: 1em;">
-									</div>
-									
-									<div class = "col-2"></div>
-								<!-- 댓글 하나 끝 -->
-									
-									
-									
+								<div class = "col-2"></div>
+								<div id = "mlist" class = "col-8" style="margin-bottom: 2em;">
+								</div>
+								<div class = "col-2"></div>
 								<!-- 댓글 쓰기 -->	
 									<div class = "col-2"></div>
 									<div class = "col-8">
-									<span><textarea  cols="4" style="resize: none;"></textarea></span>
-									<span style="float: right;"><button class = "button primary" style="height: 100%;">등록</button></span>
+									<span><textarea id = "commentContent" cols="4" style="resize: none;"></textarea></span>
+									<span style="float: right;"><button class = "button primary" id = "commentBtn"style="height: 100%;">등록</button></span>
 									</div>
 									<div class = "col-2"></div>
 								
@@ -180,8 +263,8 @@ $(document).ready(function() {
 									<div class = "col-8">
 									<br><br>
 									<span style = "float:right;">
-									<button class = "button small" id = "preV">이전글</button>
-									<button class = "button small" id = "nextV">다음글</button>
+									<button class = "button small" id = "preView">이전글</button>
+									<button class = "button small" id = "nextView">다음글</button>
 									<button class = "button small" id = "moveListBtn">목록</button>
 									</span>
 									</div>

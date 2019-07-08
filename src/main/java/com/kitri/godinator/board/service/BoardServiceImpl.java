@@ -18,22 +18,21 @@ import com.kitri.godinator.model.BoardDto;
 import com.kitri.godinator.model.CategoryDto;
 
 @Service
-public class BoardServiceImpl implements BoardService{
-	
+public class BoardServiceImpl implements BoardService {
+
 	@Autowired
 	private SqlSession sqlSession;
-	
-	//main 페이지 커뮤니티 menu
+
+	// main 페이지 커뮤니티 menu
+
 	@Override
 	public List<CategoryDto> menuList() {
-		System.out.println("service : "  + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
+		System.out.println("service : " + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
 		return sqlSession.getMapper(BoardDao.class).getBoardMenuList();
-		
-	}	
-	
-	
-	
-	//고등학교 찾기 메소드
+
+	}
+
+	// 고등학교 찾기 메소드
 	@Override
 	public String findHSchool(String schoolName) {
 		List<String> list = sqlSession.getMapper(BoardDao.class).findHSchool(schoolName);
@@ -43,8 +42,8 @@ public class BoardServiceImpl implements BoardService{
 //		System.out.println("service : " + json.toString());
 		return json.toString();
 	}
-	
-	//대학찾기 메소드
+
+	// 대학찾기 메소드
 	@Override
 	public String findUSchool(String schoolName) {
 		List<String> list = sqlSession.getMapper(BoardDao.class).findUSchool(schoolName);
@@ -62,7 +61,6 @@ public class BoardServiceImpl implements BoardService{
 		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
 
-
 //page처리 + 게시판 list 보기
 	@Override
 	public List<BoardDto> listArticle(Map<String, String> parameter) {
@@ -76,20 +74,18 @@ public class BoardServiceImpl implements BoardService{
 		return sqlSession.getMapper(BoardDao.class).listArticle(parameter);
 	}
 
-
 //	list에서 작성 된 글 보기
 	@Override
 	@Transactional
 	public BoardDto viewArticle(int boardNo) {
-		//조회수 증가
+		// 조회수 증가
 		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(boardNo);
-		//글쓴 내용 가져오기
+		// 글쓴 내용 가져오기
 		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
-		System.out.println("service view : " + boardDto); 
+//		System.out.println("service view : " + boardDto);
 		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
 		return boardDto;
 	}
-
 
 // 수정에서 사용할 게시물 가져오기
 	@Override
@@ -97,18 +93,12 @@ public class BoardServiceImpl implements BoardService{
 		return sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
 	}
 
-
-	//게시물 수정 버튼 누르기
+	// 게시물 수정 버튼 누르기
 	@Override
 	public int modifyArticle(BoardDto boardDto) {
 		int cnt = sqlSession.getMapper(BoardDao.class).modifyArticle(boardDto);
 //		System.out.println("service : " + boardDto + "||" + cnt);
-		return cnt != 0 ? boardDto.getBoardNo() : 0 ;
+		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
 
-
-	
-
-	
-	
 }

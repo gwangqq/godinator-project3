@@ -36,10 +36,6 @@ public class BoardController {
 		return "board/main";
 	}
 	
-	@RequestMapping(value = "/moveview", method = RequestMethod.GET)
-	public String move3() {
-		return "board/view";
-	}
 
 	// 게시판 list에서 글 작성 버튼 누르면 글 작성 페이지로 이동
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -82,7 +78,7 @@ public class BoardController {
 			
 			int boardNo = boardCommonService.getNextBoardNo();
 			boardDto.setBoardNo(boardNo);
-			boardDto.setBUserId(memberDto.getUserId());
+			boardDto.setbUserId(memberDto.getUserId());
 			boardDto.setUserName(memberDto.getUserName());
 //			System.out.println("C : " + boardDto);
 			boardNo = boardService.writeArticle(boardDto);
@@ -104,7 +100,7 @@ public class BoardController {
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-		System.out.println("view/c : " + parameter.toString() + boardNo);
+//		System.out.println("view/c : " + parameter.toString() + boardNo);
 		String path = "";
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
@@ -125,11 +121,11 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
 
-//		System.out.println("get으로 넘어왔다" + parameter.toString());
+		System.out.println("get으로 넘어왔다" + parameter.toString());
 		List<BoardDto> list = boardService.listArticle(parameter);
 		
 		String path = "";
-//		System.out.println(list);
+		System.out.println(list);
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();

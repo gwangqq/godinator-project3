@@ -25,7 +25,7 @@
   	<insert id="writeArticle" parameterType="boardDto">
 	insert 
 		into board (BOARD_NO, B_USER_ID, BOARD_CATEGORY, USER_NAME, BOARD_SUBJECT, BOARD_CONTENT, B_SCHOOL_NAME, B_SCHOOL_CODE,
-		B_SCHOOL_CATE1, B_SCHOOL_CATE2, REGION, B_VIEW_COUNT, DEL_STUS, STATE, B_POSTDATE )
+		B_SCHOOL_CATE1, B_SCHOOL_CATE2, REGION, B_VIEW_COUNT, DEL_STATUS, STATE, B_POSTDATE )
 		values(#{boardNo}, #{bUserId}, #{boardCategory}, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
 	</insert>
 	

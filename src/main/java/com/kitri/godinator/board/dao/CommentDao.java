@@ -1,5 +1,14 @@
 package com.kitri.godinator.board.dao;
 
+import java.util.List;
+
+import com.kitri.godinator.model.ReplyDto;
+
 public interface CommentDao {
+	
+	//댓글 쓰기
+	void writeMemo(ReplyDto replytDto);
+	//댓글 보여주기
+	List<ReplyDto> listMemo(int boardNo);
 
 }
