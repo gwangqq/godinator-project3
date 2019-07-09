@@ -23,13 +23,13 @@ public class CommentController {
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", headers = {
 			"Content-type=application/json" })
 	public String write(@RequestBody ReplyDto replyDto, HttpSession session) {
-		System.out.println("Controller (post): " + replyDto);
+//		System.out.println("Controller (post): " + replyDto);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		
 		if (memberDto != null) {
-			System.out.println(memberDto.getUserId());
+//			System.out.println(memberDto.getUserId());
 			replyDto.setCUserId(memberDto.getUserId());
-			System.out.println("C : " + replyDto);
+//			System.out.println("C : " + replyDto);
 			commentService.writeMemo(replyDto);
 			String json = commentService.listMemo(replyDto.getBoardNo());
 			return json;
@@ -37,4 +37,14 @@ public class CommentController {
 
 		return "";
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, consumes = "application/json", headers = {"Content-type=application/json"})
+	public String list(int boardNo) {
+//		System.out.println("댓글 리스트 C: " +boardNo);
+		String json = commentService.listMemo(boardNo);
+//		System.out.println(json);
+		return json;
+	}
+	
+	
 }

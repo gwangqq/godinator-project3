@@ -28,4 +28,13 @@ public interface BoardDao {
 	//글 수정 완료 메소드
 	int modifyArticle(BoardDto boardDto);
 	
+	//이전글번호 찾아오는 메소드
+	int prevArticle(Map<String, String> parameter);
+	
+	//다음 글 번호 찾아오는 메소드
+	int nextArticle(Map<String, String> parameter);
+	
+	//글 삭제 메소드
+	void deleteArticle(int boardNo);
+	
 }

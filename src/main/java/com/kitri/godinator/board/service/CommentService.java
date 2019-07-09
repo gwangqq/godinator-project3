@@ -8,5 +8,5 @@ public interface CommentService {
 	void writeMemo(ReplyDto commentDto);
 	//댓글 리스트
 	String listMemo(int boardNo);
-
+	
 }

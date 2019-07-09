@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<CategoryDto> menuList() {
-		System.out.println("service : " + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
+//		System.out.println("service : " + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
 		return sqlSession.getMapper(BoardDao.class).getBoardMenuList();
 
 	}
@@ -100,5 +100,51 @@ public class BoardServiceImpl implements BoardService {
 //		System.out.println("service : " + boardDto + "||" + cnt);
 		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
+
+//	이전글 보기
+	@Override
+	@Transactional
+	public BoardDto prevArticle(Map<String, String> parameter) {
+		int cnt = sqlSession.getMapper(BoardDao.class).prevArticle(parameter);
+//		System.out.println("prev service : " + cnt);
+		
+		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
+		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
+		parameter.put("boardNo", Integer.toString(cnt));
+		
+		return boardDto;
+	}
+
+//이전글 있는지 확인
+	@Override
+	public int checkPrev(Map<String, String> parameter) {
+		return sqlSession.getMapper(BoardDao.class).prevArticle(parameter);
+	}
+
+//다음글 보기	
+	@Override
+	@Transactional
+	public BoardDto nextArticle(Map<String, String> parameter) {
+		int cnt = sqlSession.getMapper(BoardDao.class).nextArticle(parameter);
+		
+		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
+		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
+		parameter.put("boardNo", Integer.toString(cnt));
+		
+		return boardDto;
+	}
+	
+//다음글 있는지 확인 
+	@Override
+	public int checkNext(Map<String, String> parameter) {
+		return sqlSession.getMapper(BoardDao.class).nextArticle(parameter);
+	}
+
+	@Override
+	public void deleteArticle(int boardNo) {
+		sqlSession.getMapper(BoardDao.class).deleteArticle(boardNo);
+	}
+	
+
 
 }

@@ -8,14 +8,19 @@
 	<insert id="writeMemo" parameterType="replyDto">
 		insert into
 		REPLY(comment_no, board_no, c_user_id,c_postdate, comment_content, state)
-		values(comment_seq.nextval, ${boardNo}, #{cUserId}, sysdate, #{commentContent}, 0)
+		values(comment_seq.nextval, ${boardNo}, #{CUserId}, sysdate, #{commentContent}, 0)
 	</insert>
 
 	<select id="listMemo" parameterType="int" resultType="replyDto">
 		select
-		comment_no, board_no, c_user_id, c_postdate, comment_content, state
+		comment_no commentNo, board_no boardNo, c_user_id CUserId, 
+		decode(to_char(c_postdate ,'yymmdd'),
+                    to_char(sysdate,'yymmdd'), to_char(c_postdate,'hh24:mi'),
+                    to_char(c_postdate ,'yy.mm.dd')) CPostdate
+		, comment_content commentContent, state state
 		from reply
-		where board_no = #{boardNo}
+		where state = 0 
+		and board_no = #{boardNo}
 		order by comment_no desc
 	</select>
 

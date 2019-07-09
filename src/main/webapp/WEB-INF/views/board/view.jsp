@@ -11,7 +11,7 @@
 <script>
 
 $(document).ready(function() {
-	
+	//리스트 돌아가기
 	$("#moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
@@ -32,7 +32,43 @@ $(document).ready(function() {
 	});
 	
 	
+	//삭제버튼
+	$(".DeleteBtn").click(function() {
+		var flag = confirm("게시물을 삭제하시겠습니까?");
+		if (flag == true) {
+			$("#boardCategory").val("${boardCategory}");
+			$("#pg").val("${pg}");
+			$("#key").val("${key}");
+			$("#word").val("${word}");
+			$("#boardNo").val("${boardNo}");
+			$("#commonForm").attr("method", "GET").attr("action", "${root}/board/delete").submit();
+			alert("삭제 되었습니다!");
+		}
+		
+	})
 	
+	
+	//이전 글  
+	$("#preView").click(function(){
+			$("#boardCategory").val("${boardCategory}");
+			$("#pg").val("${pg}");
+			$("#key").val("${key}");
+			$("#word").val("${word}");
+			$("#boardNo").val("${boardNo}");
+			$("#commonForm").attr("method", "GET").attr("action", "${root}/board/prev").submit();
+	});
+	
+	
+	//다음 글
+	$("#nextView").click(function(){
+			$("#boardCategory").val("${boardCategory}");
+			$("#pg").val("${pg}");
+			$("#key").val("${key}");
+			$("#word").val("${word}");
+			$("#boardNo").val("${boardNo}");
+			$("#commonForm").attr("method", "GET").attr("action", "${root}/board/next").submit();
+		
+	});
 	
 	
 	<%--댓글 기능 시작--%>
@@ -75,42 +111,45 @@ $(document).ready(function() {
 			}
 		});
 	});
+ 	
 	
+/* 	
 	function makeMemoList(memos) {
 		var memocnt = memos.commentList.length;
 		var memostr = '';
 		for(var i=0;i<memocnt;i++){
 			var memo = memos.commentList[i];
 			//댓글 하나 달기 
-		memostr += '<span class="font_light_small"><a href="#">';
-		memostr += '<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg"></a>';
-		memostr +=	'<a id="writerId" class="font_bold_small" href="#" style="color: #7f888f">' + memo.cUserId+ '</a></span>';
-		memostr +=	'&nbsp;&nbsp;&nbsp;&nbsp;<span>';
-		memostr += 	memo.commentContent;
-		memostr +=	'</span>';
-		memostr +=	'<span style="float: right;" data-seq="'+memo.boardNo+'" data-mseq="'+memo.commentNo+'">'+memo.cPostdate+'<a href = "#" class="mdeleteBtn">&times;</a> <br>';
-		memostr +=  '<a href = "#">댓글</a> &nbsp;<a href= "#">신고</a>';
-		memostr += ' </span>';
+		memostr += '<div class = "row col-12" style="height:100px;">';
+		memostr += '<div class = "col-2" style = "width:15%;">' + memo.CUserId+ '</div>';
+		memostr += '<div class = "col-8" style = "width:70%;">'+memo.commentContent+'</div>';
+		memostr += '<div class = "col-2" style = "width:15%;"><a href= "#">신고</a>';
+		memostr += '<span style="float: right; padding-top:0;" data-seq="'+memo.boardNo+'" data-mseq="'+memo.commentNo+'">'+memo.CPostdate+'</span><br>';
+		
 		//자기가 작성한 댓글에 수정 삭제 
-		if('${userInfo.userId}' == memo.cUserId){
-			memostr += '<a href = "#">댓글</a> &nbsp;<a href= "#" class = "modifyComment">수정</a>';
-			memostr += '</span>'
+		if('${userInfo.userId}' == memo.CUserId){
+			memostr += '<a href= "#" class = "modifyComment">수정</a>&nbsp;<a href = "#" class="mdeleteBtn">삭제</a>';
 			
-			memostr +='<span class = "modifyComment" style = "display : none;">';
-			memostr +='	<td colspan = "3" style="padding: 10px">';
-			memostr +='		<textarea class="commentContent" cols="160" rows="5">'+memo.commentContent+'</textarea>';
-			memostr +='	</td>';
-			memostr +='	<td width="100" style="padding: 10px" data-mseq="'+memo.commentNo+'">';
-			memostr +='		<input type="button" class= "memoModifyBtn" value = "수정">';
-			memostr +='		<input type="button" class= "memoModifyCancelBtn" value = "취소">';
-			memostr +='	</td>';
-			memostr +='</tr>';
+			//댓글 수정 창 
+			memostr +='<span class = "commentContent" style = "display:none;" data-mseq="'+memo.commentNo+'">';
+			memostr +='		<textarea  cols = "100" rows = "3" style = "resize:none;">'+memo.commentContent+'</textarea>';
+			memostr +='		<a href = "#" class= "memoModifyBtn">수정</a>';
+			memostr +='		<a href = "#" class= "memoModifyCancelBtn">취소</a>';
+			memostr +='</sapn>';
 		}
-		memostr +='<hr style="margin: 1em;">';
+		memostr += ' </div>';
 		}
 		$("#mlist").empty();
 		$("#mlist").append(memostr);
 	}
+	  */
+	//댓글 수정 버튼 
+	$(document).on("click", ".modifyComment", function() {
+// 		$(".modifyComment").attr("style",  "display : '';"); 
+		$(this).parent().prev().prev().css("display", "none");
+		$(this).parent().prev().css("display", "none");
+		$(this).parent().parent().next().css("display", "span");
+	});
 	
 	
 	//기본 댓글 불러들이는 메소드
@@ -157,7 +196,7 @@ $(document).ready(function() {
 							<!-- 제목 -->
 										
 							<!-- 게시물 상단 부분 -->
-								<div class = "row" style="padding: 0;margin: 0;">
+							<div class = "row" style="padding: 0;margin: 0;">
 							<br><br>
 							<div class = "col-2"></div>
 							<div class = "col-8">
@@ -225,51 +264,81 @@ $(document).ready(function() {
 									<div class = "col-2"></div>
 									<div class = "col-6"></div>
 									<div class = "col-2">	
-									<c:if test="${userInfo.userId == article.bUserId}">		
+									<c:if test='${userInfo.userId == article.bUserId}'>		
 										<input type="button" class = "button small moveModifyBtn" value="글수정"> 
-										<input type="button" class = "button small moveDeleteBtn" value="글삭제">
+										<input type="button" class = "button small DeleteBtn" value="글삭제">
 									</c:if>	
 									</div>
 									<div class = "col-2"></div>
 								
 								
+								<!-- 댓글 쓰기 -->
+								<div class = "row col-12">	
+									<div class = "col-2"></div>
+									<br>
+									<div class = "col-8">
+									<span><textarea id = "commentContent" cols="4" style="resize: none;"></textarea></span>
+									<span style="float: right;"><button class = "button primary" id = "commentBtn"style="height: 100%;">등록</button></span>
+									</div>
+									<div class = "col-2"></div>
+								</div>
 								
+								<!-- 댓글 쓰기 끝 -->	
+								<div class = "row col-12">
+									<div class = "col-2"></div>
+									<div class = "col-8">
+									<br><br>
+									<span style = "float:right;">
+									<c:if test='${isPrev != "0"}'>
+									<button class = "button small" id = "preView">이전글</button>
+									</c:if>
+									<c:if test='${isNext != "0"}'>
+									<button class = "button small" id = "nextView">다음글</button>
+									</c:if>
+									<button class = "button small" id = "moveListBtn">목록</button>
+									</span>
+									</div>
+									<div class = "col-2"></div>
+								</div>
 								<!-- 글정보 및 신고하기 -->
+								<div class =  "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
 									<span>댓글0| 조회수  ${article.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>
-									
-									
-									<br><br>
-								<!-- 댓글 하나  -->
-								<div class = "col-2"></div>
-								<div id = "mlist" class = "col-8" style="margin-bottom: 2em;">
 								</div>
-								<div class = "col-2"></div>
-								<!-- 댓글 쓰기 -->	
-									<div class = "col-2"></div>
-									<div class = "col-8">
-									<span><textarea id = "commentContent" cols="4" style="resize: none;"></textarea></span>
-									<span style="float: right;"><button class = "button primary" id = "commentBtn"style="height: 100%;">등록</button></span>
-									</div>
-									<div class = "col-2"></div>
-								
-								<!-- 댓글 쓰기 끝 -->	
-								
-									<div class = "col-2"></div>
-									<div class = "col-8">
 									<br><br>
-									<span style = "float:right;">
-									<button class = "button small" id = "preView">이전글</button>
-									<button class = "button small" id = "nextView">다음글</button>
-									<button class = "button small" id = "moveListBtn">목록</button>
-									</span>
+								<!-- 댓글 내용 나오는 곳 -->
+								<div class =  "row col-12" style="margin-bottom: 20px;">
+									<div class = "col-2"></div>
+									<div id = "mlist" class = "col-8" style="margin-bottom: 2em;height:150px;padding-top: 0;">
+									
+				
+									
 									</div>
 									<div class = "col-2"></div>
+								</div>
+								<div class =  "row col-12" style="margin-bottom: 20px;">
+									<div class = "col-2"></div>
+									<div  class = "col-8" style="margin-bottom: 2em;height:150px;">
+										
+										<div class = "row col-12" id = "mlist">
+										
+										
+										</div>
+										<div class = "row"></div>
+										
+										
+									</div>
+									<div class = "col-2"></div>
+								</div>
 								</div>
 						</div>
+							
+						
+						
+						
 					</div>
 <%@ include file="/WEB-INF/views/mentor/temp/tempfooter.jsp" %>	

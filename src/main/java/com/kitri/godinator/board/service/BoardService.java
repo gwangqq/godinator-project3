@@ -27,4 +27,17 @@ public interface BoardService {
 	
 	//게시물 수정 완료 버튼
 	int modifyArticle(BoardDto boardDto);
+	
+	//이전 글 보기
+	BoardDto prevArticle(Map<String, String> parameter);
+	
+	//이전 글 번호 확인
+	public int checkPrev(Map<String, String> parameter);
+	//다음 글 보기
+	BoardDto nextArticle(Map<String, String> parameter);
+	//이전 글 번호 확인
+	public int checkNext(Map<String, String> parameter);
+	
+	//글 삭제
+	void deleteArticle(int boardNo);
 }

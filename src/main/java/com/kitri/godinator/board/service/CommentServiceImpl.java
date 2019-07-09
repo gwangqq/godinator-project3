@@ -26,14 +26,18 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public String listMemo(int boardNo) {
+//		System.out.println("service listMemo " + boardNo);
 		return makeJson(boardNo);
 	}
 
 	private String makeJson(int boardNo) {
+//		System.out.println("makeJson" + boardNo);
 		List<ReplyDto> list = sqlSession.getMapper(CommentDao.class).listMemo(boardNo);
 		JSONArray array = new JSONArray(list);
 		JSONObject json = new JSONObject();
+//		System.out.println("mybatis : " + array);
 		json.put("commentList", array);
+//		System.out.println("commentList" + json.toString());
 		return json.toString();
 	}
 

@@ -105,10 +105,18 @@ public class BoardController {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
 			BoardDto boardDto = boardService.viewArticle(boardNo);
+
+			parameter.put("boardNo", Integer.toString(boardNo));
+			int isPrev = boardService.checkPrev(parameter);
+			int isNext = boardService.checkNext(parameter);
+			
 			model.addAttribute("article", boardDto);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("boardNo", boardNo);
-			System.out.println(parameter);
+			model.addAttribute("isPrev", isPrev);
+			model.addAttribute("isNext", isNext);
+//			System.out.println("결과 : " + isPrev);
+//			System.out.println(parameter);
 			path = "board/view";
 		} else {
 			path = "redirect:/index.jsp";
@@ -121,11 +129,11 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
 
-		System.out.println("get으로 넘어왔다" + parameter.toString());
+//		System.out.println("get으로 넘어왔다" + parameter.toString());
 		List<BoardDto> list = boardService.listArticle(parameter);
 		
 		String path = "";
-		System.out.println(list);
+//		System.out.println(list);
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
@@ -155,9 +163,10 @@ public class BoardController {
 				path = "board/modify";
 			return path;
 		}
-		//수정 완료 버튼 클릭
+
 		
 		
+//수정 완료 버튼 클릭
 		@RequestMapping(value = "/modify", method = RequestMethod.POST)
 		public String modify(BoardDto boardDto, 
 				@RequestParam Map<String, String> parameter, Model model,
@@ -183,6 +192,77 @@ public class BoardController {
 			model.addAttribute("parameter", parameter);
 			return path;
 		}
+
+//-------------------------------[이전 글 보기]-----------------------------
+		@RequestMapping(value = "/prev", method = RequestMethod.GET)
+		public String prev(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
+				HttpSession session) {
+//			System.out.println("prev// boardNo : " + boardNo + " boardCategory : "+ boardCategory);
+			String path = "";
+			System.out.println("prev 들어옴" + parameter);
+			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			if (memberDto != null) {
+				BoardDto boardDto = boardService.prevArticle(parameter);
+				model.addAttribute("article", boardDto);
+				model.addAttribute("parameter", parameter);
+				model.addAttribute("boardNo", parameter.get("boardNo"));
+				//System.out.println("C : boardNo -- " + parameter.get("boardNo"));
+				
+				//System.out.println(parameter);
+				path = "board/view";
+			} else {
+				path = "redirect:/index.jsp";
+			}
+			return path;
+		}
+
+//-------------------------------[다음 글 보기]-----------------------------
+		@RequestMapping(value = "/next", method = RequestMethod.GET)
+		public String next(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
+				HttpSession session) {
+//			System.out.println("prev// boardNo : " + boardNo + " boardCategory : "+ boardCategory);
+			String path = "";
+			System.out.println("prev 들어옴" + parameter);
+			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			if (memberDto != null) {
+				BoardDto boardDto = boardService.nextArticle(parameter);
+				model.addAttribute("article", boardDto);
+				model.addAttribute("parameter", parameter);
+				model.addAttribute("boardNo", parameter.get("boardNo"));
+				System.out.println("C : boardNo -- " + parameter.get("boardNo"));
+				
+				System.out.println(parameter);
+				path = "board/view";
+			} else {
+				path = "redirect:/index.jsp";
+			}
+			return path;
+		}
 		
-	
+
+//-------------------------------[글 삭제]------------------------------
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+		public String delete(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
+				HttpSession session) {
+			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			String path = "";
+			System.out.println(boardNo);
+			System.out.println("C :" +parameter);
+			if (memberDto != null) {
+				
+				boardService.deleteArticle(boardNo);
+//				System.out.println("C : " + boardDto);
+				if (boardNo != 0) {
+					model.addAttribute("boardNo", boardNo);
+					model.addAttribute("parameter", parameter);
+					path = "board/list";
+				} else {
+					path = "오류 페이지 넣어야됨";
+				}
+			
+			} else {
+				path = "redirect:/index.jsp";
+			}
+			return path;
+		}
 }
