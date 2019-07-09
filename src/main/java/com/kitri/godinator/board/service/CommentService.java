@@ -8,5 +8,8 @@ public interface CommentService {
 	void writeMemo(ReplyDto commentDto);
 	//댓글 리스트
 	String listMemo(int boardNo);
-	
-}
+	//댓글 삭제
+	String deleteMemo(int boardNo, int commentNo);
+	//댓글 수정
+	void updateMemo(ReplyDto replyDto);
+}	

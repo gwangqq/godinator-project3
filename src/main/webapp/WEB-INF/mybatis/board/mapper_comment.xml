@@ -23,6 +23,17 @@
 		and board_no = #{boardNo}
 		order by comment_no desc
 	</select>
-
+	<delete id="deleteMemo" parameterType="int">
+		delete REPLY
+		where comment_no = #{commentNo}
+	</delete>
+	
+	<update id="updateMemo">
+		update REPLY
+		set comment_content = #{commentContent},
+			c_postdate = sysdate
+		where comment_no = #{commentNo}
+		and c_user_id = #{CUserId}
+	</update>
 
 </mapper>

@@ -7,9 +7,9 @@ response.sendRedirect(request.getContextPath()+"/board/main");
 
 MemberDto memberDto = new MemberDto();
 
-memberDto.setUserId("gwangq");
-memberDto.setUserName("박광규");
-memberDto.setEmail("pgg0406@naver.com");
+memberDto.setUserId("hello");
+memberDto.setUserName("이강인");
+memberDto.setEmail("gangin@naver.com");
 
 session.setAttribute("userInfo", memberDto);
 %>

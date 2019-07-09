@@ -48,19 +48,15 @@ public class BoardController {
 			"Content-type=application/json" })
 	public @ResponseBody String searchSchool(@RequestBody Map<String, String> parameter, Model model) {
 
-//		  System.out.println("Controller진입!" + parameter);
 		String schoolType = parameter.get("schoolType");
 		String schoolName = parameter.get("schoolName");
 
-//		  System.out.println("학교 유형 : "+schoolType +", 학교 이름 : " +schoolName);
 
 		String json = "";
 		if ("고등학교".equals(schoolType)) {
 			json = boardService.findHSchool(schoolName);
-//			  System.out.println("C : " + json);
 		} else {
 			json = boardService.findUSchool(schoolName);
-//			  System.out.println("C : " + json);
 		}
 
 		return json;
@@ -70,7 +66,7 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-//		System.out.println(parameter.toString());
+		//System.out.println("write controller : 	" +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		
@@ -80,7 +76,6 @@ public class BoardController {
 			boardDto.setBoardNo(boardNo);
 			boardDto.setbUserId(memberDto.getUserId());
 			boardDto.setUserName(memberDto.getUserName());
-//			System.out.println("C : " + boardDto);
 			boardNo = boardService.writeArticle(boardDto);
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
@@ -100,7 +95,6 @@ public class BoardController {
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-//		System.out.println("view/c : " + parameter.toString() + boardNo);
 		String path = "";
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
@@ -115,8 +109,6 @@ public class BoardController {
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("isPrev", isPrev);
 			model.addAttribute("isNext", isNext);
-//			System.out.println("결과 : " + isPrev);
-//			System.out.println(parameter);
 			path = "board/view";
 		} else {
 			path = "redirect:/index.jsp";
@@ -128,16 +120,15 @@ public class BoardController {
 //------------------------[게시판 리스트]------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
-
-//		System.out.println("get으로 넘어왔다" + parameter.toString());
+		
+		//System.out.println(parameter);
 		List<BoardDto> list = boardService.listArticle(parameter);
 		
 		String path = "";
-//		System.out.println(list);
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
-
+		//System.out.println("controller : " + parameter);
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);
@@ -152,13 +143,11 @@ public class BoardController {
 		@RequestMapping(value = "/modify", method = RequestMethod.GET)
 		public String modify(@RequestParam("boardNo") int boardNo, 
 								@RequestParam Map<String, String> parameter, Model model) {
-//			System.out.println("글 수정 C : " + parameter +  "/" + boardNo );
 				String path = "";
 			
 				BoardDto boardDto = boardService.getArticle(boardNo);
 				boardDto.setBoardCategory(Integer.parseInt(parameter.get("boardCategory")));
 				model.addAttribute("article", boardDto);
-//				System.out.println(boardDto);
 				model.addAttribute("parameter", parameter);
 				path = "board/modify";
 			return path;
@@ -171,7 +160,6 @@ public class BoardController {
 		public String modify(BoardDto boardDto, 
 				@RequestParam Map<String, String> parameter, Model model,
 				HttpSession session) {
-//			System.out.println("수정 완료 " + boardDto);
 			String path = "";
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 
@@ -197,18 +185,17 @@ public class BoardController {
 		@RequestMapping(value = "/prev", method = RequestMethod.GET)
 		public String prev(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 				HttpSession session) {
-//			System.out.println("prev// boardNo : " + boardNo + " boardCategory : "+ boardCategory);
 			String path = "";
-			System.out.println("prev 들어옴" + parameter);
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 			if (memberDto != null) {
+				
 				BoardDto boardDto = boardService.prevArticle(parameter);
+				int isPrev = boardService.checkPrev(parameter);
+				model.addAttribute("isPrev", isPrev);
 				model.addAttribute("article", boardDto);
 				model.addAttribute("parameter", parameter);
 				model.addAttribute("boardNo", parameter.get("boardNo"));
-				//System.out.println("C : boardNo -- " + parameter.get("boardNo"));
 				
-				//System.out.println(parameter);
 				path = "board/view";
 			} else {
 				path = "redirect:/index.jsp";
@@ -220,18 +207,16 @@ public class BoardController {
 		@RequestMapping(value = "/next", method = RequestMethod.GET)
 		public String next(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 				HttpSession session) {
-//			System.out.println("prev// boardNo : " + boardNo + " boardCategory : "+ boardCategory);
 			String path = "";
-			System.out.println("prev 들어옴" + parameter);
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 			if (memberDto != null) {
 				BoardDto boardDto = boardService.nextArticle(parameter);
+				int isNext = boardService.checkNext(parameter);
 				model.addAttribute("article", boardDto);
 				model.addAttribute("parameter", parameter);
 				model.addAttribute("boardNo", parameter.get("boardNo"));
-				System.out.println("C : boardNo -- " + parameter.get("boardNo"));
+				model.addAttribute("isNext", isNext);
 				
-				System.out.println(parameter);
 				path = "board/view";
 			} else {
 				path = "redirect:/index.jsp";
@@ -246,16 +231,14 @@ public class BoardController {
 				HttpSession session) {
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 			String path = "";
-			System.out.println(boardNo);
-			System.out.println("C :" +parameter);
+			//System.out.println("C :" +parameter);
 			if (memberDto != null) {
 				
 				boardService.deleteArticle(boardNo);
-//				System.out.println("C : " + boardDto);
 				if (boardNo != 0) {
 					model.addAttribute("boardNo", boardNo);
 					model.addAttribute("parameter", parameter);
-					path = "board/list";
+					path = "board/deleteok";
 				} else {
 					path = "오류 페이지 넣어야됨";
 				}

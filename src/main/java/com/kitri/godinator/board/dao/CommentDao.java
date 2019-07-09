@@ -10,5 +10,10 @@ public interface CommentDao {
 	void writeMemo(ReplyDto replytDto);
 	//댓글 보여주기
 	List<ReplyDto> listMemo(int boardNo);
-
+	
+	ReplyDto viewMemo(int boardNo);
+	int modifyMemo(ReplyDto replyDto);
+	void deleteMemo(int commentNo);
+	void updateMemo(ReplyDto replyDto);
+	
 }

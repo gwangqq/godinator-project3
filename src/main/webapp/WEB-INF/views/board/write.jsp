@@ -20,7 +20,6 @@ $(document).ready(function() {
 			if(schoolName == ""){
 				alert("학교 이름을 입력해주세요");
 			} else {
-				//alert(schoolName);
 				$.ajax({
 					url:'${root}/board/searchschool/',
 					type: 'POST',
@@ -32,7 +31,6 @@ $(document).ready(function() {
 							listHSchool(response);
 							$("#schoolName").val(""); 
 						} else {
-							//alert(response.uSchoolList);
 							listUSchool(response);
 							$("#schoolName").val(""); 										
 						}
@@ -51,7 +49,6 @@ $(document).ready(function() {
 		if(schoolName == ""){
 			alert("학교 이름을 입력해주세요");
 		} else {
-			//alert(schoolType+"|||||" + schoolName);
 			$.ajax({
 				url:'${root}/board/searchschool/',
 				type: 'POST',
@@ -63,7 +60,6 @@ $(document).ready(function() {
 						listHSchool(response);
 						$("#schoolName").val(""); 
 					} else {
-						//alert(response.uSchoolList);
 						listUSchool(response);
 						$("#schoolName").val(""); 										
 					}
@@ -78,7 +74,6 @@ $(document).ready(function() {
 	 function listHSchool(hschool) {
 		 $("#searchresult").empty();
 		var hschoolcnt = hschool.hSchoolList.length;
-		//alert(hschoolcnt);
 		var hschoolstr = '';
 		if(hschoolcnt != 0){
 			for(var i=0; i<hschoolcnt; i++){
@@ -95,7 +90,6 @@ $(document).ready(function() {
 	 function listUSchool(uschool) {
 		 $("#searchresult").empty();
 		var uschoolcnt = uschool.uSchoolList.length;
-		//alert(uschoolcnt);
 		var uschoolstr = '';
 		if(uschoolcnt != 0){
 			for(var i=0; i<uschoolcnt; i++){
@@ -113,7 +107,6 @@ $(document).ready(function() {
 //선택한 학교 label에 보여주기 
 	$(document).on("click", ".searchresult", function(){
 		var checkschool = $(this).text();
-		//alert(checkschool);
 		if(checkschool != "검색결과가 없습니다."){
 			$(this).parent().siblings("#checkedschool").find("#finalcheck").text(checkschool);
 		} else {
@@ -124,7 +117,6 @@ $(document).ready(function() {
 //modal창 확인 눌렀을 때 바깥 textfield에 학교 이름 뿌리기
 	$(document).on("click", "#confirmschool", function(){
 		var checkschool = $(this).parent().prev().find("#finalcheck").text();
-		//alert(checkschool);
 		$("#searchSchool").val(checkschool);
 		$("#searchresult").empty();
 		$("#finalcheck").empty();
@@ -152,7 +144,7 @@ $(document).ready(function() {
 		
 //글작성 취소 눌렀을 때 list로 돌아가기 
 	$("#cancelBtn").click(function() {
-		$("#bcode").val("${bcode}");
+		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
 		$("#key").val("");
 		$("#word").val("");
@@ -194,7 +186,7 @@ $(document).ready(function() {
 				<!-- enctype="multipart/form-data" --> 
 								<div class = "row">
 				
-				<input type="hidden" name="bcode" value="${parameter.bcode}">
+				<input type="hidden" name="boardCategory" value="${parameter.boardCategory}">
 				<input type="hidden" name="pg" value="1">
 				<input type="hidden" name="key" value="">
 				<input type="hidden" name="word" value="">

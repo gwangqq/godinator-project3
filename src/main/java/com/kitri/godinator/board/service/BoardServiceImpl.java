@@ -27,7 +27,6 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<CategoryDto> menuList() {
-//		System.out.println("service : " + sqlSession.getMapper(BoardDao.class).getBoardMenuList().toString());
 		return sqlSession.getMapper(BoardDao.class).getBoardMenuList();
 
 	}
@@ -39,7 +38,6 @@ public class BoardServiceImpl implements BoardService {
 		JSONArray array = new JSONArray(list);
 		JSONObject json = new JSONObject();
 		json.put("hSchoolList", array);
-//		System.out.println("service : " + json.toString());
 		return json.toString();
 	}
 
@@ -50,7 +48,6 @@ public class BoardServiceImpl implements BoardService {
 		JSONArray array = new JSONArray(list);
 		JSONObject json = new JSONObject();
 		json.put("uSchoolList", array);
-//		System.out.println("service : " + json.toString());
 		return json.toString();
 	}
 
@@ -97,7 +94,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int modifyArticle(BoardDto boardDto) {
 		int cnt = sqlSession.getMapper(BoardDao.class).modifyArticle(boardDto);
-//		System.out.println("service : " + boardDto + "||" + cnt);
 		return cnt != 0 ? boardDto.getBoardNo() : 0;
 	}
 
@@ -106,8 +102,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDto prevArticle(Map<String, String> parameter) {
 		int cnt = sqlSession.getMapper(BoardDao.class).prevArticle(parameter);
-//		System.out.println("prev service : " + cnt);
-		
+		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(cnt);
 		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
 		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));
@@ -126,7 +121,7 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public BoardDto nextArticle(Map<String, String> parameter) {
 		int cnt = sqlSession.getMapper(BoardDao.class).nextArticle(parameter);
-		
+		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(cnt);
 		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
 		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));

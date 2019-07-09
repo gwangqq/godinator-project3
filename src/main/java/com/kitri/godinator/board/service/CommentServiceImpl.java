@@ -41,4 +41,20 @@ public class CommentServiceImpl implements CommentService{
 		return json.toString();
 	}
 
+
+
+	@Override
+	public String deleteMemo(int boardNo, int commentNo) {
+		sqlSession.getMapper(CommentDao.class).deleteMemo(commentNo);
+		return makeJson(boardNo);
+	}
+
+
+
+	@Override
+	public void updateMemo(ReplyDto replyDto) {
+		sqlSession.getMapper(CommentDao.class).updateMemo(replyDto);
+		
+	}
+
 }

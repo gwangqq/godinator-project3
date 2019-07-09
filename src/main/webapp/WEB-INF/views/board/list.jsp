@@ -11,16 +11,16 @@ $(document).ready(function() {
 	$(".moveWriteBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
-		$("#key").val("");
-		$("#word").val("");
-		$("#boardNo").val("");
+		$("#key").val("${key}");
+		$("#word").val("${word}");
+		$("#boardNo").val("${boardNo}}");
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
 	});
 	
 	
 	$(".viewBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
-		$("#pg").val("${pg}");
+		$("#pg").val("1");
 		$("#key").val("${key}");
 		$("#word").val("${word}");
 		$("#boardNo").val($(this).attr("data-seq"));

@@ -3,9 +3,14 @@
 <%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %> 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 <style>
-.micro{
-	s
+.like :hover{
+	color: #f56a6a;
+}
+
+.like{
+	color:black;
 }
 </style>
 <script>
@@ -37,12 +42,11 @@ $(document).ready(function() {
 		var flag = confirm("게시물을 삭제하시겠습니까?");
 		if (flag == true) {
 			$("#boardCategory").val("${boardCategory}");
-			$("#pg").val("${pg}");
-			$("#key").val("${key}");
-			$("#word").val("${word}");
+			$("#pg").val("1");
+			$("#key").val("");
+			$("#word").val("");
 			$("#boardNo").val("${boardNo}");
 			$("#commonForm").attr("method", "GET").attr("action", "${root}/board/delete").submit();
-			alert("삭제 되었습니다!");
 		}
 		
 	})
@@ -70,7 +74,6 @@ $(document).ready(function() {
 		
 	});
 	
-	
 	<%--댓글 기능 시작--%>
 	<%--댓글 작성--%>
 	$("#commentBtn").click(function() {
@@ -79,7 +82,6 @@ $(document).ready(function() {
 		} else {
 			var boardNo ='${article.boardNo}';
 			var commentContent = $("#commentContent").val();
-			alert(boardNo + "|" + commentContent);
 			var param = JSON.stringify({'boardNo' : boardNo, 'commentContent' : commentContent});
 			if(commentContent.trim().length != 0){
 				$.ajax({
@@ -100,55 +102,93 @@ $(document).ready(function() {
 	<%--댓글을 리스트로 보여주기--%>
 	 getMemoList();
 	$(document).on("click",".mdeleteBtn", function() {
-		$.ajax({
-			url:'${root}/memo/'+$(this).parent("td").attr("data-seq")+'/'+$(this).parent("td").attr("data-mseq"),
-			type: 'DELETE',
-			contentType:'application/json;charset=UTF-8',
-			dataType : 'json',
-			success : function(response) {
-				makeMemoList(response);
-				$("#commentContent").val('');
-			}
-		});
+		var flag = confirm("댓글을 삭제하시겠습니까??");
+		if(flag == true){
+			$.ajax({
+				url:'${root}/comment/'+$(this).parent("td").attr("data-seq")+'/'+$(this).parent("td").attr("data-mseq"),
+				type: 'DELETE',
+				contentType:'application/json;charset=UTF-8',
+				dataType : 'json',
+				success : function(response) {
+					makeMemoList(response);
+					$("#commentContent").val('');
+				}
+			});
+		}
 	});
  	
 	
-/* 	
+ 	
 	function makeMemoList(memos) {
 		var memocnt = memos.commentList.length;
 		var memostr = '';
 		for(var i=0;i<memocnt;i++){
 			var memo = memos.commentList[i];
-			//댓글 하나 달기 
-		memostr += '<div class = "row col-12" style="height:100px;">';
-		memostr += '<div class = "col-2" style = "width:15%;">' + memo.CUserId+ '</div>';
-		memostr += '<div class = "col-8" style = "width:70%;">'+memo.commentContent+'</div>';
-		memostr += '<div class = "col-2" style = "width:15%;"><a href= "#">신고</a>';
-		memostr += '<span style="float: right; padding-top:0;" data-seq="'+memo.boardNo+'" data-mseq="'+memo.commentNo+'">'+memo.CPostdate+'</span><br>';
+//댓글 하나 달기 
+		memostr += '<tbody>';
+		memostr += '<tr style = "height:70px;">';
+		memostr += '	<td colspan="2" rowspan ="1">' + memo.CUserId+ '</td>';
+		memostr += '	<td colspan="5" rowspan ="1" width = "450">'+memo.commentContent+'</td>';
+		memostr += '	<td colspan="3" rowspan ="1">'+memo.CPostdate+'</td>';
+		memostr += '	<td colspan="2" rowspan ="1" ><a href = "#" style = "maring:0;padding:0;"><a href="#">신고</a></td>';
 		
 		//자기가 작성한 댓글에 수정 삭제 
-		if('${userInfo.userId}' == memo.CUserId){
-			memostr += '<a href= "#" class = "modifyComment">수정</a>&nbsp;<a href = "#" class="mdeleteBtn">삭제</a>';
+ 		if('${userInfo.userId}' == memo.CUserId){
+			memostr += '<td colspan="2" rowspan ="1" data-seq="'+memo.boardNo+'" data-mseq="'+memo.commentNo+'"  style = "maring:0;padding:0;"><a href= "#" class = "mmodifyBtn">수정</a><br><a href = "#" class="mdeleteBtn">삭제</a></td>';
 			
 			//댓글 수정 창 
-			memostr +='<span class = "commentContent" style = "display:none;" data-mseq="'+memo.commentNo+'">';
-			memostr +='		<textarea  cols = "100" rows = "3" style = "resize:none;">'+memo.commentContent+'</textarea>';
-			memostr +='		<a href = "#" class= "memoModifyBtn">수정</a>';
-			memostr +='		<a href = "#" class= "memoModifyCancelBtn">취소</a>';
-			memostr +='</sapn>';
+			memostr +='<tr class = "modifyComment" style = "display : none;">';
+			memostr +='		<td colspan="1" rowspan ="1">' + memo.CUserId+ '</td>';
+			memostr +='		<td colspan="7"><textarea class="commentContent" cols="500" rows="2" style = "resize : none;">'+memo.commentContent+'</textarea>';
+			memostr +='		</td>';
+			memostr +='		<td colspan="2" width="100" style="padding: 10px" data-mseq="'+memo.commentNo+'">';
+			memostr +='			<a href = "#" class= "memoModifyBtn">수정</a><br>';
+			memostr +='			<a href = "#" class= "memoModifyCancelBtn">취소</a>';
+			memostr +='		</td>';
+			memostr +='</tr>'; 
 		}
-		memostr += ' </div>';
+ 		memostr += '	</tr>';
+		memostr += '</tbody>';
 		}
 		$("#mlist").empty();
 		$("#mlist").append(memostr);
 	}
-	  */
-	//댓글 수정 버튼 
-	$(document).on("click", ".modifyComment", function() {
-// 		$(".modifyComment").attr("style",  "display : '';"); 
-		$(this).parent().prev().prev().css("display", "none");
-		$(this).parent().prev().css("display", "none");
-		$(this).parent().parent().next().css("display", "span");
+	
+	
+	getMemoList();
+	<%-- 댓글 수정 버튼 --%>
+	$(document).on("click", ".mmodifyBtn", function() {
+/* 		$(".modifyComment").attr("style",  "display : '';"); */
+		$(this).parent().parent().css("display", "none");
+		$(this).parent().parent().next().css("display", "table-row");
+	});
+	
+	$(document).on("click", ".memoModifyCancelBtn", function() {
+		/* $(".modifyComment").attr("style",  "display : '';"); */
+		$(this).parent().parent().css("display", "none");
+		$(this).parent().parent().prev().css("display", "table-row");
+	});
+	
+	$(document).on("click", ".memoModifyBtn", function() {
+		var boardNo ='${article.boardNo}';
+		var commentContent = $(this).parent().prev().find(".commentContent").val();
+		var commentNo = $(this).parent().attr("data-mseq");
+		alert(boardNo + "||" + commentContent + "|" +commentNo);
+		var param = JSON.stringify({'boardNo' : boardNo, 'commentContent' : commentContent, 'commentNo' : commentNo});
+		if(commentContent.trim().length != 0){
+			$.ajax({
+				url:'${root}/comment',
+				type: 'PUT',
+				contentType:'application/json;charset=UTF-8',
+				dataType : 'json',
+				data:param,
+				success : function(response) {
+					makeMemoList(response);
+				}
+			});
+		} else{
+			alert("댓글의 내용을 작성해주세요");
+		}
 	});
 	
 	
@@ -248,11 +288,11 @@ $(document).ready(function() {
 										<div class="rounded-lg" style="background-color: white; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
 											
 											<div class="btnLike" style="float:left; margin-left: 0.8em;">
-												<a href="#"><img alt="좋아요 아이콘" src="/godinator/resources/images/like.png"></a>
+												<a href="#" class = "like"><i class='far fa-thumbs-up' style='font-size:48px;'></i></a>
 												<span style="display: block;">0</span>
 											</div>
 											<div class="btnLike" style="float:right; margin-right: 0.8em;">
-												<a href="#"><img alt="싫어요 아이콘" src="/godinator/resources/images/unlike.png"></a>
+												<a href="#" class = "like"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></a>
 												<span style="display: block;">0</span>
 											</div>
 											
@@ -275,9 +315,9 @@ $(document).ready(function() {
 								<!-- 댓글 쓰기 -->
 								<div class = "row col-12">	
 									<div class = "col-2"></div>
-									<br>
+	
 									<div class = "col-8">
-									<span><textarea id = "commentContent" cols="4" style="resize: none;"></textarea></span>
+									<span><textarea id = "commentContent" cols="4" style="resize: none;" maxlength="200" placeholder="최대 200자까지 작성 가능합니다."></textarea></span>
 									<span style="float: right;"><button class = "button primary" id = "commentBtn"style="height: 100%;">등록</button></span>
 									</div>
 									<div class = "col-2"></div>
@@ -289,11 +329,11 @@ $(document).ready(function() {
 									<div class = "col-8">
 									<br><br>
 									<span style = "float:right;">
-									<c:if test='${isPrev != "0"}'>
-									<button class = "button small" id = "preView">이전글</button>
-									</c:if>
 									<c:if test='${isNext != "0"}'>
-									<button class = "button small" id = "nextView">다음글</button>
+									<button class = "button small" id = "nextView">이전글</button>
+									</c:if>
+									<c:if test='${isPrev != "0"}'>
+									<button class = "button small" id = "preView">다음글</button>
 									</c:if>
 									<button class = "button small" id = "moveListBtn">목록</button>
 									</span>
@@ -305,32 +345,16 @@ $(document).ready(function() {
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
 									<span>댓글0| 조회수  ${article.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
-									<hr style="margin: 0;">
 									</div>
 									<div class = "col-2"></div>
 								</div>
-									<br><br>
 								<!-- 댓글 내용 나오는 곳 -->
-								<div class =  "row col-12" style="margin-bottom: 20px;">
+								<div class =  "row col-12">
 									<div class = "col-2"></div>
-									<div id = "mlist" class = "col-8" style="margin-bottom: 2em;height:150px;padding-top: 0;">
-									
-				
-									
-									</div>
-									<div class = "col-2"></div>
-								</div>
-								<div class =  "row col-12" style="margin-bottom: 20px;">
-									<div class = "col-2"></div>
-									<div  class = "col-8" style="margin-bottom: 2em;height:150px;">
-										
-										<div class = "row col-12" id = "mlist">
-										
-										
-										</div>
-										<div class = "row"></div>
-										
-										
+									<div  class = "col-8">
+										<table id = "mlist">
+											
+										</table>
 									</div>
 									<div class = "col-2"></div>
 								</div>

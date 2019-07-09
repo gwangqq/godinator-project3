@@ -19,6 +19,7 @@
 			select count(board_no)
 			from board
 			where board_category = #{boardCategory}
+			and del_status = 0
 			and to_char(b_postdate, 'yymmdd') = to_char(sysdate,'yymmdd')
 	</select>
 	
@@ -26,6 +27,7 @@
 			select count(board_no)
 			from board
 			where board_category = #{boardCategory}
+			and del_status = 0
 				<if test="word != null and word != ''" >
 		           	<if test="key == 'board_subject'">
 		           	and board_subject like '%'||#{word}||'%'
