@@ -121,14 +121,14 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
 		
-		System.out.println(parameter);
+		//System.out.println(parameter);
 		List<BbsDto> list = boardService.listArticle(parameter);
-		System.out.println("list C : "  + list);
+		//System.out.println("list C : "  + list);
 		String path = "";
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
-		System.out.println("controller : " + parameter);
+		//System.out.println("controller : " + parameter);
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);
