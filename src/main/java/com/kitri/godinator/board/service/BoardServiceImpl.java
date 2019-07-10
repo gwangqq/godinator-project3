@@ -14,7 +14,7 @@ import com.kitri.godinator.board.controller.NumberCheck;
 import com.kitri.godinator.board.dao.BoardCommonDao;
 import com.kitri.godinator.board.dao.BoardDao;
 import com.kitri.godinator.model.BoardConstance;
-import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
 
 @Service
@@ -53,14 +53,14 @@ public class BoardServiceImpl implements BoardService {
 
 //	기본 글 쓰기 메소드
 	@Override
-	public int writeArticle(BoardDto boardDto) {
-		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(boardDto);
-		return cnt != 0 ? boardDto.getBoardNo() : 0;
+	public int writeArticle(BbsDto bbsDto) {
+		int cnt = sqlSession.getMapper(BoardDao.class).writeArticle(bbsDto);
+		return cnt != 0 ? bbsDto.getBoardNo() : 0;
 	}
 
 //page처리 + 게시판 list 보기
 	@Override
-	public List<BoardDto> listArticle(Map<String, String> parameter) {
+	public List<BbsDto> listArticle(Map<String, String> parameter) {
 		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
 		int end = pg * BoardConstance.ARTICLE_SIZE;
 		int start = end - BoardConstance.ARTICLE_SIZE;
@@ -74,40 +74,40 @@ public class BoardServiceImpl implements BoardService {
 //	list에서 작성 된 글 보기
 	@Override
 	@Transactional
-	public BoardDto viewArticle(int boardNo) {
+	public BbsDto viewArticle(int boardNo) {
 		// 조회수 증가
 		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(boardNo);
 		// 글쓴 내용 가져오기
-		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
-//		System.out.println("service view : " + boardDto);
-		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
-		return boardDto;
+		BbsDto bbsDto = sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
+//		System.out.println("service view : " + BbsDto);
+		bbsDto.setBoardContent(bbsDto.getBoardContent().replace("\n", "<br>"));
+		return bbsDto;
 	}
 
 // 수정에서 사용할 게시물 가져오기
 	@Override
-	public BoardDto getArticle(int boardNo) {
+	public BbsDto getArticle(int boardNo) {
 		return sqlSession.getMapper(BoardDao.class).viewArticle(boardNo);
 	}
 
 	// 게시물 수정 버튼 누르기
 	@Override
-	public int modifyArticle(BoardDto boardDto) {
-		int cnt = sqlSession.getMapper(BoardDao.class).modifyArticle(boardDto);
-		return cnt != 0 ? boardDto.getBoardNo() : 0;
+	public int modifyArticle(BbsDto bbsDto) {
+		int cnt = sqlSession.getMapper(BoardDao.class).modifyArticle(bbsDto);
+		return cnt != 0 ? bbsDto.getBoardNo() : 0;
 	}
 
 //	이전글 보기
 	@Override
 	@Transactional
-	public BoardDto prevArticle(Map<String, String> parameter) {
+	public BbsDto prevArticle(Map<String, String> parameter) {
 		int cnt = sqlSession.getMapper(BoardDao.class).prevArticle(parameter);
 		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(cnt);
-		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
-		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
+		BbsDto bbsDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
+		bbsDto.setBoardContent(bbsDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));
 		
-		return boardDto;
+		return bbsDto;
 	}
 
 //이전글 있는지 확인
@@ -119,14 +119,14 @@ public class BoardServiceImpl implements BoardService {
 //다음글 보기	
 	@Override
 	@Transactional
-	public BoardDto nextArticle(Map<String, String> parameter) {
+	public BbsDto nextArticle(Map<String, String> parameter) {
 		int cnt = sqlSession.getMapper(BoardDao.class).nextArticle(parameter);
 		sqlSession.getMapper(BoardCommonDao.class).updateViewCount(cnt);
-		BoardDto boardDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
-		boardDto.setBoardContent(boardDto.getBoardContent().replace("\n", "<br>"));
+		BbsDto bbsDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
+		bbsDto.setBoardContent(bbsDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));
 		
-		return boardDto;
+		return bbsDto;
 	}
 	
 //다음글 있는지 확인 

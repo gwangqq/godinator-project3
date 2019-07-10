@@ -7,7 +7,7 @@
 
 <script>
 $(document).ready(function() {
-	
+	//글쓰기 이동 버튼
 	$(".moveWriteBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
@@ -17,7 +17,7 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
 	});
 	
-	
+	//각 게시물 보기 버튼
 	$(".viewBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
@@ -27,6 +27,7 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/view").submit();
 	});
 	
+	//최신목록
 	$(".firstListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("1");
@@ -35,6 +36,7 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
 	});
 	
+	//페이지, 끝 목록
 	$(".moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val($(this).attr("data-pg"));
@@ -42,6 +44,16 @@ $(document).ready(function() {
 		$("#word").val("${word}");
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
 	});
+	
+	//검색 기능
+	$("#searchBtn").click(function() {
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val("1");
+		$("#key").val($("#skey").val());
+		$("#word").val($("#sword").val());
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
+	});
+
 });
 </script>	
 
@@ -128,40 +140,23 @@ $(document).ready(function() {
 											</ul>
 										</div>
 										<div class = "col-2"></div>
-										<!-- <li><span class="button disabled">최신게시물</span></li>
-												<li><span class="button disabled">이전</span></li>
-												<li><a href="#" class="page active">1</a></li>
-												<li><a href="#" class="page">2</a></li>
-												<li><a href="#" class="page">3</a></li>
-												<li><a href="#" class="page">4</a></li>
-												<li><a href="#" class="page">5</a></li>
-												<li><a href="#" class="page">6</a></li>
-												<li><a href="#" class="page">7</a></li>
-												<li><a href="#" class="page">8</a></li>
-												<li><a href="#" class="page">9</a></li>
-												<li><a href="#" class="page">10</a></li>
-												<li><a href="#" class="button">다음</a></li>
-												<li><a href="#" class="button">끝 게시물</a></li> -->
 								
 								
 								<!-- =============== 조건 검색 창 ===========-->
 									
 										<div class = "col-1"></div>
 										<div class = "col-3" style="margin-right: 0; padding:0;">
-										<select name = "key" id="key">
-											<option value="1">전체</option>
-											<option value="2">글제목</option>
-											<option value="3">작성자</option>
-											<option value="4">작성내용</option>
-											<option value="5">학교이름</option>
-											<option value="6">지역</option>
+										<select name = "key" id="skey">
+											<option value="board_subject">글제목</option>
+											<option value="b_user_id">작성자</option>
+											<option value="b_school_name">학교이름</option>
 										</select>
 										</div>
 										<div class = "col-6" style="margin-left: 0;margin-right: 0;padding:0;">
-										<input type="text" placeholder="검색내용을 입력해주세요" name = "word" id = "word">					
+										<input type="text" placeholder="검색내용을 입력해주세요" name = "word" id = "sword">					
 										</div>
 										<div class = "col-1" style="margin-left: 0; margin-right: 0;padding:0;">
-										<button class="button icon solid fa-search">검색</button>
+										<button class="button icon solid fa-search" id = "searchBtn">검색</button>
 										</div>
 									</div>
 									

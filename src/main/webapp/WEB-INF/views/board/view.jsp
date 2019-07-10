@@ -5,11 +5,11 @@
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %> 
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 <style>
-.like :hover{
-	color: #f56a6a;
+#like{
+	color:black;
 }
 
-.like{
+#unlike{
 	color:black;
 }
 </style>
@@ -26,7 +26,7 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/list").submit();
 	});
 	
-	<%-- 수정 버튼--%>
+	//수정 버튼
 	$(".moveModifyBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
 		$("#pg").val("${pg}");
@@ -36,6 +36,14 @@ $(document).ready(function() {
 		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/modify").submit();
 	});
 	
+	//글작성
+	$("#moveWriteBtn").click(function() {
+		$("#boardCategory").val("${boardCategory}");
+		$("#pg").val("1");
+		$("#key").val("");
+		$("#word").val("");
+		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
+	});
 	
 	//삭제버튼
 	$(".DeleteBtn").click(function() {
@@ -173,7 +181,7 @@ $(document).ready(function() {
 		var boardNo ='${article.boardNo}';
 		var commentContent = $(this).parent().prev().find(".commentContent").val();
 		var commentNo = $(this).parent().attr("data-mseq");
-		alert(boardNo + "||" + commentContent + "|" +commentNo);
+		//alert(boardNo + "||" + commentContent + "|" +commentNo);
 		var param = JSON.stringify({'boardNo' : boardNo, 'commentContent' : commentContent, 'commentNo' : commentNo});
 		if(commentContent.trim().length != 0){
 			$.ajax({
@@ -207,6 +215,15 @@ $(document).ready(function() {
 	}
 	
 	
+//----------------------------------좋아요 기능------------------------------------
+	$("#like").click(function() {
+		$(this).css("color","#f56a6a");
+		
+	});
+	
+	$("#unlike").click(function() {
+		$(this).css("color","#f56a6a");
+	});
 });
 
 
@@ -288,11 +305,11 @@ $(document).ready(function() {
 										<div class="rounded-lg" style="background-color: white; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
 											
 											<div class="btnLike" style="float:left; margin-left: 0.8em;">
-												<a href="#" class = "like"><i class='far fa-thumbs-up' style='font-size:48px;'></i></a>
+												<a href="#" id = "like"><i class='far fa-thumbs-up' style='font-size:48px;'></i></a>
 												<span style="display: block;">0</span>
 											</div>
 											<div class="btnLike" style="float:right; margin-right: 0.8em;">
-												<a href="#" class = "like"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></a>
+												<a href="#" id = "unlike"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></a>
 												<span style="display: block;">0</span>
 											</div>
 											
@@ -337,6 +354,7 @@ $(document).ready(function() {
 									</c:if>
 									<button class = "button small" id = "moveListBtn">목록</button>
 									</span>
+									<button class = "button small" id = "moveWriteBtn">글작성</button>
 									</div>
 									<div class = "col-2"></div>
 								</div>

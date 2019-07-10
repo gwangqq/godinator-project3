@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
-import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.PageNavigation;
 
@@ -64,7 +64,7 @@ public class BoardController {
 
 //------------------------[글쓰기]-------------------------
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BoardDto boardDto, @RequestParam Map<String, String> parameter, Model model,
+	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
 		//System.out.println("write controller : 	" +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
@@ -73,10 +73,10 @@ public class BoardController {
 		if (memberDto != null) {
 			
 			int boardNo = boardCommonService.getNextBoardNo();
-			boardDto.setBoardNo(boardNo);
-			boardDto.setbUserId(memberDto.getUserId());
-			boardDto.setUserName(memberDto.getUserName());
-			boardNo = boardService.writeArticle(boardDto);
+			bbsDto.setBoardNo(boardNo);
+			bbsDto.setbUserId(memberDto.getUserId());
+			bbsDto.setUserName(memberDto.getUserName());
+			boardNo = boardService.writeArticle(bbsDto);
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
 				path = "board/writeok";
@@ -98,13 +98,13 @@ public class BoardController {
 		String path = "";
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
-			BoardDto boardDto = boardService.viewArticle(boardNo);
+			BbsDto bbsDto = boardService.viewArticle(boardNo);
 
 			parameter.put("boardNo", Integer.toString(boardNo));
 			int isPrev = boardService.checkPrev(parameter);
 			int isNext = boardService.checkNext(parameter);
 			
-			model.addAttribute("article", boardDto);
+			model.addAttribute("article", bbsDto);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("boardNo", boardNo);
 			model.addAttribute("isPrev", isPrev);
@@ -121,14 +121,14 @@ public class BoardController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(@RequestParam Map<String, String> parameter, Model model, HttpServletRequest requset) {
 		
-		//System.out.println(parameter);
-		List<BoardDto> list = boardService.listArticle(parameter);
-		
+		System.out.println(parameter);
+		List<BbsDto> list = boardService.listArticle(parameter);
+		System.out.println("list C : "  + list);
 		String path = "";
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
-		//System.out.println("controller : " + parameter);
+		System.out.println("controller : " + parameter);
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);
@@ -145,9 +145,9 @@ public class BoardController {
 								@RequestParam Map<String, String> parameter, Model model) {
 				String path = "";
 			
-				BoardDto boardDto = boardService.getArticle(boardNo);
-				boardDto.setBoardCategory(Integer.parseInt(parameter.get("boardCategory")));
-				model.addAttribute("article", boardDto);
+				BbsDto bbsDto = boardService.getArticle(boardNo);
+				bbsDto.setBoardCategory(Integer.parseInt(parameter.get("boardCategory")));
+				model.addAttribute("article", bbsDto);
 				model.addAttribute("parameter", parameter);
 				path = "board/modify";
 			return path;
@@ -157,7 +157,7 @@ public class BoardController {
 		
 //수정 완료 버튼 클릭
 		@RequestMapping(value = "/modify", method = RequestMethod.POST)
-		public String modify(BoardDto boardDto, 
+		public String modify(BbsDto bbsDto, 
 				@RequestParam Map<String, String> parameter, Model model,
 				HttpSession session) {
 			String path = "";
@@ -165,7 +165,7 @@ public class BoardController {
 
 			if (memberDto != null) {
 
-				int boardNo = boardService.modifyArticle(boardDto);
+				int boardNo = boardService.modifyArticle(bbsDto);
 				if (boardNo != 0) {
 					model.addAttribute("boardNo", boardNo);
 					path = "board/writeok";
@@ -189,10 +189,10 @@ public class BoardController {
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 			if (memberDto != null) {
 				
-				BoardDto boardDto = boardService.prevArticle(parameter);
+				BbsDto bbsDto = boardService.prevArticle(parameter);
 				int isPrev = boardService.checkPrev(parameter);
 				model.addAttribute("isPrev", isPrev);
-				model.addAttribute("article", boardDto);
+				model.addAttribute("article", bbsDto);
 				model.addAttribute("parameter", parameter);
 				model.addAttribute("boardNo", parameter.get("boardNo"));
 				
@@ -210,9 +210,9 @@ public class BoardController {
 			String path = "";
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 			if (memberDto != null) {
-				BoardDto boardDto = boardService.nextArticle(parameter);
+				BbsDto bbsDto = boardService.nextArticle(parameter);
 				int isNext = boardService.checkNext(parameter);
-				model.addAttribute("article", boardDto);
+				model.addAttribute("article", bbsDto);
 				model.addAttribute("parameter", parameter);
 				model.addAttribute("boardNo", parameter.get("boardNo"));
 				model.addAttribute("isNext", isNext);

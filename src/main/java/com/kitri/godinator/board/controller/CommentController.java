@@ -33,7 +33,7 @@ public class CommentController {
 //			System.out.println("C : " + replyDto);
 			commentService.writeMemo(replyDto);
 			String json = commentService.listMemo(replyDto.getBoardNo());
-			System.out.println(json);
+//			System.out.println(json);
 			return json;
 		}
 

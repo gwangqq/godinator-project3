@@ -3,7 +3,7 @@ package com.kitri.godinator.board.service;
 import java.util.List;
 import java.util.Map;
 
-import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
 
 public interface BoardService {
@@ -15,26 +15,26 @@ public interface BoardService {
 	String findHSchool(String schoolName);
 	
 	//글 작성 완료
-	int writeArticle(BoardDto boardDto);
+	int writeArticle(BbsDto bbsDto);
 	
 	
 	//게시판 LIST 보여주기
-	List<BoardDto> listArticle(Map<String, String> parameter);
+	List<BbsDto> listArticle(Map<String, String> parameter);
 	
 	//게시물 하나씩 보여주기 
-	BoardDto viewArticle(int boardNo);
-	BoardDto getArticle(int boardNo);
+	BbsDto viewArticle(int boardNo);
+	BbsDto getArticle(int boardNo);
 	
 	//게시물 수정 완료 버튼
-	int modifyArticle(BoardDto boardDto);
+	int modifyArticle(BbsDto bbsDto);
 	
 	//이전 글 보기
-	BoardDto prevArticle(Map<String, String> parameter);
+	BbsDto prevArticle(Map<String, String> parameter);
 	
 	//이전 글 번호 확인
 	public int checkPrev(Map<String, String> parameter);
 	//다음 글 보기
-	BoardDto nextArticle(Map<String, String> parameter);
+	BbsDto nextArticle(Map<String, String> parameter);
 	//이전 글 번호 확인
 	public int checkNext(Map<String, String> parameter);
 	

@@ -4,12 +4,11 @@
 <%
 response.sendRedirect(request.getContextPath()+"/board/main");
 
-
 MemberDto memberDto = new MemberDto();
 
-memberDto.setUserId("hello");
-memberDto.setUserName("이강인");
-memberDto.setEmail("gangin@naver.com");
+memberDto.setUserId("hwang");
+memberDto.setUserName("황희찬");
+memberDto.setEmail("hwang@naver.com");
 
 session.setAttribute("userInfo", memberDto);
 %>

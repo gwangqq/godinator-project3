@@ -91,7 +91,7 @@ public class PageNavigation {
 			endPage = totalPageCount;
 		for (int i = startPage; i <= endPage; i++) {
 			if (pageNo == i) {
-				tmpNavigator.append("     <li><a href ='#' class='page active moveListBtn'>" + i + "</a></li>\n");
+				tmpNavigator.append("     <li><a href ='#' class='page active disabled' role = 'button'>" + i + "</a></li>\n");
 			} else {
 				tmpNavigator.append("     <li><a href ='#' class = 'page moveListBtn' data-pg='"+ i +"'>" + i + "</a></li>\n");
 			}

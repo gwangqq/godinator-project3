@@ -3,7 +3,7 @@ package com.kitri.godinator.board.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.kitri.godinator.model.BoardDto;
+import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
 
 
@@ -17,16 +17,16 @@ public interface BoardDao {
 	List<String> findHSchool(String schoolName);
 	
 	//글 작성 완료 
-	int writeArticle(BoardDto boardDto);
+	int writeArticle(BbsDto bbsDto);
 	
 	//게시판 list보여주는 메소드
-	List<BoardDto> listArticle(Map<String, String> parameter);
+	List<BbsDto> listArticle(Map<String, String> parameter);
 	
 	//게시물 가져오는 메소드
-	BoardDto viewArticle(int boardNo);
+	BbsDto viewArticle(int boardNo);
 	
 	//글 수정 완료 메소드
-	int modifyArticle(BoardDto boardDto);
+	int modifyArticle(BbsDto bbsDto);
 	
 	//이전글번호 찾아오는 메소드
 	int prevArticle(Map<String, String> parameter);
