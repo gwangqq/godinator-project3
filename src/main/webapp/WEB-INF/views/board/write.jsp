@@ -6,6 +6,7 @@
 <!--장소검색  Modal -->
 <script>
 $(document).ready(function() {
+	
 //------------------------------[학교 검색 모달창 시작]-----------------------------------	
 	
 	//모달 엔터 클릭시 
@@ -144,11 +145,7 @@ $(document).ready(function() {
 		
 //글작성 취소 눌렀을 때 list로 돌아가기 
 	$("#cancelBtn").click(function() {
-		$("#boardCategory").val("${boardCategory}");
-		$("#pg").val("1");
-		$("#key").val("");
-		$("#word").val("");
-		location.href="${root}/board/moveview";
+		history.back();
 	});
 });
 </script>	
@@ -189,6 +186,8 @@ $(document).ready(function() {
 				<input type="hidden" name="pg" value="1">
 				<input type="hidden" name="key" value="">
 				<input type="hidden" name="word" value="">
+				<input type="hidden" name="latitude" value="" id ="latitude">
+				<input type="hidden" name="longtitude" value="" id = "longtitude">
 				
 									<!-- 기본 정보 -->
 								<br>
@@ -243,81 +242,128 @@ $(document).ready(function() {
 <script>
 $(document).ready(function(){
 	
-	map();
 	
-	var address = "";
-	var latitude = "";
-	var longtitude = "";
+	var address = "서울 시청";
+	
+	var latitude = 0;
+	var longtitude = 0;
+	
 	
 	$("#addressSearch").keypress(function(key) {
 		if(key.keyCode ==13){
-			alert($("#addressSearch").val());
 			address = $("#addressSearch").val();
-			
 			map();
 		}
 	});
 	
 	
 	$("#addressBtn").click(function() {
-		alert(address);
+		address = $("#addressSearch").val();
+		map();
 	});
 	 
+	$("#mapBtn").click(function() {
+		map();
+	});
 	
+	
+//키워드 검색 맵 
 function map(){
 	//모달에 카카오 맵 띄우기
 	setTimeout(function() { 
 		
-		
-		
-		kakao.maps.load(function() {
-			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-			 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			
+			kakao.maps.load(function() {
+				
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = { 
 			        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 			        level: 3 // 지도의 확대 레벨
 			    };
-			 //지도 생성
-			 var map = new kakao.maps.Map(mapContainer, mapOption);
-			 
-			// 주소-좌표 변환 객체를 생성합니다
-			 var geocoder = new kakao.maps.services.Geocoder();
-		 	
-			
-			//---------------------------------주소 입력시 마커 띄우기 
-			// 주소로 좌표를 검색합니다
-			 geocoder.addressSearch(address , function(result, status) {
-
-			     // 정상적으로 검색이 완료됐으면 
-			      if (status === kakao.maps.services.Status.OK) {
-
-			         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-			         // 결과값으로 받은 위치를 마커로 표시합니다
-			         var marker = new kakao.maps.Marker({
-			             map: map,
-			             position: coords
-			         });
-
-			         // 인포윈도우로 장소에 대한 설명을 표시합니다
-			         var infowindow = new kakao.maps.InfoWindow({
-			             content: '<div style="width:150px;text-align:center;padding:6px 0;">'+address+'</div>'
-			         });
-			         infowindow.open(map, marker);
-
-			         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			         map.setCenter(coords);
-			     } 
-			     
-			 });    
-		 });
 	
-	}, 1700);
+			var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+			
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var marker = new kakao.maps.Marker({ 
+			    // 지도 중심좌표에 마커를 생성합니다 
+			    position: map.getCenter(),
+			}); 
+			
+			// 지도에 마커를 표시합니다
+			marker.setMap(map);
+	
+			// 지도에 클릭 이벤트를 등록합니다
+			// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+			    
+			    // 클릭한 위도, 경도 정보를 가져옵니다 
+			    var latlng = mouseEvent.latLng; 
+			    
+			    // 마커 위치를 클릭한 위치로 옮깁니다
+			    marker.setPosition(latlng);
+			    latitude = latlng.getLat();
+			    longtitude = latlng.getLng();
+			    
+			    
+			    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+			    message += '경도는 ' + latlng.getLng() + ' 입니다';
+						    
+			    
+			    alert(message);
+			   
+				});
+			 	
+			// 장소 검색 객체를 생성합니다
+			var ps = new kakao.maps.services.Places(); 
+	
+	
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			var zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+			
+			
+			// 키워드로 장소를 검색합니다
+			ps.keywordSearch(address, placesSearchCB); 	
+			
+			
+			// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+			function placesSearchCB (data, status, pagination) {
+			    if (status === kakao.maps.services.Status.OK) {
+	
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			        // LatLngBounds 객체에 좌표를 추가합니다
+			        var bounds = new kakao.maps.LatLngBounds();
+	
+			        for (var i=0; i<data.length; i++) {
+			           
+			            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+			        }       
+	
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			        map.setBounds(bounds);
+			    } 
+			}
+			
+		
+		});
+	
+	}, 700);
 	
 }
 	
-	
-	 
+
+		$(document).on("click", "#chooseplace", function() {
+			//latitude longtitude
+			alert(latitude + "///" + longtitude);
+			$("#latitude").val(latitude);
+			$("#longtitude").val(longtitude);
+			
+		});
+	if(latitude ==0 || longtitude ==0){
+		$("#latitude").val(0);
+		$("#longtitude").val(0);
+	}
 		  
 	
 });
@@ -328,7 +374,7 @@ function map(){
 
 		<div class = "row">
 			<div class = "col-2">
-				<label>주소 검색</label>
+				<label>장소 검색</label>
 			</div>
          	<div class = "col-8">
          		<input type="text" name = "addressSearch" id = "addressSearch">
@@ -341,7 +387,7 @@ function map(){
         
          <!--  modal footer-->
         <div class="modal-footer">
-          <input type="button" class="button" data-dismiss="modal" value = "Close">
+          <input type="button" class="button" data-dismiss="modal" value = "선택" id = "chooseplace">
         </div>
         
       </div>

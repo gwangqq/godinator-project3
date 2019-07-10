@@ -29,7 +29,7 @@
 		values(#{boardNo}, #{bUserId}, #{boardCategory}, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
 		
 		into bbs (BBS_NO, BOARD_NO, SAVE_FOLDER, ORGINAL_NAME, SAVED_NAME, FILE_SIZE, LATITUDE, LONGITUDE)
-		values (bbs_seq.nextval, #{boardNo}, #{saveFolder, jdbcType=VARCHAR}, #{orginalName, jdbcType=VARCHAR}, #{savedName, jdbcType=VARCHAR}, #{fileSize, jdbcType=VARCHAR}, #{latitude, jdbcType=VARCHAR}, #{longitude, jdbcType=VARCHAR})
+		values (bbs_seq.nextval, #{boardNo}, #{saveFolder, jdbcType=VARCHAR}, #{orginalName, jdbcType=VARCHAR}, #{savedName, jdbcType=VARCHAR}, #{fileSize, jdbcType=VARCHAR}, #{latitude, jdbcType=INTEGER}, #{longitude, jdbcType=INTEGER})
 	select * from dual
 	
 	</insert>

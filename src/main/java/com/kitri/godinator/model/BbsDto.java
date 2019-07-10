@@ -11,7 +11,7 @@ public class BbsDto extends BoardDto{
 	private String orginalName;		// 원본파일이름
 	private String savedName;		// 저장파일이름
 	private int fileSize;			// 파일크기
-	private int latitude;			// 위도
-	private int longitude;			// 경도
+	private float latitude;			// 위도
+	private float longitude;			// 경도
 
 }
