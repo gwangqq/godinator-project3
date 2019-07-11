@@ -45,4 +45,8 @@ public interface BoardService {
 	//좋아요 숫자
 	String likeCount(LoveDto loveDto);
 	
+	//좋아요 
+	int totalLike(LoveDto loveDto);
+	int totalHate(LoveDto loveDto);
+	
 }

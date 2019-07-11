@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
 import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
 import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.LoveDto;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.PageNavigation;
+import com.kitri.godinator.model.ReplyDto;
 
 @Controller
 @RequestMapping("/board")
@@ -106,7 +110,14 @@ public class BoardController {
 			parameter.put("boardNo", Integer.toString(boardNo));
 			int isPrev = boardService.checkPrev(parameter);
 			int isNext = boardService.checkNext(parameter);
-			
+//			LoveDto loveDto = new LoveDto();
+//			loveDto.setBoardNo(boardNo);
+//			loveDto.setUserId(memberDto.getUserId());
+//			int totalLike = boardService.totalLike(loveDto);
+//			int totalHate = boardService.totalHate(loveDto);
+//			
+//			model.addAttribute("totalLike", totalLike);
+//			model.addAttribute("totalHate", totalHate);
 			model.addAttribute("article", bbsDto);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("boardNo", boardNo);
@@ -260,19 +271,29 @@ public class BoardController {
 		public @ResponseBody String like(@RequestBody LoveDto loveDto, Model model, HttpSession session) {
 			String likeCheck = "";
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			JSONObject json = new JSONObject();
 			if (memberDto != null) {
 				
 				loveDto.setUserId(memberDto.getUserId());
 				
-				System.out.println(loveDto);
+				System.out.println("client -> controller : " + loveDto);
+				
 				
 				likeCheck = boardService.likeCount(loveDto); 
-				System.out.println(likeCheck);
+				System.out.println("controller -> client : " + likeCheck);
+				int totalLike = boardService.totalLike(loveDto);
+				int totalHate = boardService.totalHate(loveDto);
 				
 				
-				return likeCheck;
+				json.put("likeCheck", likeCheck);
+				json.put("totalLike", totalLike);
+				json.put("totalHate", totalHate);
+				
+				
+				
+				return json.toString();
 			} else {
-				return likeCheck;
+				return json.toString();
 			}
 		}
 

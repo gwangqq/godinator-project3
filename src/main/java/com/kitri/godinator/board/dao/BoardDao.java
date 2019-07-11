@@ -44,11 +44,21 @@ public interface BoardDao {
 	// 좋아요 눌렀나 안눌렀나 확인 0없음/1있음
 	int isLike(LoveDto loveDto);
 	
+	//좋아요& 싫어요 뭐 눌렀는지 확인 L:좋아요 U:싫어요
+	String likeUnlike(LoveDto loveDto);
+	
 	// 아직 안 눌렀을 시 (0) --> insert
 	int insertLike(LoveDto loveDto);
 
 	// 이미 눌렀을 시 (1) --> 0 delete (좋아요 기록 삭제)
 	int deleteLike(LoveDto loveDto);
 	
-	void updateLike(LoveDto loveDto);
+	//좋아요 -> 싫어요 , 싫어요 -> 좋아요
+	int updateLike(LoveDto loveDto);
+	
+	//좋아요 전체 개수
+	int totalLike(LoveDto loveDto);
+	//싫어요 전체 개수
+	int totalHate(LoveDto loveDto);
+	
 }

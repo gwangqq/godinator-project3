@@ -106,7 +106,7 @@ public class BoardServiceImpl implements BoardService {
 		BbsDto bbsDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
 		bbsDto.setBoardContent(bbsDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));
-		
+
 		return bbsDto;
 	}
 
@@ -125,10 +125,10 @@ public class BoardServiceImpl implements BoardService {
 		BbsDto bbsDto = sqlSession.getMapper(BoardDao.class).viewArticle(cnt);
 		bbsDto.setBoardContent(bbsDto.getBoardContent().replace("\n", "<br>"));
 		parameter.put("boardNo", Integer.toString(cnt));
-		
+
 		return bbsDto;
 	}
-	
+
 //다음글 있는지 확인 
 	@Override
 	public int checkNext(Map<String, String> parameter) {
@@ -144,33 +144,72 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public String likeCount(LoveDto loveDto) {
 		String check = "";
-		
-		
-		
-		
-		//좋아요 확인 (0: 좋아요 안했음 -> insert / 1: 좋아요 했음 ->update)
+
+		// 좋아요&싫어요 확인 (0: 좋아요 안했음 -> insert / 1: 좋아요 했음 ->update)
 		int likeResult = sqlSession.getMapper(BoardDao.class).isLike(loveDto);
 		System.out.println("좋아요 눌렀나 확인: " + likeResult);
+
+		// 어느 버튼 눌렀는지
+		String inLikeUnlike = loveDto.getLikeUnlike();
 		
-		if(likeResult == 0) {
-			//좋아요 확인 후 insert(좋아요 누를 때)
+		System.out.println("무슨 버튼을 눌렀는지 : " + inLikeUnlike );
+		// 좋아요&싫어요 둘중에 뭐 눌려있는지 L:좋아요 U: 싫어요
+		String outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
+		
+		System.out.println("무슨 버튼 눌려 있는지 : "+outLikeUnlike);
+		
+		int success = 0;
+
+		if (likeResult == 0) {
+			// 좋아요 확인 후 insert(좋아요 누를 때)
+
 			int firstClick = sqlSession.getMapper(BoardDao.class).insertLike(loveDto);
-			System.out.println("좋아요 눌렀음 : "+  firstClick);
-			return check = "like";
+			System.out.println(inLikeUnlike + "버튼 눌렀음  : " + firstClick);
+
+			check = "like";
+
+		} else if (likeResult == 1) {
 			
-		} else if (likeResult ==1) {
-			//좋아요 확인 후 update(누른 좋아요 취소할 때)
-			int cancelLike = sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
-			System.out.println("좋아요 취소했다 : " + cancelLike);
-			return check = "likeCancel";
 			
+			System.out.println("들어옴!!!! 눌른 버튼 : " + inLikeUnlike +", 눌려있던 버튼 : " + outLikeUnlike );
+			//outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
+			
+			
+			if (inLikeUnlike.equals(outLikeUnlike)) {
+				// 좋아요 L 취소 delete
+				success = sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
+
+				System.out.println(inLikeUnlike + "버튼 취소  성공 : " + success);
+
+				check = "deleteLike";
+			
+					
+			} else if (inLikeUnlike != outLikeUnlike) {
+				
+				success = sqlSession.getMapper(BoardDao.class).updateLike(loveDto);
+
+				System.out.println(inLikeUnlike + "버튼 변경  성공 : " + success);
+				check = "changeLike";
+				
+			} 
+
 		}
-		
-		
+
 		return check;
+	}
+	
+	//좋아요 전체 숫자 
+	@Override
+	public int totalLike(LoveDto loveDto) {
+		return sqlSession.getMapper(BoardDao.class).totalLike(loveDto);
+	}
+
+	@Override
+	public int totalHate(LoveDto loveDto) {
+		return sqlSession.getMapper(BoardDao.class).totalHate(loveDto);
 	}
 
 	
-
-
+	
+	
 }

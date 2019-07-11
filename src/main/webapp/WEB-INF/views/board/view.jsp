@@ -4,19 +4,10 @@
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %> 
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-<style>
-#like{
-	color:black;
-}
-
-#unlike{
-	color:black;
-}
-</style>
 <script>
 
 $(document).ready(function() {
-	
+	getlikecount();
 	//리스트 돌아가기
 	$("#moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
@@ -219,28 +210,22 @@ $(document).ready(function() {
 	
 	
 //----------------------------------좋아요 기능------------------------------------
-	$("#like").click(function() {
-		
+	$(".likeBtn").click(function() {
+		alert("눌렸다");
 		var boardNo ='${article.boardNo}';
 		var userId = '${userInfo.userId}';
-		var type = "like";
+		var likeUnlike = $(this).attr("likeUnlike");
 		if(userId != null){
-			var param = JSON.stringify({'boardNo' : boardNo, 'userId' : userId});
+			var param = JSON.stringify({'boardNo' : boardNo, 'userId' : userId, 'likeUnlike' : likeUnlike});
 			$.ajax({
 				url:'${root}/board/like',
 				type: 'POST',
 				contentType:'application/json;charset=UTF-8',
 				data:param,
+				dataType : 'json',
 				success : function(result) {
 					alert(result);	
-					
-					if(result.likeCheck == 'like'){
-						$(this).css("color","#f56a6a");
-						
-					} else {
-						$(this).css("color","black");
-						
-					}
+					getlikecount();
 					
 				}
 			});
@@ -251,35 +236,20 @@ $(document).ready(function() {
 		
 	});
 	
-	$("#unlike").click(function() {
-		var boardNo ='${article.boardNo}';
-		var userId = '${userInfo.userId}';
-		var type = "hate";
-		if(userId != null){
-			var param = JSON.stringify({'boardNo' : boardNo, 'userId' : userId});
-			$.ajax({
-				url:'${root}/board/like',
-				type: 'POST',
-				contentType:'application/json;charset=UTF-8',
-				data:param,
-				success : function(result) {
-					alert(result);	
-					
-					if(result.likeCheck == 'hate'){
-						$(this).css("color","#f56a6a");
-						
-					} else {
-						$(this).css("color","black");
-						
-					}
-					
-				}
-			});
-		} else {
-			alert("로그인이 필요합니다");
-			return false;
-		}
-	});
+	
+	
+	//좋아요 숫자 불러오는 메소드 
+	function getlikecount() {
+		$.ajax({
+			url:'${root}/board/like',
+			type: 'GET',
+			success : function(response) {
+			alert('${totalLike}');
+			alert('${totalHate}');
+			}
+		});
+	}
+	
 });
 
 
@@ -391,27 +361,7 @@ $(document).ready(function() {
 											    image: markerImage
 											});
 											
-											
-										//-----------------------------------------------
-											
-											
-											
-											/* var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-											    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-											    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-											      
-											// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-											var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-											    markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다 
-											
-											// 마커를 생성합니다
-											var marker = new kakao.maps.Marker({
-											    position: markerPosition,
-											    image: markerImage // 마커이미지 설정 
-											});*/
-											
-											
-											
+
 											
 											// 마커가 지도 위에 표시되도록 설정합니다
 											marker.setMap(map);
@@ -429,12 +379,12 @@ $(document).ready(function() {
 									<div class = "col-2">
 										<div class="rounded-lg" style="background-color: white; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
 											
-											<div class="btnLike" style="float:left; margin-left: 0.8em;">
-												<a href="#" id = "like"><i class='far fa-thumbs-up' style='font-size:48px;'></i></a>
+											<div style="float:left; margin-left: 0.8em;">
+												<label id = "like" likeUnlike = "L" class = "likeBtn"><i class='far fa-thumbs-up' style='font-size:48px;'></i></label>
 												<span style="display: block;">0</span>
 											</div>
-											<div class="btnLike" style="float:right; margin-right: 0.8em;">
-												<a href="#" id = "unlike"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></a>
+											<div  style="float:right; margin-right: 0.8em;" >
+												<label id = "unlike"  likeUnlike = "U" class = "likeBtn"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></label>
 												<span style="display: block;">0</span>
 											</div>
 											
@@ -490,7 +440,7 @@ $(document).ready(function() {
 								<div class =  "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글</span><span id = "ccount"></span><span>| 조회수  ${article.bViewCount} | 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글</span><span id = "ccount"></span><span>| 조회수  ${article.bViewCount} | 좋아요 <span id = "likecount"></span>|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									</div>
 									<div class = "col-2"></div>
 								</div>
