@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
+import com.kitri.godinator.model.LoveDto;
 
 
 public interface BoardDao {
@@ -37,4 +38,17 @@ public interface BoardDao {
 	//글 삭제 메소드
 	void deleteArticle(int boardNo);
 	
+	//댓글수 찾기
+	void countComment(int boardNo);
+	
+	// 좋아요 눌렀나 안눌렀나 확인 0없음/1있음
+	int isLike(LoveDto loveDto);
+	
+	// 아직 안 눌렀을 시 (0) --> insert
+	int insertLike(LoveDto loveDto);
+
+	// 이미 눌렀을 시 (1) --> 0 delete (좋아요 기록 삭제)
+	int deleteLike(LoveDto loveDto);
+	
+	void updateLike(LoveDto loveDto);
 }

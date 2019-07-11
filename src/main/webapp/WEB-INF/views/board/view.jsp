@@ -16,7 +16,7 @@
 <script>
 
 $(document).ready(function() {
-	alert("${count}");
+	
 	//리스트 돌아가기
 	$("#moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
@@ -102,7 +102,6 @@ $(document).ready(function() {
 					success : function(response) {
 						makeMemoList(response);
 						$("#commentContent").val('');
-						alert("${count}");
 					}
 				});
 			}
@@ -131,6 +130,7 @@ $(document).ready(function() {
  	
 	function makeMemoList(memos) {
 		var memocnt = memos.commentList.length;
+		$("#ccount").text(memos.count);
 		var memostr = '';
 		for(var i=0;i<memocnt;i++){
 			var memo = memos.commentList[i];
@@ -212,6 +212,7 @@ $(document).ready(function() {
 			data:{boardNo : '${article.boardNo}'},
 			success : function(response) {
 				makeMemoList(response);
+				//$("#ccount").text(response.count);
 			}
 		});
 	}
@@ -219,12 +220,65 @@ $(document).ready(function() {
 	
 //----------------------------------좋아요 기능------------------------------------
 	$("#like").click(function() {
-		$(this).css("color","#f56a6a");
+		
+		var boardNo ='${article.boardNo}';
+		var userId = '${userInfo.userId}';
+		var type = "like";
+		if(userId != null){
+			var param = JSON.stringify({'boardNo' : boardNo, 'userId' : userId});
+			$.ajax({
+				url:'${root}/board/like',
+				type: 'POST',
+				contentType:'application/json;charset=UTF-8',
+				data:param,
+				success : function(result) {
+					alert(result);	
+					
+					if(result.likeCheck == 'like'){
+						$(this).css("color","#f56a6a");
+						
+					} else {
+						$(this).css("color","black");
+						
+					}
+					
+				}
+			});
+		} else {
+			alert("로그인이 필요합니다");
+			return false;
+		}
 		
 	});
 	
 	$("#unlike").click(function() {
-		$(this).css("color","#f56a6a");
+		var boardNo ='${article.boardNo}';
+		var userId = '${userInfo.userId}';
+		var type = "hate";
+		if(userId != null){
+			var param = JSON.stringify({'boardNo' : boardNo, 'userId' : userId});
+			$.ajax({
+				url:'${root}/board/like',
+				type: 'POST',
+				contentType:'application/json;charset=UTF-8',
+				data:param,
+				success : function(result) {
+					alert(result);	
+					
+					if(result.likeCheck == 'hate'){
+						$(this).css("color","#f56a6a");
+						
+					} else {
+						$(this).css("color","black");
+						
+					}
+					
+				}
+			});
+		} else {
+			alert("로그인이 필요합니다");
+			return false;
+		}
 	});
 });
 
@@ -303,7 +357,7 @@ $(document).ready(function() {
 								<!-- 지도 -->
 								<div class = "row col-12">
 									<div class = "col-2"></div>
-									<div class = "col-8" id = "maparea" style="width:100%;height:300px;"></div>
+									<div class = "col-8" id = "maparea" style="width:300px;height:300px;"></div>
 										<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing"></script>
 										<script>
 											var latitude = ${article.latitude};
@@ -320,10 +374,44 @@ $(document).ready(function() {
 											// 마커가 표시될 위치입니다 
 											var markerPosition  = new kakao.maps.LatLng(latitude, longtitude); 
 											
+											
+											var imageSrc = 'https://i.ya-webdesign.com/images/address-icon-png-8.png', // 마커이미지의 주소입니다    
+										    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+										    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+										      
+										// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+										var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+										    markerPosition = new kakao.maps.LatLng(latitude, longtitude); // 마커가 표시될 위치입니다 
+											
+											
+											
+											
+											var marker = new kakao.maps.Marker({
+											    position: markerPosition,
+											    image: markerImage
+											});
+											
+											
+										//-----------------------------------------------
+											
+											
+											
+											/* var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+											    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+											    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+											      
+											// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+											var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+											    markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다 
+											
 											// 마커를 생성합니다
 											var marker = new kakao.maps.Marker({
-											    position: markerPosition
-											});
+											    position: markerPosition,
+											    image: markerImage // 마커이미지 설정 
+											});*/
+											
+											
+											
 											
 											// 마커가 지도 위에 표시되도록 설정합니다
 											marker.setMap(map);
@@ -402,7 +490,7 @@ $(document).ready(function() {
 								<div class =  "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글 ${count} | 조회수  ${article.bViewCount} | 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글</span><span id = "ccount"></span><span>| 조회수  ${article.bViewCount} | 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									</div>
 									<div class = "col-2"></div>
 								</div>

@@ -45,7 +45,7 @@ public class CommentController {
 	public String list(int boardNo) {
 //		System.out.println("댓글 리스트 C: " +boardNo);
 		String json = commentService.listMemo(boardNo);
-		System.out.println("controller  " +  json);
+//		System.out.println("controller  :" +  json);
 	
 		return json;
 	}

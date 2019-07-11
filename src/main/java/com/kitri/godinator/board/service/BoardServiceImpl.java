@@ -16,6 +16,7 @@ import com.kitri.godinator.board.dao.BoardDao;
 import com.kitri.godinator.model.BoardConstance;
 import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
+import com.kitri.godinator.model.LoveDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -28,7 +29,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<CategoryDto> menuList() {
 		return sqlSession.getMapper(BoardDao.class).getBoardMenuList();
-
 	}
 
 	// 고등학교 찾기 메소드
@@ -139,6 +139,37 @@ public class BoardServiceImpl implements BoardService {
 	public void deleteArticle(int boardNo) {
 		sqlSession.getMapper(BoardDao.class).deleteArticle(boardNo);
 	}
+
+	@Override
+	@Transactional
+	public String likeCount(LoveDto loveDto) {
+		String check = "";
+		
+		
+		
+		
+		//좋아요 확인 (0: 좋아요 안했음 -> insert / 1: 좋아요 했음 ->update)
+		int likeResult = sqlSession.getMapper(BoardDao.class).isLike(loveDto);
+		System.out.println("좋아요 눌렀나 확인: " + likeResult);
+		
+		if(likeResult == 0) {
+			//좋아요 확인 후 insert(좋아요 누를 때)
+			int firstClick = sqlSession.getMapper(BoardDao.class).insertLike(loveDto);
+			System.out.println("좋아요 눌렀음 : "+  firstClick);
+			return check = "like";
+			
+		} else if (likeResult ==1) {
+			//좋아요 확인 후 update(누른 좋아요 취소할 때)
+			int cancelLike = sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
+			System.out.println("좋아요 취소했다 : " + cancelLike);
+			return check = "likeCancel";
+			
+		}
+		
+		
+		return check;
+	}
+
 	
 
 

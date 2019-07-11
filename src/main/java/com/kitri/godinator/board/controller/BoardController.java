@@ -1,5 +1,6 @@
 package com.kitri.godinator.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
 import com.kitri.godinator.model.BbsDto;
+import com.kitri.godinator.model.LoveDto;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.PageNavigation;
 
@@ -66,7 +68,7 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-		System.out.println("write controller in : 	" +parameter);
+		//System.out.println("write controller in : 	" +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		
@@ -88,7 +90,7 @@ public class BoardController {
 			path = "redirect:/index.jsp";
 		}
 		model.addAttribute("parameter", parameter);
-		System.out.println("write controller out : 	" +parameter);
+		//System.out.println("write controller out : 	" +parameter);
 		return path;
 	}
 	
@@ -249,4 +251,31 @@ public class BoardController {
 			}
 			return path;
 		}
+		
+	
+	//----------------------------------[좋아요, 싫어요]---------------------------------
+		
+		@RequestMapping(value = "/like", method = RequestMethod.POST, consumes = "application/json", headers = {
+		"Content-type=application/json" })
+		public @ResponseBody String like(@RequestBody LoveDto loveDto, Model model, HttpSession session) {
+			String likeCheck = "";
+			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+			if (memberDto != null) {
+				
+				loveDto.setUserId(memberDto.getUserId());
+				
+				System.out.println(loveDto);
+				
+				likeCheck = boardService.likeCount(loveDto); 
+				System.out.println(likeCheck);
+				
+				
+				return likeCheck;
+			} else {
+				return likeCheck;
+			}
+		}
+
+		
+	
 }

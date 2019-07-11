@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.CategoryDto;
+import com.kitri.godinator.model.LoveDto;
 
 public interface BoardService {
 	//MainMenu 커뮤니티 탭 목록 보여주기
@@ -40,4 +41,8 @@ public interface BoardService {
 	
 	//글 삭제
 	void deleteArticle(int boardNo);
+	
+	//좋아요 숫자
+	String likeCount(LoveDto loveDto);
+	
 }

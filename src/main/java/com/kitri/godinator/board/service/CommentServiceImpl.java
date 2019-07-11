@@ -38,10 +38,9 @@ public class CommentServiceImpl implements CommentService{
 //		System.out.println("mybatis : " + array);
 		json.put("commentList", array);
 //		System.out.println("commentList" + json.toString());
-		
 		int count = sqlSession.getMapper(CommentDao.class).countMemo(boardNo);
 		json.put("count", count);
-		System.out.println("service" + json.toString());
+//		System.out.println("service" + json.toString());
 		return json.toString();
 	}
 

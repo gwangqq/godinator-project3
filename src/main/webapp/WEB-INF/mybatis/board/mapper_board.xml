@@ -128,4 +128,27 @@
 			     del_status = 1
 			  where board_no = #{boardNo}
 	</update>
+	
+	<!--좋아요 싫어요 버튼 확인-->
+	<select id="isLike" parameterType="loveDto" resultType="int">
+		select count(*)
+		from love
+		where board_no = #{boardNo}
+		and user_id = #{userId}
+		<if test = ""></if>
+	</select>
+	
+	<!-- 좋아요 버튼 isnert -->
+	<insert id="insertLike" parameterType="loveDto">
+		insert into love (like_no, board_no, user_id, like_unlike)
+    		values (like_seq.nextval, #{boardNo}, #{userId},'l')
+	</insert>
+	
+	<!-- 좋아요 버튼 취소 -->
+	<delete id="deleteLike">
+		delete love
+		where board_no = #{boardNo}
+		and user_id = #{userId}
+	</delete>
+	
 </mapper>
