@@ -23,6 +23,13 @@
 		and board_no = #{boardNo}
 		order by comment_no desc
 	</select>
+	<!-- 댓글 수 구하기 -->
+	<select id="countMemo" parameterType="int" resultType="int">
+		select count(*)
+			from reply
+			where board_no = #{boardNo}
+	</select>
+	
 	<delete id="deleteMemo" parameterType="int">
 		delete REPLY
 		where comment_no = #{commentNo}

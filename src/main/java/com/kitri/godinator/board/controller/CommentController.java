@@ -3,6 +3,7 @@ package com.kitri.godinator.board.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +45,8 @@ public class CommentController {
 	public String list(int boardNo) {
 //		System.out.println("댓글 리스트 C: " +boardNo);
 		String json = commentService.listMemo(boardNo);
-//		System.out.println(json);
+		System.out.println("controller  " +  json);
+	
 		return json;
 	}
 	

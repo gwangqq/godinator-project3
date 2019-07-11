@@ -16,6 +16,7 @@
 <script>
 
 $(document).ready(function() {
+	alert("${count}");
 	//리스트 돌아가기
 	$("#moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
@@ -101,6 +102,7 @@ $(document).ready(function() {
 					success : function(response) {
 						makeMemoList(response);
 						$("#commentContent").val('');
+						alert("${count}");
 					}
 				});
 			}
@@ -310,7 +312,7 @@ $(document).ready(function() {
 											var mapContainer = document.getElementById('maparea'), // 지도를 표시할 div 
 											    mapOption = { 
 											        center: new kakao.maps.LatLng(latitude, longtitude), // 지도의 중심좌표
-											        level: 3 // 지도의 확대 레벨
+											        level: 4 // 지도의 확대 레벨
 											    };
 											
 											var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -400,7 +402,7 @@ $(document).ready(function() {
 								<div class =  "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글0| 조회수  ${article.bViewCount}| 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글 ${count} | 조회수  ${article.bViewCount} | 좋아요 0|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
 									</div>
 									<div class = "col-2"></div>
 								</div>
