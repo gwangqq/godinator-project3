@@ -66,7 +66,7 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
-		System.out.println("write controller : 	" +parameter);
+		System.out.println("write controller in : 	" +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		
@@ -88,6 +88,7 @@ public class BoardController {
 			path = "redirect:/index.jsp";
 		}
 		model.addAttribute("parameter", parameter);
+		System.out.println("write controller out : 	" +parameter);
 		return path;
 	}
 	

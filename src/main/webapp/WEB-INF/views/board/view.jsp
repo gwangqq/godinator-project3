@@ -297,7 +297,42 @@ $(document).ready(function() {
 									</div>
 									<div class = "col-2"></div>
 									<br><br><br><br>
+									<c:if test='${article.latitude !=0 && article.longtitude !=0}'>
+								<!-- 지도 -->
+								<div class = "row col-12">
+									<div class = "col-2"></div>
+									<div class = "col-8" id = "maparea" style="width:100%;height:300px;"></div>
+										<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing"></script>
+										<script>
+											var latitude = ${article.latitude};
+											var longtitude = ${article.longtitude};
+											
+											var mapContainer = document.getElementById('maparea'), // 지도를 표시할 div 
+											    mapOption = { 
+											        center: new kakao.maps.LatLng(latitude, longtitude), // 지도의 중심좌표
+											        level: 3 // 지도의 확대 레벨
+											    };
+											
+											var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+											
+											// 마커가 표시될 위치입니다 
+											var markerPosition  = new kakao.maps.LatLng(latitude, longtitude); 
+											
+											// 마커를 생성합니다
+											var marker = new kakao.maps.Marker({
+											    position: markerPosition
+											});
+											
+											// 마커가 지도 위에 표시되도록 설정합니다
+											marker.setMap(map);
+											
+											// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+											// marker.setMap(null);    
+											</script>
 									
+									<div class = "col-2"></div>
+								</div>
+							</c:if>
 									
 									<!-- 좋아요 싫어요 버튼  -->
 									<div class = "col-5"></div>
@@ -339,6 +374,9 @@ $(document).ready(function() {
 									</div>
 									<div class = "col-2"></div>
 								</div>
+								
+								
+							
 								
 								<!-- 댓글 쓰기 끝 -->	
 								<div class = "row col-12">

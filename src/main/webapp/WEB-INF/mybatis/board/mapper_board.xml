@@ -28,8 +28,8 @@
 		B_SCHOOL_CATE1, B_SCHOOL_CATE2, REGION, B_VIEW_COUNT, DEL_STATUS, STATE, B_POSTDATE )
 		values(#{boardNo}, #{bUserId}, #{boardCategory}, #{userName}, #{boardSubject}, #{boardContent}, #{bSchoolName}, null, null, null, #{region},  0, 0, 0, sysdate)
 		
-		into bbs (BBS_NO, BOARD_NO, SAVE_FOLDER, ORGINAL_NAME, SAVED_NAME, FILE_SIZE, LATITUDE, LONGITUDE)
-		values (bbs_seq.nextval, #{boardNo}, #{saveFolder, jdbcType=VARCHAR}, #{orginalName, jdbcType=VARCHAR}, #{savedName, jdbcType=VARCHAR}, #{fileSize, jdbcType=VARCHAR}, #{latitude, jdbcType=INTEGER}, #{longitude, jdbcType=INTEGER})
+		into bbs (BBS_NO, BOARD_NO, SAVE_FOLDER, ORIGINAL_NAME, SAVED_NAME, FILE_SIZE, LATITUDE, LONGTITUDE)
+		values (bbs_seq.nextval, #{boardNo}, #{saveFolder, jdbcType=VARCHAR}, #{originalName, jdbcType=VARCHAR}, #{savedName, jdbcType=VARCHAR}, #{fileSize, jdbcType=VARCHAR}, #{latitude, jdbcType=INTEGER}, #{longtitude, jdbcType=INTEGER})
 	select * from dual
 	
 	</insert>
@@ -82,12 +82,14 @@
 	
 	<!-- 게시물 보기 -->
 	<select id = "viewArticle" parameterType="int" resultType="bbsDto">
-	select board_no boardNo, board_category boardCategory, b_user_id bUserId, board_subject boardSubject, board_content boardContent, b_school_name bSchoolName,
-        decode(to_char(b_postdate ,'yymmdd'),
-                    to_char(sysdate,'yymmdd'), to_char(b_postdate,'hh24:mi:ss'),
-                    to_char(b_postdate ,'yy.mm.dd')) bPostdate, region region, b_view_count bViewCount
-	from board
-	where board_no = #{boardNo}
+	select a.board_no boardNo, a.board_category boardCategory, a.b_user_id bUserId, a.board_subject boardSubject, a.board_content boardContent, a.b_school_name bSchoolName,
+        decode(to_char(a.b_postdate ,'yymmdd'),
+                    to_char(sysdate,'yymmdd'), to_char(a.b_postdate,'hh24:mi:ss'),
+                    to_char(a.b_postdate ,'yy.mm.dd')) bPostdate, a.region region, a.b_view_count bViewCount,
+        b.save_folder saveFolder, b.original_name originalName, b.saved_name savedName, b.file_size fileSize, b.latitude latitude, b.longtitude longtitude
+	from board a, bbs b
+	where a.board_no = b.board_no 
+	and a.board_no = #{boardNo}
 	</select>
 	
 	<!-- 글 수정 -->

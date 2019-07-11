@@ -220,7 +220,7 @@ $(document).ready(function() {
 								<label>장소 첨부</label>
 								</div>
 								<div class = "col-3">																
-								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색" >
+								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색" ><label id = "placeresult"></label>
 								<!-----------------------------------[지도 modal]----------------------------------------------->
  								  
   <div class="modal fade" id="mapModal">
@@ -287,7 +287,6 @@ function map(){
 			// 지도를 클릭한 위치에 표출할 마커입니다
 			var marker = new kakao.maps.Marker({ 
 			    // 지도 중심좌표에 마커를 생성합니다 
-			    position: map.getCenter(),
 			}); 
 			
 			// 지도에 마커를 표시합니다
@@ -306,11 +305,11 @@ function map(){
 			    longtitude = latlng.getLng();
 			    
 			    
-			    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-			    message += '경도는 ' + latlng.getLng() + ' 입니다';
+			/*     var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+			    message += '경도는 ' + latlng.getLng() + ' 입니다'; */
 						    
 			    
-			    alert(message);
+			    //alert(message);
 			   
 				});
 			 	
@@ -358,13 +357,22 @@ function map(){
 			alert(latitude + "///" + longtitude);
 			$("#latitude").val(latitude);
 			$("#longtitude").val(longtitude);
-			
+			$("#placeresult").text(address+" X");
+			$("#addressSearch").val("");
 		});
-	if(latitude ==0 || longtitude ==0){
-		$("#latitude").val(0);
-		$("#longtitude").val(0);
-	}
-		  
+		
+		$(document).on("click", "#placeresult", function() {
+			alert("눌렸음!!");	
+			$("#latitude").val(0);
+			$("#longtitude").val(0);
+			$("#placeresult").text("");
+		});
+		
+		if(latitude == 0 || longtitude == 0){
+			$("#latitude").val(0);
+			$("#longtitude").val(0);
+		}
+			  
 	
 });
 </script> 		
