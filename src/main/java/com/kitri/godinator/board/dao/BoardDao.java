@@ -57,8 +57,8 @@ public interface BoardDao {
 	int updateLike(LoveDto loveDto);
 	
 	//좋아요 전체 개수
-	int totalLike(LoveDto loveDto);
+	int totalLike(int boardNo);
 	//싫어요 전체 개수
-	int totalHate(LoveDto loveDto);
+	int totalHate(int boardNo);
 	
 }

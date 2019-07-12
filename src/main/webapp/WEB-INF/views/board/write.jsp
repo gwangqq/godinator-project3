@@ -501,7 +501,7 @@ function map(){
 								
 								<div class = "col-2"></div>
 								<div class = "col-8">
-									<input type="file" class="form-control-file border" name="file">
+									<input type="file" class="form-control-file border" name="file" id = "file">
 								</div>
 								<div class = "col-2"></div>
 								

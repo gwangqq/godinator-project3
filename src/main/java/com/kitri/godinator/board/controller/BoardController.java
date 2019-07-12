@@ -106,18 +106,16 @@ public class BoardController {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		if (memberDto != null) {
 			BbsDto bbsDto = boardService.viewArticle(boardNo);
-
 			parameter.put("boardNo", Integer.toString(boardNo));
 			int isPrev = boardService.checkPrev(parameter);
 			int isNext = boardService.checkNext(parameter);
-//			LoveDto loveDto = new LoveDto();
-//			loveDto.setBoardNo(boardNo);
-//			loveDto.setUserId(memberDto.getUserId());
-//			int totalLike = boardService.totalLike(loveDto);
-//			int totalHate = boardService.totalHate(loveDto);
-//			
-//			model.addAttribute("totalLike", totalLike);
-//			model.addAttribute("totalHate", totalHate);
+			
+			int totalLike = boardService.totalLike(boardNo);
+			int totalHate = boardService.totalHate(boardNo);
+			
+			
+			model.addAttribute("totalLike", totalLike);
+			model.addAttribute("totalHate", totalHate);
 			model.addAttribute("article", bbsDto);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("boardNo", boardNo);
@@ -271,32 +269,27 @@ public class BoardController {
 		public @ResponseBody String like(@RequestBody LoveDto loveDto, Model model, HttpSession session) {
 			String likeCheck = "";
 			MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-			JSONObject json = new JSONObject();
+			String json = "";
 			if (memberDto != null) {
 				
 				loveDto.setUserId(memberDto.getUserId());
 				
 				System.out.println("client -> controller : " + loveDto);
+				int boardNo = loveDto.getBoardNo();
 				
-				
-				likeCheck = boardService.likeCount(loveDto); 
+				likeCheck = boardService.likeCount(loveDto);
+				int totalLike = boardService.totalLike(boardNo);
+				int totalHate = boardService.totalHate(boardNo);
 				System.out.println("controller -> client : " + likeCheck);
-				int totalLike = boardService.totalLike(loveDto);
-				int totalHate = boardService.totalHate(loveDto);
 				
-				
-				json.put("likeCheck", likeCheck);
-				json.put("totalLike", totalLike);
-				json.put("totalHate", totalHate);
-				
-				
-				
-				return json.toString();
+				json = "{\"likeCheck\" : \""+likeCheck+"\",\"totalLike\" : \""+totalLike+"\",\"totalHate\" : \""+totalHate+"\"}";
+				return json;
 			} else {
-				return json.toString();
+				likeCheck = "";
 			}
+			
+			return json;
 		}
-
 		
 	
 }

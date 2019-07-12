@@ -7,7 +7,6 @@
 <script>
 
 $(document).ready(function() {
-	getlikecount();
 	//리스트 돌아가기
 	$("#moveListBtn").click(function() {
 		$("#boardCategory").val("${boardCategory}");
@@ -211,7 +210,7 @@ $(document).ready(function() {
 	
 //----------------------------------좋아요 기능------------------------------------
 	$(".likeBtn").click(function() {
-		alert("눌렸다");
+		//alert("눌렸다");
 		var boardNo ='${article.boardNo}';
 		var userId = '${userInfo.userId}';
 		var likeUnlike = $(this).attr("likeUnlike");
@@ -224,11 +223,15 @@ $(document).ready(function() {
 				data:param,
 				dataType : 'json',
 				success : function(result) {
-					alert(result);	
-					getlikecount();
+					if(result.likeCheck != "like"){
+						alert(result.likeCheck);
+					}
 					
+					$("#totalLike").text(result.totalLike);
+					$("#totalHate").text(result.totalHate);
 				}
 			});
+			
 		} else {
 			alert("로그인이 필요합니다");
 			return false;
@@ -236,19 +239,6 @@ $(document).ready(function() {
 		
 	});
 	
-	
-	
-	//좋아요 숫자 불러오는 메소드 
-	function getlikecount() {
-		$.ajax({
-			url:'${root}/board/like',
-			type: 'GET',
-			success : function(response) {
-			alert('${totalLike}');
-			alert('${totalHate}');
-			}
-		});
-	}
 	
 });
 
@@ -381,11 +371,11 @@ $(document).ready(function() {
 											
 											<div style="float:left; margin-left: 0.8em;">
 												<label id = "like" likeUnlike = "L" class = "likeBtn"><i class='far fa-thumbs-up' style='font-size:48px;'></i></label>
-												<span style="display: block;">0</span>
+												<span style="display: block;" id = "totalLike">${totalLike}</span>
 											</div>
 											<div  style="float:right; margin-right: 0.8em;" >
-												<label id = "unlike"  likeUnlike = "U" class = "likeBtn"><i  class='far fa-thumbs-down' style='font-size:48px;'></i></label>
-												<span style="display: block;">0</span>
+												<label id = "unlike"  likeUnlike = "U" class = "likeBtn"><i class='far fa-thumbs-down' style='font-size:48px;'></i></label>
+												<span style="display: block;" id = "totalHate">${totalHate}</span>
 											</div>
 											
 											<div style="clear: both;"></div>

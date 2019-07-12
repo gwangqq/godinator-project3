@@ -142,6 +142,7 @@
 		select like_unlike likeUnlike
 		from love
 		where board_no = #{boardNo}
+		and user_id = #{userId}
 	</select>
 	
 	
@@ -166,13 +167,14 @@
 	</update>
 	
 	<!-- 좋아요 싫어요 전체 숫자 -->
-	<select id="totalLike" parameterType="loveDto" resultType="int">
+	<select id="totalLike" parameterType="int" resultType="int">
 	select count(*)
 		from love
 		where board_no = #{boardNo}
 		and like_unlike = 'L'
 	</select>
-	<select id="totalHate" parameterType="loveDto" resultType="int">
+	
+	<select id="totalHate" parameterType="int" resultType="int">
 	select count(*)
 		from love
 		where board_no = #{boardNo}

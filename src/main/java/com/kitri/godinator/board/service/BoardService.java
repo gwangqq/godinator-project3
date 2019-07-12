@@ -46,7 +46,7 @@ public interface BoardService {
 	String likeCount(LoveDto loveDto);
 	
 	//좋아요 
-	int totalLike(LoveDto loveDto);
-	int totalHate(LoveDto loveDto);
+	int totalLike(int boardNo);
+	int totalHate(int boardNo);
 	
 }

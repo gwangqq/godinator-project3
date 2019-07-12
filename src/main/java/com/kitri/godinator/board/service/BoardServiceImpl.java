@@ -147,18 +147,12 @@ public class BoardServiceImpl implements BoardService {
 
 		// 좋아요&싫어요 확인 (0: 좋아요 안했음 -> insert / 1: 좋아요 했음 ->update)
 		int likeResult = sqlSession.getMapper(BoardDao.class).isLike(loveDto);
-		System.out.println("좋아요 눌렀나 확인: " + likeResult);
 
 		// 어느 버튼 눌렀는지
 		String inLikeUnlike = loveDto.getLikeUnlike();
-		
-		System.out.println("무슨 버튼을 눌렀는지 : " + inLikeUnlike );
+
 		// 좋아요&싫어요 둘중에 뭐 눌려있는지 L:좋아요 U: 싫어요
 		String outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
-		
-		System.out.println("무슨 버튼 눌려 있는지 : "+outLikeUnlike);
-		
-		int success = 0;
 
 		if (likeResult == 0) {
 			// 좋아요 확인 후 insert(좋아요 누를 때)
@@ -169,47 +163,51 @@ public class BoardServiceImpl implements BoardService {
 			check = "like";
 
 		} else if (likeResult == 1) {
-			
-			
-			System.out.println("들어옴!!!! 눌른 버튼 : " + inLikeUnlike +", 눌려있던 버튼 : " + outLikeUnlike );
-			//outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
-			
-			
+
+			System.out.println("들어옴!!!! 눌른 버튼 : " + inLikeUnlike + ", 눌려있던 버튼 : " + outLikeUnlike);
+			// outLikeUnlike = sqlSession.getMapper(BoardDao.class).likeUnlike(loveDto);
+
 			if (inLikeUnlike.equals(outLikeUnlike)) {
-				// 좋아요 L 취소 delete
-				success = sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
+				if (inLikeUnlike.equals("L")) {
+					// 좋아요 L 취소 delete
+					sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
 
-				System.out.println(inLikeUnlike + "버튼 취소  성공 : " + success);
+					check = "이미 '좋아요'를 누른 게시물입니다";
+				} else if (inLikeUnlike.equals("U")) {
+					sqlSession.getMapper(BoardDao.class).deleteLike(loveDto);
 
-				check = "deleteLike";
-			
-					
+					check = "이미 '싫어요'를 누른 게시물입니다";
+				}
 			} else if (inLikeUnlike != outLikeUnlike) {
-				
-				success = sqlSession.getMapper(BoardDao.class).updateLike(loveDto);
 
-				System.out.println(inLikeUnlike + "버튼 변경  성공 : " + success);
-				check = "changeLike";
-				
-			} 
+				if (inLikeUnlike.equals("L")) {
+					sqlSession.getMapper(BoardDao.class).updateLike(loveDto);
+
+					check = "이미 '싫어요'를 누른 게시물입니다";
+				} else if (inLikeUnlike.equals("U")) {
+					sqlSession.getMapper(BoardDao.class).updateLike(loveDto);
+
+					check = "이미 '좋아요'를 누른 게시물입니다";
+
+				}
+
+			}
 
 		}
 
 		return check;
 	}
-	
-	//좋아요 전체 숫자 
+
+	// 좋아요 전체 숫자
 	@Override
-	public int totalLike(LoveDto loveDto) {
-		return sqlSession.getMapper(BoardDao.class).totalLike(loveDto);
+	public int totalLike(int boardNo) {
+		return sqlSession.getMapper(BoardDao.class).totalLike(boardNo);
 	}
 
+	// 싫어요 전체 숫자
 	@Override
-	public int totalHate(LoveDto loveDto) {
-		return sqlSession.getMapper(BoardDao.class).totalHate(loveDto);
+	public int totalHate(int boardNo) {
+		return sqlSession.getMapper(BoardDao.class).totalHate(boardNo);
 	}
 
-	
-	
-	
 }
