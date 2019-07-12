@@ -1,14 +1,18 @@
 package com.kitri.godinator.board.controller;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,19 +21,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
 import com.kitri.godinator.model.BbsDto;
 import com.kitri.godinator.model.LoveDto;
 import com.kitri.godinator.model.MemberDto;
 import com.kitri.godinator.model.PageNavigation;
-import com.kitri.godinator.model.ReplyDto;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	@Autowired
 	private BoardCommonService boardCommonService;
@@ -70,7 +76,8 @@ public class BoardController {
 
 //------------------------[글쓰기]-------------------------
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, Model model,
+	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter, 
+			@RequestParam("file") MultipartFile multipartFile ,Model model,
 			HttpSession session) {
 		//System.out.println("write controller in : 	" +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
@@ -82,7 +89,41 @@ public class BoardController {
 			bbsDto.setBoardNo(boardNo);
 			bbsDto.setbUserId(memberDto.getUserId());
 			bbsDto.setUserName(memberDto.getUserName());
-			boardNo = boardService.writeArticle(bbsDto);
+			
+				if(multipartFile != null && !multipartFile.isEmpty()) {
+					String originalName = multipartFile.getOriginalFilename();
+					String realPath = servletContext.getRealPath("/upload/board");
+					DateFormat df = new SimpleDateFormat("yyMMdd");//MM대문자가 월 /소문자 분(minute)
+					String saveFolder = df.format(new Date());
+					String realSaveFolder = realPath + File.separator + saveFolder; 
+					File dir = new File(saveFolder);
+					
+					System.out.println("controller에서 저장된 경로!! : "+realPath);
+					if(!dir.exists())
+						dir.mkdirs();//폴더까지 생성
+					
+					String savedName = UUID.randomUUID().toString() + originalName.substring(originalName.lastIndexOf('.'));
+					
+					File file = new File(realSaveFolder, savedName);
+					
+					try {
+						multipartFile.transferTo(file);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					bbsDto.setOriginalName(originalName);
+					bbsDto.setSavedName(savedName);
+					bbsDto.setSaveFolder(saveFolder);
+				} 
+			
+				boardNo = boardService.writeArticle(bbsDto);
+			
+			
+			
+			
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
 				path = "board/writeok";
@@ -136,7 +177,7 @@ public class BoardController {
 		//System.out.println(parameter);
 		List<BbsDto> list = boardService.listArticle(parameter);
 		//System.out.println("list C : "  + list);
-		String path = "";
+	
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
@@ -145,7 +186,7 @@ public class BoardController {
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);
 		
-		return path = "board/list";
+		return "board/list";
 	}
 
 	
