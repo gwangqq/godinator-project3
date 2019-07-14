@@ -164,6 +164,7 @@
 	<update id = "updateLike" parameterType="loveDto">
 		update love set 
 			like_unlike = #{likeUnlike}
+			where user_id = #{userId}
 	</update>
 	
 	<!-- 좋아요 싫어요 전체 숫자 -->
