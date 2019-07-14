@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>	
+<%@ include file="/WEB-INF/views/template/header.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>  
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>  
 <script>
@@ -31,28 +31,6 @@ $(document).ready(function() {
 
 
 </script>
-
-
-
-</head>
-	<body class="is-preload">
-
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>${parameter.bUserId}</strong></a>님 환영합니다.
-									               <a>로그인</a><a>마이페이지</a>
-								</header>
-
-							<!-- Content -->
-							
-							<!-- 제목 -->
 										
 							<!-- 게시물 상단 부분 -->
 								<div class = "row" style=";margin: 0 auto;">
@@ -102,4 +80,4 @@ $(document).ready(function() {
 								</div>
 						</div>
 					</div>
-<%@ include file="/WEB-INF/views/mentor/temp/tempfooter.jsp" %>	
+<%@ include file="/WEB-INF/views/template/sidebar.jsp" %>	

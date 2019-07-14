@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.filters.AddDefaultCharsetFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -177,11 +179,30 @@ public class BoardController {
 		//System.out.println(parameter);
 		List<BbsDto> list = boardService.listArticle(parameter);
 		//System.out.println("list C : "  + list);
-	
+		
+		int totalLike = 0;
+		int totalHate = 0;
+		int boardNo = 0;
+		for (int i = 0; i < list.size(); i++) {
+			boardNo = list.get(i).getBoardNo();
+			totalLike = boardService.totalLike(boardNo);
+			totalHate = boardService.totalLike(boardNo);
+			list.get(i).setLikeCount(totalLike);
+			list.get(i).setHateCount(totalHate);
+		}
+		
+		//System.out.println("contreller  :"  + list);
 		PageNavigation pageNavigation = boardCommonService.getPageNavigation(parameter);
 		pageNavigation.setRoot(requset.getContextPath());
 		pageNavigation.makeNavigator();
 		//System.out.println("controller : " + parameter);
+		
+		//System.out.println(totalLike);
+	
+		
+		//model.addAttribute("totalLike", totalLike);
+		//model.addAttribute("totalHate", totalHate);
+		
 		model.addAttribute("parameter", parameter);
 		model.addAttribute("articleList", list);
 		model.addAttribute("navigator", pageNavigation);

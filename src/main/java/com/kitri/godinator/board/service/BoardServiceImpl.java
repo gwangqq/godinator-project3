@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
 import com.kitri.godinator.board.controller.NumberCheck;
 import com.kitri.godinator.board.dao.BoardCommonDao;
 import com.kitri.godinator.board.dao.BoardDao;
@@ -60,11 +61,12 @@ public class BoardServiceImpl implements BoardService {
 
 //page처리 + 게시판 list 보기
 	@Override
+	@Transactional
 	public List<BbsDto> listArticle(Map<String, String> parameter) {
 		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
 		int end = pg * BoardConstance.ARTICLE_SIZE;
 		int start = end - BoardConstance.ARTICLE_SIZE;
-
+		
 		parameter.put("start", start + "");
 		parameter.put("end", end + "");
 

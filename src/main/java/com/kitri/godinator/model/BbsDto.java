@@ -13,5 +13,6 @@ public class BbsDto extends BoardDto{
 	private int fileSize;			// 파일크기
 	private float latitude;			// 위도
 	private float longtitude;			// 경도
-
+	private int likeCount;
+	private int hateCount;
 }

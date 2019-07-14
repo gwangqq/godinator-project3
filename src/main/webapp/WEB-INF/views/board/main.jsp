@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 </head>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
+<%@ include file="/WEB-INF/views/template/header.jsp" %>	
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 
@@ -57,36 +57,7 @@ $(document).ready(function() {
 });
 </script>	
 
-</head>
-<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
-
-				<!-- Main -->
-					<div id="main">
-					
-					
-					
-					
-						<div class="inner">
-
-							<!-- Header -->
-								<header id="header">
-									<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-									</ul>
-								</header>
-
-
-
-							<!-- Content -->
-							
 							<!-- 게시판 제목 -->
 								<section>
 									<header class="main">
@@ -116,9 +87,10 @@ $(document).ready(function() {
 														<td>${article.bUserId}</td>
 														<td>${article.bPostdate}</td>
 														<td>${article.bViewCount}</td>
-														<td>좋아요 숫자</td>
+														<td>${article.likeCount}</td>
 													</tr>
 												</c:forEach>
+														
 												</tbody>
 											</table>
 									</div>
@@ -165,4 +137,4 @@ $(document).ready(function() {
 						</div>
 					</div>
 
-<%@ include file="/WEB-INF/views/board/temp/tempfooter.jsp" %>
+<%@ include file="/WEB-INF/views/template/sidebar.jsp" %>
