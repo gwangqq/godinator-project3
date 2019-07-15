@@ -130,7 +130,7 @@ $(document).ready(function() {
 		memostr += '	<td colspan="2" rowspan ="1">' + memo.CUserId+ '</td>';
 		memostr += '	<td colspan="5" rowspan ="1" width = "450">'+memo.commentContent+'</td>';
 		memostr += '	<td colspan="3" rowspan ="1">'+memo.CPostdate+'</td>';
-		memostr += '	<td colspan="2" rowspan ="1" ><a href = "#" style = "maring:0;padding:0;"><a href="#">신고</a></td>';
+		memostr += '	<td colspan="2" rowspan ="1" ></td>';
 		
 		//자기가 작성한 댓글에 수정 삭제 
  		if('${userInfo.userId}' == memo.CUserId){
@@ -297,18 +297,29 @@ $(document).ready(function() {
 								<div class = "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "maparea" style="width:300px;height:300px;"></div>
-										<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing"></script>
+										<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f22525e443605fce310be835dea5bdc2&libraries=services,clusterer,drawing&autoload=false"></script>
 										<script>
+						 	map();
+										
+							function map(){ 
+								//모달에 카카오 맵 띄우기
+								setTimeout(function() { 
+										
+									kakao.maps.load(function() {
 											var latitude = ${article.latitude};
 											var longtitude = ${article.longtitude};
 											
 											var mapContainer = document.getElementById('maparea'), // 지도를 표시할 div 
 											    mapOption = { 
 											        center: new kakao.maps.LatLng(latitude, longtitude), // 지도의 중심좌표
-											        level: 4 // 지도의 확대 레벨
+											        level: 4
+											// 지도의 확대 레벨
 											    };
 											
 											var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+											
+										
+											map.relayout();
 											
 											// 마커가 표시될 위치입니다 
 											var markerPosition  = new kakao.maps.LatLng(latitude, longtitude); 
@@ -322,21 +333,23 @@ $(document).ready(function() {
 										var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
 										    markerPosition = new kakao.maps.LatLng(latitude, longtitude); // 마커가 표시될 위치입니다 
 											
-											
-											
-											
 											var marker = new kakao.maps.Marker({
 											    position: markerPosition,
 											    image: markerImage
 											});
 											
-
-											
 											// 마커가 지도 위에 표시되도록 설정합니다
 											marker.setMap(map);
 											
 											// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-											// marker.setMap(null);    
+											// marker.setMap(null);  
+											
+
+											
+										});
+								
+							}, 700);
+						 } 
 											</script>
 									
 									<div class = "col-2"></div>
@@ -401,7 +414,9 @@ $(document).ready(function() {
 									</c:if>
 									<button class = "button small" id = "moveListBtn">목록</button>
 									</span>
-									<button class = "button small" id = "moveWriteBtn">글작성</button>
+									<c:if test='${userInfo.userId == article.bUserId}'>	
+										<button class = "button small" id = "moveWriteBtn">글작성</button>
+									</c:if>
 									</div>
 									<div class = "col-2"></div>
 								</div>
@@ -409,7 +424,7 @@ $(document).ready(function() {
 								<div class =  "row col-12">
 									<div class = "col-2"></div>
 									<div class = "col-8" id = "boradInfo">
-									<span>댓글</span><span id = "ccount"></span><span>| 조회수  ${article.bViewCount} | 좋아요 <span id = "likecount"></span>|<a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a></span>
+									<span>댓글</span><span id = "ccount"></span><span>| 조회수  ${article.bViewCount} | 좋아요 <span id = "likecount"></span>|<!-- <a href="#" style="color: #7f888f"><i class = "fas fa-exclamation-triangle	"></i>게시물 신고</a> --></span>
 									</div>
 									<div class = "col-2"></div>
 								</div>

@@ -10,6 +10,19 @@ public class PageNavigation {
 	private int totalPageCount;
 	private int pageNo;
 	private String navigator;
+	private int HotTotalArticleCount;
+
+	public int getHotTotalArticleCount() {
+		return HotTotalArticleCount;
+	}
+
+	public void setHotTotalArticleCount(int hotTotalArticleCount) {
+		HotTotalArticleCount = hotTotalArticleCount;
+	}
+
+	public void setNavigator(String navigator) {
+		this.navigator = navigator;
+	}
 
 	public String getRoot() {
 		return root;
@@ -74,39 +87,45 @@ public class PageNavigation {
 	public void makeNavigator() {
 		StringBuffer tmpNavigator = new StringBuffer();
 		int pageSize = BoardConstance.PAGE_SIZE;
-		
-		int prePage = (pageNo - 1)/ pageSize * pageSize;
-		
+
+		int prePage = (pageNo - 1) / pageSize * pageSize;
+
 		if (this.isNowFirst()) {
 			tmpNavigator.append("  <li><span class='button small firstListBtn'>최신목록</span></li>");
 			tmpNavigator.append("   <li><span class='button small disabled'>이전</span></li>\n");
 		} else {
 			tmpNavigator.append("   <li><span class = 'button small firstListBtn'>최신목록</span></li>\n");
-			tmpNavigator.append("   <li><span class = 'button small moveListBtn' data-pg='"+ prePage +"'>이전</span></li>");
+			tmpNavigator
+					.append("   <li><span class = 'button small moveListBtn' data-pg='" + prePage + "'>이전</span></li>");
 		}
-		
-		int startPage = prePage+1;
+
+		int startPage = prePage + 1;
 		int endPage = prePage + pageSize;
-		if(endPage >= totalPageCount)
+		if (endPage >= totalPageCount)
 			endPage = totalPageCount;
 		for (int i = startPage; i <= endPage; i++) {
 			if (pageNo == i) {
-				tmpNavigator.append("     <li><a href ='#' class='page active disabled' role = 'button'>" + i + "</a></li>\n");
+				tmpNavigator.append(
+						"     <li><a href ='#' class='page active disabled' role = 'button'>" + i + "</a></li>\n");
 			} else {
-				tmpNavigator.append("     <li><a href ='#' class = 'page moveListBtn' data-pg='"+ i +"'>" + i + "</a></li>\n");
+				tmpNavigator.append(
+						"     <li><a href ='#' class = 'page moveListBtn' data-pg='" + i + "'>" + i + "</a></li>\n");
 			}
 		}
-		
+
 		if (this.isNowEnd()) {
 			tmpNavigator.append("   <li><a href ='#' class='button small  disabled'>다음</a></li> \n");
-			tmpNavigator.append("   <li><a href ='#' class='button small  moveListBtn' data-pg="+ totalPageCount +">끝 목록</a></li>");
+			tmpNavigator.append("   <li><a href ='#' class='button small  moveListBtn' data-pg=" + totalPageCount
+					+ ">끝 목록</a></li>");
 		} else {
-			tmpNavigator.append("   <li><a href ='#' class = 'button small  moveListBtn' data-pg='"+ (endPage+1) +"'>다음</a></li>");
-			tmpNavigator.append("   <li><a href ='#' class = 'button small  moveListBtn' data-pg='"+ totalPageCount +"'>끝 목록</a></li>");
+			tmpNavigator.append("   <li><a href ='#' class = 'button small  moveListBtn' data-pg='" + (endPage + 1)
+					+ "'>다음</a></li>");
+			tmpNavigator.append("   <li><a href ='#' class = 'button small  moveListBtn' data-pg='" + totalPageCount
+					+ "'>끝 목록</a></li>");
 		}
 
 		this.navigator = tmpNavigator.toString();
-		
+
 	}
 
 }

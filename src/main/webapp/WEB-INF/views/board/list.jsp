@@ -4,17 +4,18 @@
 <%@ include file="/WEB-INF/views/board/temp/board_common.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 
-
 <script>
 $(document).ready(function() {
 	//글쓰기 이동 버튼
 	$(".moveWriteBtn").click(function() {
-		$("#boardCategory").val("${boardCategory}");
-		$("#pg").val("1");
-		$("#key").val("${key}");
-		$("#word").val("${word}");
-		$("#boardNo").val("${boardNo}}");
-		$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
+			
+			$("#boardCategory").val("${boardCategory}");
+			$("#pg").val("1");
+			$("#key").val("${key}");
+			$("#word").val("${word}");
+			$("#boardNo").val("${boardNo}}");
+			$("#commonForm").attr("method", "GET").attr("action", "${root}/board/write").submit();
+		
 	});
 	
 	//각 게시물 보기 버튼
@@ -122,12 +123,14 @@ $(document).ready(function() {
 												</tbody>
 											</table>
 									</div>
-									<c:if test="${parameter.boardCategory != 4}">
-									<div class = "col-2" style = "float: right;">
-										<button class = "button moveWriteBtn" id = "moveWriteBtn">글쓰기</button>
-										</div>
-									<br>
-									</c:if>
+										<c:if test="${userInfo.userId != null}">
+											<c:if test="${parameter.boardCategory != 4}">
+											<div class = "col-2" style = "float: right;">
+												<button class = "button moveWriteBtn" id = "moveWriteBtn">글쓰기</button>
+												</div>
+											<br>
+											</c:if>
+										</c:if>
 									<hr class="major" />
 									<br>
 									
@@ -151,7 +154,7 @@ $(document).ready(function() {
 										<select name = "key" id="skey">
 											<option value="board_subject">글제목</option>
 											<option value="b_user_id">작성자</option>
-											<option value="b_school_name">학교이름</option>
+											<!-- <option value="b_school_name">학교이름</option> -->
 										</select>
 										</div>
 										<div class = "col-6" style="margin-left: 0;margin-right: 0;padding:0;">

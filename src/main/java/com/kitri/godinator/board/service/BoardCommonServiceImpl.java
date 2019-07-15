@@ -28,20 +28,34 @@ public class BoardCommonServiceImpl implements BoardCommonService {
 		PageNavigation navigation = new PageNavigation();
 		
 		int boardCategory = Integer.parseInt(parameter.get("boardCategory"));
-		
-		int newArticleCount = sqlSession.getMapper(BoardCommonDao.class).getNewArticleCount(boardCategory);
-		navigation.setNewArticleCount(newArticleCount);
-		
-		int totalArticleCount = sqlSession.getMapper(BoardCommonDao.class).getTotalArticleCount(parameter);
-		navigation.setTotalArticleCount(totalArticleCount);
-
-		int totalPageCount = (totalArticleCount-1) / BoardConstance.ARTICLE_SIZE + 1;//나누어 떨어지는 숫자를 없애면 된다
-		navigation.setTotalPageCount(totalPageCount);
-		
-		int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
-		navigation.setNowFirst(pg <= BoardConstance.PAGE_SIZE);
-		navigation.setNowEnd((totalPageCount-1)/BoardConstance.PAGE_SIZE * BoardConstance.PAGE_SIZE < pg);
-		navigation.setPageNo(pg);
+		if (boardCategory != 4) {
+			int newArticleCount = sqlSession.getMapper(BoardCommonDao.class).getNewArticleCount(boardCategory);
+			navigation.setNewArticleCount(newArticleCount);
+			
+			int totalArticleCount = sqlSession.getMapper(BoardCommonDao.class).getTotalArticleCount(parameter);
+			navigation.setTotalArticleCount(totalArticleCount);
+			
+			int totalPageCount = (totalArticleCount-1) / BoardConstance.ARTICLE_SIZE + 1;//나누어 떨어지는 숫자를 없애면 된다
+			navigation.setTotalPageCount(totalPageCount);
+			
+			int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
+			navigation.setNowFirst(pg <= BoardConstance.PAGE_SIZE);
+			navigation.setNowEnd((totalPageCount-1)/BoardConstance.PAGE_SIZE * BoardConstance.PAGE_SIZE < pg);
+			navigation.setPageNo(pg);
+			
+		} else {
+			
+			int totalArticleCount = sqlSession.getMapper(BoardCommonDao.class).getHotTotalArticleCount();
+			navigation.setTotalArticleCount(totalArticleCount);
+			
+			int totalPageCount = (totalArticleCount-1) / BoardConstance.ARTICLE_SIZE + 1;//나누어 떨어지는 숫자를 없애면 된다
+			navigation.setTotalPageCount(totalPageCount);
+			
+			int pg = NumberCheck.NotNumberToOne(parameter.get("pg"));
+			navigation.setNowFirst(pg <= BoardConstance.PAGE_SIZE);
+			navigation.setNowEnd((totalPageCount-1)/BoardConstance.PAGE_SIZE * BoardConstance.PAGE_SIZE < pg);
+			navigation.setPageNo(pg);
+		}
 		return navigation;
 	}
 

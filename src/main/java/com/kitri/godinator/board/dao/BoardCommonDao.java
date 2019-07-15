@@ -12,4 +12,7 @@ public interface BoardCommonDao {
 	//페이지 처리 
 	public int getNewArticleCount(int boardCategory);       
 	public int getTotalArticleCount(Map<String, String> parameter);
+	
+	
+	public int getHotTotalArticleCount();
 }

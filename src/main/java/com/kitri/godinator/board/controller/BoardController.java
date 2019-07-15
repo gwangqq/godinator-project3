@@ -1,15 +1,9 @@
 package com.kitri.godinator.board.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import javax.servlet.ServletContext;
+//import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kitri.godinator.board.service.BoardCommonService;
 import com.kitri.godinator.board.service.BoardService;
@@ -34,8 +27,8 @@ import com.kitri.godinator.model.PageNavigation;
 @RequestMapping("/board")
 public class BoardController {
 
-	@Autowired
-	private ServletContext servletContext;
+//	@Autowired
+//	private ServletContext servletContext;
 
 	@Autowired
 	private BoardCommonService boardCommonService;
@@ -47,21 +40,21 @@ public class BoardController {
 	public String main(Model model) {
 		
 			
-			
-			
-			List<BbsDto> list = boardService.mainHotArticle();
-			System.out.println("list C : " + list);
-			int totalLike = 0;
-			int totalHate = 0;
-			int boardNo = 0;
-			for (int i = 0; i < list.size(); i++) {
-				boardNo = list.get(i).getBoardNo();
-				totalLike = boardService.totalLike(boardNo);
-				totalHate = boardService.totalHate(boardNo);
-				list.get(i).setLikeCount(totalLike);
-				list.get(i).setHateCount(totalHate);
-			}
-			model.addAttribute("mainArticleList", list);
+//			
+//			
+//			List<BbsDto> list = boardService.mainHotArticle();
+//			System.out.println("list C : " + list);
+//			int totalLike = 0;
+//			int totalHate = 0;
+//			int boardNo = 0;
+//			for (int i = 0; i < list.size(); i++) {
+//				boardNo = list.get(i).getBoardNo();
+//				totalLike = boardService.totalLike(boardNo);
+//				totalHate = boardService.totalHate(boardNo);
+//				list.get(i).setLikeCount(totalLike);
+//				list.get(i).setHateCount(totalHate);
+//			}
+//			model.addAttribute("mainArticleList", list);
 			
 		
 		
@@ -96,55 +89,55 @@ public class BoardController {
 
 //------------------------[글쓰기]-------------------------
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter,
-			@RequestParam("file") List<MultipartFile> multipartFile, Model model, HttpSession session) {
+	public String write(BbsDto bbsDto, @RequestParam Map<String, String> parameter
+			, Model model, HttpSession session) {
 		// System.out.println("write controller in : " +parameter);
 		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
 		String path = "";
 		//System.out.println(multipartFile.toString());
-
+		System.out.println(parameter);
 		if (memberDto != null) {
-
+			
 			int boardNo = boardCommonService.getNextBoardNo();
+			
 			bbsDto.setBoardNo(boardNo);
 			bbsDto.setbUserId(memberDto.getUserId());
 			bbsDto.setUserName(memberDto.getUserName());
-
-			if (multipartFile != null && !multipartFile.isEmpty()) {
-				for (int i = 0; i < multipartFile.size(); i++) {
-
-					String originalName = multipartFile.get(i).getOriginalFilename();
-					String realPath = servletContext.getRealPath("/upload/board");
-					DateFormat df = new SimpleDateFormat("yyMMdd");// MM대문자가 월 /소문자 분(minute)
-					String saveFolder = df.format(new Date());
-					String realSaveFolder = realPath + File.separator + saveFolder;
-					File dir = new File(realSaveFolder);
-
-				//	System.out.println("controller에서 저장된 경로!! : " + realPath);
-					if (!dir.exists())
-						dir.mkdirs();// 폴더까지 생성
-
-					String savedName = UUID.randomUUID().toString()
-							+ originalName.substring(originalName.lastIndexOf('.'));
-
-					File file = new File(realSaveFolder, savedName);
-
-					try {
-						multipartFile.get(i).transferTo(file);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
-					bbsDto.setOriginalName(originalName);
-					bbsDto.setSavedName(savedName);
-					bbsDto.setSaveFolder(saveFolder);
-				}
-			}
+			
+//			if (multipartFile != null && !multipartFile.isEmpty()) {
+//				for (int i = 0; i < multipartFile.size(); i++) {
+//
+//					String originalName = multipartFile.get(i).getOriginalFilename();
+//					String realPath = servletContext.getRealPath("/upload/board");
+//					DateFormat df = new SimpleDateFormat("yyMMdd");// MM대문자가 월 /소문자 분(minute)
+//					String saveFolder = df.format(new Date());
+//					String realSaveFolder = realPath + File.separator + saveFolder;
+//					File dir = new File(realSaveFolder);
+//
+//				//	System.out.println("controller에서 저장된 경로!! : " + realPath);
+//					if (!dir.exists())
+//						dir.mkdirs();// 폴더까지 생성
+//
+//					String savedName = UUID.randomUUID().toString()
+//							+ originalName.substring(originalName.lastIndexOf('.'));
+//
+//					File file = new File(realSaveFolder, savedName);
+//
+//					try {
+//						multipartFile.get(i).transferTo(file);
+//					} catch (IllegalStateException e) {
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//
+//					bbsDto.setOriginalName(originalName);
+//					bbsDto.setSavedName(savedName);
+//					bbsDto.setSaveFolder(saveFolder);
+//				}
+//			}
 
 			boardNo = boardService.writeArticle(bbsDto);
-
 			if (boardNo != 0) {
 				model.addAttribute("boardNo", boardNo);
 				path = "board/writeok";
@@ -156,7 +149,7 @@ public class BoardController {
 			path = "redirect:/index.jsp";
 		}
 		model.addAttribute("parameter", parameter);
-		// System.out.println("write controller out : " +parameter);
+		System.out.println("write controller out : " +parameter);
 		return path;
 	}
 
@@ -165,8 +158,8 @@ public class BoardController {
 	public String view(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
 		String path = "";
-		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if (memberDto != null) {
+		
+		
 			BbsDto bbsDto = boardService.viewArticle(boardNo);
 			parameter.put("boardNo", Integer.toString(boardNo));
 			int isPrev = boardService.checkPrev(parameter);
@@ -183,9 +176,7 @@ public class BoardController {
 			model.addAttribute("isPrev", isPrev);
 			model.addAttribute("isNext", isNext);
 			path = "board/view";
-		} else {
-			path = "redirect:/index.jsp";
-		}
+		
 		return path;
 	}
 
@@ -291,9 +282,12 @@ public class BoardController {
 	public String prev(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
 		String path = "";
-		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if (memberDto != null) {
-
+	
+			int totalLike = boardService.totalLike(boardNo);
+			int totalHate = boardService.totalHate(boardNo);
+	
+			model.addAttribute("totalLike", totalLike);
+			model.addAttribute("totalHate", totalHate);
 			BbsDto bbsDto = boardService.prevArticle(parameter);
 			int isPrev = boardService.checkPrev(parameter);
 			model.addAttribute("isPrev", isPrev);
@@ -302,9 +296,7 @@ public class BoardController {
 			model.addAttribute("boardNo", parameter.get("boardNo"));
 
 			path = "board/view";
-		} else {
-			path = "redirect:/index.jsp";
-		}
+		
 		return path;
 	}
 
@@ -313,19 +305,19 @@ public class BoardController {
 	public String next(@RequestParam("boardNo") int boardNo, @RequestParam Map<String, String> parameter, Model model,
 			HttpSession session) {
 		String path = "";
-		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if (memberDto != null) {
+		
 			BbsDto bbsDto = boardService.nextArticle(parameter);
 			int isNext = boardService.checkNext(parameter);
 			model.addAttribute("article", bbsDto);
 			model.addAttribute("parameter", parameter);
 			model.addAttribute("boardNo", parameter.get("boardNo"));
 			model.addAttribute("isNext", isNext);
+			int totalLike = boardService.totalLike(boardNo);
+			int totalHate = boardService.totalHate(boardNo);
 
+			model.addAttribute("totalLike", totalLike);
+			model.addAttribute("totalHate", totalHate);
 			path = "board/view";
-		} else {
-			path = "redirect:/index.jsp";
-		}
 		return path;
 	}
 
