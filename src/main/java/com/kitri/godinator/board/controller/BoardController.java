@@ -44,10 +44,32 @@ public class BoardController {
 	private BoardService boardService;
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(@RequestParam Map<String, String> parameter, Model model) {
-		return "board/main";
+	public String main(Model model) {
+		
+			
+			
+			
+			List<BbsDto> list = boardService.mainHotArticle();
+			System.out.println("list C : " + list);
+			int totalLike = 0;
+			int totalHate = 0;
+			int boardNo = 0;
+			for (int i = 0; i < list.size(); i++) {
+				boardNo = list.get(i).getBoardNo();
+				totalLike = boardService.totalLike(boardNo);
+				totalHate = boardService.totalHate(boardNo);
+				list.get(i).setLikeCount(totalLike);
+				list.get(i).setHateCount(totalHate);
+			}
+			model.addAttribute("mainArticleList", list);
+			
+		
+		
+		return "/main";
 	}
-
+	
+	
+	
 	// 게시판 list에서 글 작성 버튼 누르면 글 작성 페이지로 이동
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void write(@RequestParam Map<String, String> parameter, Model model) {
@@ -175,7 +197,7 @@ public class BoardController {
 		
 		if(boardCategory != 4) {
 		
-		// System.out.println(parameter);
+		System.out.println(parameter);
 		List<BbsDto> list = boardService.listArticle(parameter);
 		// System.out.println("list C : " + list);
 		int totalLike = 0;
@@ -197,9 +219,9 @@ public class BoardController {
 		model.addAttribute("navigator", pageNavigation);
 		
 		} else if (boardCategory == 4) {
-			// System.out.println(parameter);
+			System.out.println(parameter);
 			List<BbsDto> list = boardService.listHotArticle(parameter);
-			// System.out.println("list C : " + list);
+			System.out.println("list C : " + list);
 			int totalLike = 0;
 			int totalHate = 0;
 			int boardNo = 0;

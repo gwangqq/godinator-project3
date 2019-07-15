@@ -9,10 +9,11 @@
 -->
 <html>
 <head>
-	<title>Generic - Editorial by HTML5 UP</title>
+	<title>Godinator</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<%-- <link rel="stylesheet" href="${root}/css/main.css" /> --%>
+ 	<link rel="stylesheet" href="${root}/css/main.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -57,7 +58,7 @@ $(document).ready(function() {
 </script>
 
  
-<link rel="stylesheet" href="${root}/css/main.css" />
+
 <!-- 
 <link rel="stylesheet" href="${root}/css/recommendation.css"/>
 <link rel="stylesheet" href="${root}/css/schooldetail.css"/>
@@ -65,9 +66,9 @@ $(document).ready(function() {
 <link rel="stylesheet" href="${root}/css/schoolrating.css"/>
 <link rel="stylesheet" href="${root}/css/searchschool.css"/>
 <link rel="stylesheet" href="${root}/css/morris.css"/>
--->
 <link rel="stylesheet" href="${root}/css/login.css"/>
 <link rel="stylesheet" href="${root}/css/register.css"/>
+-->
 
 
 

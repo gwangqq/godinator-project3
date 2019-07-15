@@ -6,7 +6,7 @@
 <div id="sidebar">
    <div class="inner">
       <section id="mainPage" class="alt">
-         <span>고디네이터</span>
+         <span>GODINATOR[MAIN]</span>
       </section>
       
       <nav id="menu">

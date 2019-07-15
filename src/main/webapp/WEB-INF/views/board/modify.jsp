@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/template/header.jsp" %>
+<%@ include file="/WEB-INF/views/board/temp/tempheader.jsp" %>
 <%@ include file="/WEB-INF/views/board/temp/headstyle.jsp" %>
 <!-- 모달창 들  -->
 <!--장소검색  Modal -->
@@ -175,16 +175,16 @@ $(document).ready(function() {
 									<header class="main">
 									<br>
 									<c:if test="${parameter.boardCategory == 1}">
-										<h2>홍보게시판</h2> 
+										<label>홍보게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 2}">
-										<h2>고등학교 게시판</h2> 
+										<label>고등학교 게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 3}">
-										<h2>대학교 게시판</h2> 
+										<label>대학교 게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 4}">
-										<h2><font color="red">Hot</font> 게시판</h2> 
+										<label><font color="red">Hot</font> 게시판</label> 
 									</c:if>
 									</header>
 								<hr class = "major"/>	
@@ -231,6 +231,7 @@ $(document).ready(function() {
 								</div>
 								<div class = "col-3">																<!-- onclick="resizeMap();" -->
 								<input type="button" id = "mapBtn"class="button" data-toggle="modal" data-target="#mapModal" value="장소검색" >
+								<label id = "placeresult" style="padding: 0;margin: 0;"></label>
 								<!-----------------------------------[지도 modal]----------------------------------------------->
  								  
   <div class="modal fade" id="mapModal">
@@ -335,9 +336,15 @@ function displayMarker(place) {
 
 
 		<div class = "row">
-         	<div class = "col-12">
-         	<input type="text" name = "search" id = "search">
+         	<div class = "col-2">
+				<label>장소 검색</label>
+			</div>
+         	<div class = "col-8">
+         		<input type="text" name = "addressSearch" id = "addressSearch">
          	</div>
+			<div class = "col-2">
+				<input type = "button" id = "addressBtn" value = "검색">		
+			</div>
        		</div>
         </div>
         
@@ -437,12 +444,12 @@ function displayMarker(place) {
 								<!-- 게시물 완료 버튼 및 위로가기 버튼 -->
 
 								
-								
+								<!-- 
 								<div class = "col-2"></div>
 								<div class = "col-8">
-									<!-- <input type="file" class="form-control-file border" name="file"> -->
+									<input type="file" class="form-control-file border" name="file">
 								</div>
-								<div class = "col-2"></div>
+								<div class = "col-2"></div> -->
 								
 								<div class = "col-8"></div>
 								<div class = "col-2" style="padding-right: 0;">

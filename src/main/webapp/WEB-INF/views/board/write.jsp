@@ -155,16 +155,16 @@ $(document).ready(function() {
 									<header class="main">
 									<br>
 									<c:if test="${parameter.boardCategory == 1}">
-										<h3>홍보게시판</h3> 
+										<label>홍보게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 2}">
-										<h3>고등학교 게시판</h3> 
+										<label>고등학교 게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 3}">
-										<h3>대학교 게시판</h3> 
+										<label>대학교 게시판</label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 4}">
-										<h3><font color="red">Hot</font> 게시판</h3> 
+										<label><font color="red">Hot</font> 게시판</label> 
 									</c:if>
 									</header>
 								<hr class = "major"/>	

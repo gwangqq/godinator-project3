@@ -33,21 +33,15 @@
 		            	<if test="key == 'board_subject'">
 		            		and board_subject like '%'||#{word}||'%'
 		            	</if>
-		            	<if test="key != 'board_subject'">
-		            		and ${key} = #{word}
-		            	</if>
 		            	<!-- 작성자로 검색 -->
 		            	<if test="key == 'b_user_id'">
 		            		and b_user_id like '%'||#{word}||'%'
 		            	</if>
-		            	<if test="key != 'b_user_id'">
-		            		and ${key} = #{word}
-		            	</if>
 		            	<!-- 학교 이름으로 검색하기 -->
-		            <!-- 	<if test="key == 'b_school_name'">
+		             	<if test="key == 'b_school_name'">
 		            		and b_school_name like '%'||#{word}||'%'
 		            	</if>
-		            	<if test="key != 'b_school_name'">
+		            	<!-- <if test="key != 'b_school_name'">
 		            		and ${key} = #{word}
 		            	</if> -->
 		            </if>

@@ -66,16 +66,16 @@ $(document).ready(function() {
 								<section>
 									<header class="main">
 									<c:if test="${parameter.boardCategory == 1}">
-										<h1>홍보게시판</h1> 
+										<label><font size="10px">홍보게시판</font></label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 2}">
-										<h1>고등학교 게시판</h1> 
+										<label><font size="10px">고등학교 게시판</font></label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 3}">
-										<h1>대학교 게시판</h1> 
+										<label><font size="10px">대학교 게시판</font></label>
 									</c:if>
 									<c:if test="${parameter.boardCategory == 4}">
-										<h1><font color="red">Hot</font> 게시판</h1> 
+										<label><font color="red" size="10px">Hot</font><font size="10px">게시판</font></label> 
 									</c:if>
 									</header>
 									
@@ -109,15 +109,15 @@ $(document).ready(function() {
 												</c:if>
 												<c:if test="${parameter.boardCategory == 4}">
 													<c:forEach var = "hotArticle" items = "${hotArticleList}">
-													<tr class = "viewBtn" data-seq="${hotArticle.boardNo}">
-														<td>${hotArticle.boardNo}</td>
-														<td>[${hotArticle.region}/${hotArticle.bSchoolName}]${hotArticle.boardSubject.replace('<','&lt;')}</td>
-														<td>${hotArticle.bUserId}</td>
-														<td>${hotArticle.bPostdate}</td>
-														<td>${hotArticle.bViewCount}</td>
-														<td>${hotArticle.likeCount}</td>
-													</tr>
-												</c:forEach>
+														<tr class = "viewBtn" data-seq="${hotArticle.boardNo}">
+															<td>${hotArticle.boardNo}</td>
+															<td>[${hotArticle.region}/${hotArticle.bSchoolName}]${hotArticle.boardSubject.replace('<','&lt;')}</td>
+															<td>${hotArticle.bUserId}</td>
+															<td>${hotArticle.bPostdate}</td>
+															<td>${hotArticle.bViewCount}</td>
+															<td>${hotArticle.likeCount}</td>
+														</tr>
+													</c:forEach>
 												</c:if>
 												</tbody>
 											</table>

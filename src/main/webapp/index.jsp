@@ -3,13 +3,5 @@
     pageEncoding="UTF-8"%>
 <%
 response.sendRedirect(request.getContextPath()+"/board/main");
-
-MemberDto memberDto = new MemberDto();
-
-memberDto.setUserId("park123");
-memberDto.setUserName("박미래");
-memberDto.setEmail("son@naver.com");
-
-session.setAttribute("userInfo", memberDto);
 %>
  

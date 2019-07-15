@@ -21,7 +21,6 @@ import com.kitri.godinator.model.BoardDto;
 import com.kitri.godinator.model.EditDto;
 import com.kitri.godinator.model.MemberDto;
 
-import oracle.net.aso.e;
 
 
 @Controller

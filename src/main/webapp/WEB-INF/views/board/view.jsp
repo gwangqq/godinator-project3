@@ -260,7 +260,6 @@ $(document).ready(function() {
 									<!-- 아이디 -->
 									<div class = "col-2"></div>
 									<div class="col-8">
-									<hr style="margin: 0;">
 										<!-- <span style = "float:left;">
 										<a href="#">
 											<img class="profile_icon" alt="작성자 프로필 사진" src="/godinator/resources/images/pic11.jpg">
